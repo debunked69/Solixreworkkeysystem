@@ -255,7 +255,7 @@ end
 -- Check if the key exists and is valid
 local function validateKey(key)
     if not key or key == "" then
-        return false, "KEY_INCORRECT"
+        return false, "KEY_NOT_FOUND"
     end
     
     if not isGameSupported() then
@@ -315,7 +315,7 @@ local function main()
         pcall(function() delfile("Key.txt") end)
         
         local statusMessage = "Invalid key"
-        if statusOrCode == "KEY_INCORRECT" then
+        if statusOrCode == "KEY_NOT_FOUND" then
             statusMessage = "No key found"
         elseif statusOrCode == "KEY_EXPIRED" then
             statusMessage = "Key expired"
@@ -332,9 +332,29 @@ local function main()
     end
     
     -- Key is valid, set up queue_on_teleport and execute the script
-    queue_on_teleport([[
-        loadstring(game:HttpGet("https://raw.githubusercontent.com/debunked69/solixloader/refs/heads/main/solix%20v2%20new%20loader.lua"))()
-    ]])
+    local saveSuccess, saveError = pcall(function()
+        writefile("Key.txt", keyContent)
+    end)
+    
+    if not saveSuccess then
+        createNotification("Warning", "Failed to save key: " .. tostring(saveError), 5, Color3.fromRGB(255, 170, 0), notifGui)
+    else
+        -- Verify the key was saved correctly
+        local readSuccess, savedKey = pcall(function()
+            return readfile("Key.txt")
+        end)
+        
+        if not readSuccess or savedKey ~= keyContent then
+            createNotification("Warning", "Key verification failed. Teleport may not work correctly.", 5, Color3.fromRGB(255, 170, 0), notifGui)
+        else
+            -- Only set up queue_on_teleport if the key was saved successfully
+            queue_on_teleport([[
+                loadstring(game:HttpGet("https://raw.githubusercontent.com/debunked69/solixloader/refs/heads/main/solix%20v2%20new%20loader.lua"))()
+            ]])
+            
+            createNotification("Info", "Key saved successfully. Ready for teleport.", 3, Color3.fromRGB(85, 255, 127), notifGui)
+        end
+    end
     
     -- Try to execute the script with the valid key
     local execSuccess, execError = executeScript(keyContent)
@@ -825,15 +845,30 @@ CheckButton.MouseButton1Click:Connect(function()
         
         createNotification("Success", "Your key is valid! " .. expiryInfo, 5, Color3.fromRGB(85, 255, 127), ScreenGui)
         
-        pcall(function()
+        -- Save the key to file first
+        local saveSuccess, saveError = pcall(function()
             writefile("Key.txt", keyText)
         end)
         
-        queue_on_teleport([[
-    -- Always load the main loader script which will handle key validation
-    -- and show the key system if needed
-    loadstring(game:HttpGet("https://raw.githubusercontent.com/debunked69/solixloader/refs/heads/main/solix%20v2%20new%20loader.lua"))()
-]])
+        if not saveSuccess then
+            createNotification("Warning", "Failed to save key: " .. tostring(saveError), 5, Color3.fromRGB(255, 170, 0), ScreenGui)
+        else
+            -- Verify the key was saved correctly
+            local readSuccess, savedKey = pcall(function()
+                return readfile("Key.txt")
+            end)
+            
+            if not readSuccess or savedKey ~= keyText then
+                createNotification("Warning", "Key verification failed. Teleport may not work correctly.", 5, Color3.fromRGB(255, 170, 0), ScreenGui)
+            else
+                -- Only set up queue_on_teleport if the key was saved successfully
+                queue_on_teleport([[
+                    loadstring(game:HttpGet("https://raw.githubusercontent.com/debunked69/solixloader/refs/heads/main/solix%20v2%20new%20loader.lua"))()
+                ]])
+                
+                createNotification("Info", "Key saved successfully. Ready for teleport.", 3, Color3.fromRGB(85, 255, 127), ScreenGui)
+            end
+        end
         
         if autoExecuteEnabled then
             local execSuccess, execError = executeScript(keyText)
