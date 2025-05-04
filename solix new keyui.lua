@@ -1,3 +1,4 @@
+
 repeat wait() until game:IsLoaded()
 
 local Players = game:GetService("Players")
@@ -197,6 +198,7 @@ local function getScriptLoaderUrl()
         [3059674] = "https://api.luarmor.net/files/v3/loaders/21ad7f491e4658e9dc9529a60c887c6e.lua", -- Jailbreak
         [34644452] = "https://api.luarmor.net/files/v3/loaders/0c8fdf9bb25a6a7071731b72a90e3c69.lua", -- Arise Crossover
         [3333298] = "https://api.luarmor.net/files/v3/loaders/e1d276b47f79a40a336a530f3bd6268c.lua", -- Bobule gum
+        [35789249] = "https://api.luarmor.net/files/v3/loaders/e4ea33e9eaf0ae943d59ea98f2444ebe.lua", -- Grow a garden
     }
     
     return scriptMap[creatorId]
