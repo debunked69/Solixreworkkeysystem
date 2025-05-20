@@ -702,22 +702,22 @@ local LinkvertiseCorner = Instance.new("UICorner")
 LinkvertiseCorner.CornerRadius = UDim.new(0, 6)
 LinkvertiseCorner.Parent = LinkvertiseButton
 
-local LootlabsButton = Instance.new("TextButton")
-LootlabsButton.Name = "LootlabsButton"
-LootlabsButton.FontFace = Font.new("rbxassetid://12187365364")
-LootlabsButton.Text = "Get Key (Lootlabs)"
-LootlabsButton.TextColor3 = Color3.fromRGB(240, 240, 240)
-LootlabsButton.TextSize = 12
-LootlabsButton.BackgroundColor3 = Color3.fromRGB(28, 29, 32)
-LootlabsButton.BackgroundTransparency = 0.5
-LootlabsButton.BorderSizePixel = 0
-LootlabsButton.Position = UDim2.fromOffset(0, 50)
-LootlabsButton.Size = UDim2.new(1, 0, 0, 40)
-LootlabsButton.Parent = ButtonsSection
+local workinkButton = Instance.new("TextButton")
+workinkButton.Name = "Button"
+workinkButton.FontFace = Font.new("rbxassetid://12187365364")
+workinkButton.Text = "Get Key (workink)"
+workinkButton.TextColor3 = Color3.fromRGB(240, 240, 240)
+workinkButton.TextSize = 12
+workinkButton.BackgroundColor3 = Color3.fromRGB(28, 29, 32)
+workinkButton.BackgroundTransparency = 0.5
+workinkButton.BorderSizePixel = 0
+workinkButton.Position = UDim2.fromOffset(0, 50)
+workinkButton.Size = UDim2.new(1, 0, 0, 40)
+workinkButton.Parent = ButtonsSection
 
-local LootlabsCorner = Instance.new("UICorner")
-LootlabsCorner.CornerRadius = UDim.new(0, 6)
-LootlabsCorner.Parent = LootlabsButton
+local workinkCorner = Instance.new("UICorner")
+workinkCorner.CornerRadius = UDim.new(0, 6)
+workinkCorner.Parent = workinkButton
 
 local DiscordButton = Instance.new("TextButton")
 DiscordButton.Name = "DiscordButton"
@@ -794,7 +794,7 @@ local function applyButtonHoverEffect(button)
 end
 
 applyButtonHoverEffect(LinkvertiseButton)
-applyButtonHoverEffect(LootlabsButton)
+applyButtonHoverEffect(workinkButton)
 applyButtonHoverEffect(DiscordButton)
 
 local autoExecuteEnabled = true 
@@ -938,9 +938,9 @@ LinkvertiseButton.MouseButton1Click:Connect(function()
     createNotification("Copied", "Linkvertise link copied to clipboard!", 5, Color3.fromRGB(255, 188, 254), ScreenGui)
 end)
 
-LootlabsButton.MouseButton1Click:Connect(function()
+workinkButton.MouseButton1Click:Connect(function()
     setclipboard("https://ads.luarmor.net/get_key?for=Solix_Free_Keysystems-pqJCGTqnTsng")
-    createNotification("Copied", "Lootlabs link copied to clipboard!", 5, Color3.fromRGB(255, 188, 254), ScreenGui)
+    createNotification("Copied", "workink link copied to clipboard!", 5, Color3.fromRGB(255, 188, 254), ScreenGui)
 end)
 
 DiscordButton.MouseButton1Click:Connect(function()
