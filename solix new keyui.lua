@@ -362,7 +362,7 @@ local function main()
         end)
         
         if not readSuccess or savedKey ~= keyContent then
-            createNotification("Warning", "Key verification failed. Teleport may not work correctly.", 5, Color3.fromRGB(255, 170, 0), notifGui)
+            createNotification("Warning", "Key verification failed. Teleport may not  correctly.", 5, Color3.fromRGB(255, 170, 0), notifGui)
         else
          
             queue_on_teleport([[
@@ -702,22 +702,22 @@ local LinkvertiseCorner = Instance.new("UICorner")
 LinkvertiseCorner.CornerRadius = UDim.new(0, 6)
 LinkvertiseCorner.Parent = LinkvertiseButton
 
-local workinkButton = Instance.new("TextButton")
-workinkButton.Name = "Button"
-workinkButton.FontFace = Font.new("rbxassetid://12187365364")
-workinkButton.Text = "Get Key (workink)"
-workinkButton.TextColor3 = Color3.fromRGB(240, 240, 240)
-workinkButton.TextSize = 12
-workinkButton.BackgroundColor3 = Color3.fromRGB(28, 29, 32)
-workinkButton.BackgroundTransparency = 0.5
-workinkButton.BorderSizePixel = 0
-workinkButton.Position = UDim2.fromOffset(0, 50)
-workinkButton.Size = UDim2.new(1, 0, 0, 40)
-workinkButton.Parent = ButtonsSection
+local lootlabsButton = Instance.new("TextButton")
+lootlabsButton.Name = "Button"
+lootlabsButton.FontFace = Font.new("rbxassetid://12187365364")
+lootlabsButton.Text = "Get Key (lootlabs)"
+lootlabsButton.TextColor3 = Color3.fromRGB(240, 240, 240)
+lootlabsButton.TextSize = 12
+lootlabsButton.BackgroundColor3 = Color3.fromRGB(28, 29, 32)
+lootlabsButton.BackgroundTransparency = 0.5
+lootlabsButton.BorderSizePixel = 0
+lootlabsButton.Position = UDim2.fromOffset(0, 50)
+lootlabsButton.Size = UDim2.new(1, 0, 0, 40)
+lootlabsButton.Parent = ButtonsSection
 
-local workinkCorner = Instance.new("UICorner")
-workinkCorner.CornerRadius = UDim.new(0, 6)
-workinkCorner.Parent = workinkButton
+local lootlabsCorner = Instance.new("UICorner")
+lootlabsCorner.CornerRadius = UDim.new(0, 6)
+lootlabsCorner.Parent = lootlabsButton
 
 local DiscordButton = Instance.new("TextButton")
 DiscordButton.Name = "DiscordButton"
@@ -794,7 +794,7 @@ local function applyButtonHoverEffect(button)
 end
 
 applyButtonHoverEffect(LinkvertiseButton)
-applyButtonHoverEffect(workinkButton)
+applyButtonHoverEffect(lootlabsButton)
 applyButtonHoverEffect(DiscordButton)
 
 local autoExecuteEnabled = true 
@@ -938,9 +938,9 @@ LinkvertiseButton.MouseButton1Click:Connect(function()
     createNotification("Copied", "Linkvertise link copied to clipboard!", 5, Color3.fromRGB(255, 188, 254), ScreenGui)
 end)
 
-workinkButton.MouseButton1Click:Connect(function()
+lootlabsButton.MouseButton1Click:Connect(function()
     setclipboard("https://ads.luarmor.net/get_key?for=Solix_Free_Keysystems-pqJCGTqnTsng")
-    createNotification("Copied", "workink link copied to clipboard!", 5, Color3.fromRGB(255, 188, 254), ScreenGui)
+    createNotification("Copied", "lootlabs link copied to clipboard!", 5, Color3.fromRGB(255, 188, 254), ScreenGui)
 end)
 
 DiscordButton.MouseButton1Click:Connect(function()
