@@ -365,9 +365,7 @@ local function main()
             createNotification("Warning", "Key verification failed. Teleport may not  correctly.", 5, Color3.fromRGB(255, 170, 0), notifGui)
         else
          
-            queue_on_teleport([[
-                loadstring(game:HttpGet("https://raw.githubusercontent.com/debunked69/Solixreworkkeysystem/refs/heads/main/solix%20new%20keyui.lua"))()
-            ]])
+            
             
             createNotification("Info", "Key saved successfully. Ready for teleport.", 3, Color3.fromRGB(85, 255, 127), notifGui)
         end
@@ -878,12 +876,6 @@ CheckButton.MouseButton1Click:Connect(function()
             if not readSuccess or savedKey ~= keyText then
                 createNotification("Warning", "Key verification failed. Teleport may not work correctly.", 5, Color3.fromRGB(255, 170, 0), ScreenGui)
             else
-             
-                queue_on_teleport([[
-                   
-                  
-                    loadstring(game:HttpGet("https://raw.githubusercontent.com/debunked69/Solixreworkkeysystem/refs/heads/main/solix%20new%20keyui.lua"))()
-                ]])
                 
                 createNotification("Info", "Key saved successfully. Ready for teleport.", 3, Color3.fromRGB(85, 255, 127), ScreenGui)
             end
