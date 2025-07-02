@@ -201,7 +201,8 @@ local function getScriptLoaderUrl()
         [3333298] = "https://api.luarmor.net/files/v3/loaders/e1d276b47f79a40a336a530f3bd6268c.lua", -- Bobule gum
         [35789249] = "https://api.luarmor.net/files/v3/loaders/e4ea33e9eaf0ae943d59ea98f2444ebe.lua", -- Grow a garden
         [34160477] = "https://api.luarmor.net/files/v3/loaders/22843f88cd6ebbd164621b3c115446c8.lua", -- Ghoul RE
-    }
+		[35289532] = "https://api.luarmor.net/files/v3/loaders/17c644b9b443899c429c51b2af748fc6.lua", -- Dig
+	}
     
     return scriptMap[creatorId]
 end
