@@ -202,7 +202,7 @@ local function getScriptLoaderUrl()
         [34160477] = "https://api.luarmor.net/files/v3/loaders/22843f88cd6ebbd164621b3c115446c8.lua", -- Ghoul RE
 	[35289532] = "https://api.luarmor.net/files/v3/loaders/17c644b9b443899c429c51b2af748fc6.lua", -- Dig
         [2782840] = "https://api.luarmor.net/files/v3/loaders/b3400f5a4e28cad1e1110b45004c3837.lua", -- Build a boat
-	[35330702] = "loadstring(game:HttpGet("https://api.luarmor.net/files/v3/loaders/036786acbfa6e6e030dce074faa1173f.lua"))()", -- Volleyball pldpaldwdwa
+	[35330702] = "https://api.luarmor.net/files/v3/loaders/036786acbfa6e6e030dce074faa1173f.lua", -- Volleyball pldpaldwdwa
         
 	}
     
