@@ -200,10 +200,10 @@ local function getScriptLoaderUrl()
         [3333298] = "https://api.luarmor.net/files/v3/loaders/e1d276b47f79a40a336a530f3bd6268c.lua", -- Bobule gum
         [35789249] = "https://api.luarmor.net/files/v3/loaders/e4ea33e9eaf0ae943d59ea98f2444ebe.lua", -- Grow a garden
         [34160477] = "https://api.luarmor.net/files/v3/loaders/22843f88cd6ebbd164621b3c115446c8.lua", -- Ghoul RE
-	[35289532] = "https://api.luarmor.net/files/v3/loaders/17c644b9b443899c429c51b2af748fc6.lua", -- Dig
+		[35289532] = "https://api.luarmor.net/files/v3/loaders/17c644b9b443899c429c51b2af748fc6.lua", -- Dig
         [2782840] = "https://api.luarmor.net/files/v3/loaders/b3400f5a4e28cad1e1110b45004c3837.lua", -- Build a boat
-	[35330702] = "https://api.luarmor.net/files/v3/loaders/036786acbfa6e6e030dce074faa1173f.lua", -- Volleyball pldpaldwdwa
-        
+		[35330702] = "https://api.luarmor.net/files/v3/loaders/036786acbfa6e6e030dce074faa1173f.lua", -- Volleyball pldpaldwdwa
+        [6042520] = "https://api.luarmor.net/files/v3/loaders/00e140acb477c5ecde501c1d448df6f9.lua",
 	}
     
     return scriptMap[creatorId]
