@@ -203,7 +203,8 @@ local function getScriptLoaderUrl()
 		[35289532] = "https://api.luarmor.net/files/v3/loaders/17c644b9b443899c429c51b2af748fc6.lua", -- Dig
         [2782840] = "https://api.luarmor.net/files/v3/loaders/b3400f5a4e28cad1e1110b45004c3837.lua", -- Build a boat
 		[35330702] = "https://api.luarmor.net/files/v3/loaders/036786acbfa6e6e030dce074faa1173f.lua", -- Volleyball pldpaldwdwa
-        [6042520] = "https://api.luarmor.net/files/v3/loaders/00e140acb477c5ecde501c1d448df6f9.lua",
+        [6042520] = "https://api.luarmor.net/files/v3/loaders/00e140acb477c5ecde501c1d448df6f9.lua", -- 99 Days in forest
+		[35558055] = "https://api.luarmor.net/files/v3/loaders/ba4595cfb82d2434a478b9003f3674b4.lua", -- Build a Plane
 	}
     
     return scriptMap[creatorId]
