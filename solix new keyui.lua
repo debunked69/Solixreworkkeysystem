@@ -206,6 +206,7 @@ local function getScriptLoaderUrl()
         [6042520] = "https://api.luarmor.net/files/v3/loaders/00e140acb477c5ecde501c1d448df6f9.lua", -- 99 Days in forest
 		[35558055] = "https://api.luarmor.net/files/v3/loaders/ba4595cfb82d2434a478b9003f3674b4.lua", -- Build a Plane
 		[32740991] = "https://api.luarmor.net/files/v3/loaders/646e60921195f2b2d59015703b0b100a.lua", -- Type Soul
+		[22718068] = "https://api.luarmor.net/files/v3/loaders/c08f7269fc31f6a60ec57ecfacfdb34e.lua", -- 3008
 	}
     
     return scriptMap[creatorId]
