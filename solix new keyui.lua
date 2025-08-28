@@ -207,6 +207,7 @@ local function getScriptLoaderUrl()
 		[35558055] = "https://api.luarmor.net/files/v3/loaders/ba4595cfb82d2434a478b9003f3674b4.lua", -- Build a Plane
 		[32740991] = "https://api.luarmor.net/files/v3/loaders/646e60921195f2b2d59015703b0b100a.lua", -- Type Soul
 		[22718068] = "https://api.luarmor.net/files/v3/loaders/c08f7269fc31f6a60ec57ecfacfdb34e.lua", -- 3008
+		[36015593] = "https://api.luarmor.net/files/v3/loaders/283d81b313c32e170c4545392802a347.lua", -- Hunty Zomibes
 	}
     
     return scriptMap[creatorId]
