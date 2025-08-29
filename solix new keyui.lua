@@ -1,999 +1,506 @@
+local ListGame = {
+	["3808223175"] = "4fe2dfc202115670b1813277df916ab2", -- Jujutsu Infinite
+	["994732206"]  = "e2718ddebf562c5c4080dfce26b09398", -- Blox Fruits
+	["1650291138"] = "9b64d07193c7c2aef970d57aeb286e70", -- Demon Fall
+	["5750914919"] = "8bbc8a7c4e023bc0c80799fec3233162", -- Fisch
+	["66654135"]   = "9c916252a9f79bbf5a108f97c531e807", -- Murder Mystery 2
+	["3317771874"] = "e95ef6f27596e636a7d706375c040de4", -- Pet Simulator 99
+	["1511883870"] = "fefdf5088c44beb34ef52ed6b520507c", -- Shindo Life
+	["6035872082"] = "3bb7969a9ecb9e317b0a24681327c2e2", -- Rivals
+	["245662005"]  = "21ad7f491e4658e9dc9529a60c887c6e", -- Jailbreak
+	["7018190066"] = "98f5c64a0a9ecca29517078597bbcbdb", -- Dead Rails
+	["7074860883"] = "0c8fdf9bb25a6a7071731b72a90e3c69", -- Anime Crossover
+	["7436755782"] = "e4ea33e9eaf0ae943d59ea98f2444ebe", -- Grow a Garden
+	["210851291"]  = "b3400f5a4e28cad1e1110b45004c3837", -- Build a Boat
+	-- ? idk Dig game
+	["6931042565"] = "036786acbfa6e6e030dce074faa1173f", -- Volleyball Legends
+	["7326934954"] = "00e140acb477c5ecde501c1d448df6f9", -- 99 Nights in the Forest
+	["7822444776"] = "ba4595cfb82d2434a478b9003f3674b4", -- Build a Plane
+	["4871329703"] = "646e60921195f2b2d59015703b0b100a", -- TypeSoul
+	["5578556129"] = "ba96a23ddff0c5b40e67eb1c0f2997c4", -- Anime Vanguards
+	["1000233041"] = "c08f7269fc31f6a60ec57ecfacfdb34e", -- 3008
+	["7750955984"] = "283d81b313c32e170c4545392802a347", -- Hunty Zombie
+}
 
-repeat wait() until game:IsLoaded()
+local URLsigma
+local GameId = ListGame[tostring(game.GameId)]
 
-local Players = game:GetService("Players")
-local TweenService = game:GetService("TweenService")
-local UserInputService = game:GetService("UserInputService")
-
-
-local function createNotification(title, content, duration, color, parent)
-    duration = duration or 5
-    color = color or Color3.fromRGB(255, 188, 254)
-    
-    local Notification = Instance.new("Frame")
-    Notification.Name = "Notification"
-    Notification.AnchorPoint = Vector2.new(1, 1)
-    Notification.BackgroundTransparency = 0.06
-    Notification.AutomaticSize = Enum.AutomaticSize.XY
-    Notification.BackgroundColor3 = Color3.fromRGB(16, 16, 16)
-    Notification.BorderSizePixel = 0
-    Notification.Position = UDim2.new(1, -25, 1, -25)
-    Notification.Size = UDim2.fromOffset(232, 59)
-    Notification.Parent = parent
-    
-    local NotifStroke = Instance.new("UIStroke")
-    NotifStroke.Name = "_CHILD"
-    NotifStroke.Color = Color3.fromRGB(158, 114, 158)
-    NotifStroke.Transparency = 0.9
-    NotifStroke.Parent = Notification
-    
-    local NotifAcrylic1 = Instance.new("ImageLabel")
-    NotifAcrylic1.Name = "acrylicthing"
-    NotifAcrylic1.Image = "rbxassetid://9968344105"
-    NotifAcrylic1.ImageTransparency = 0.98
-    NotifAcrylic1.ScaleType = Enum.ScaleType.Tile
-    NotifAcrylic1.TileSize = UDim2.fromOffset(128, 128)
-    NotifAcrylic1.BackgroundTransparency = 1
-    NotifAcrylic1.Size = UDim2.fromScale(1, 1)
-    
-    local NotifAcrylicCorner1 = Instance.new("UICorner")
-    NotifAcrylicCorner1.CornerRadius = UDim.new(0, 12)
-    NotifAcrylicCorner1.Parent = NotifAcrylic1
-    
-    NotifAcrylic1.Parent = Notification
-    
-    local NotifAcrylic2 = Instance.new("ImageLabel")
-    NotifAcrylic2.Name = "acrylicthing"
-    NotifAcrylic2.Image = "rbxassetid://9968344227"
-    NotifAcrylic2.ImageTransparency = 0.9
-    NotifAcrylic2.ScaleType = Enum.ScaleType.Tile
-    NotifAcrylic2.TileSize = UDim2.fromOffset(128, 128)
-    NotifAcrylic2.BackgroundTransparency = 1
-    NotifAcrylic2.Size = UDim2.fromScale(1, 1)
-    
-    local NotifAcrylicCorner2 = Instance.new("UICorner")
-    NotifAcrylicCorner2.CornerRadius = UDim.new(0, 12)
-    NotifAcrylicCorner2.Parent = NotifAcrylic2
-    
-    NotifAcrylic2.Parent = Notification
-    
-    local TextHolder = Instance.new("Frame")
-    TextHolder.Name = "TextHolder"
-    TextHolder.AutomaticSize = Enum.AutomaticSize.XY
-    TextHolder.BackgroundTransparency = 1
-    TextHolder.Position = UDim2.new(0, 7, 0.12, 0)
-    TextHolder.Size = UDim2.fromOffset(20, 12)
-    
-    local TextLayout = Instance.new("UIListLayout")
-    TextLayout.Padding = UDim.new(0, -4)
-    TextLayout.SortOrder = Enum.SortOrder.LayoutOrder
-    TextLayout.Parent = TextHolder
-    
-    local TitleText = Instance.new("TextLabel")
-    TitleText.FontFace = Font.new("rbxassetid://12187365364", Enum.FontWeight.SemiBold)
-    TitleText.Text = title
-    TitleText.TextColor3 = Color3.fromRGB(199, 199, 203)
-    TitleText.TextSize = 14
-    TitleText.TextXAlignment = Enum.TextXAlignment.Left
-    TitleText.AutomaticSize = Enum.AutomaticSize.X
-    TitleText.BackgroundTransparency = 1
-    TitleText.Position = UDim2.fromOffset(10, 8)
-    TitleText.Size = UDim2.fromOffset(212, 20)
-    TitleText.Parent = TextHolder
-    
-    local ContentText = Instance.new("TextLabel")
-    ContentText.Name = "TextLabel"
-    ContentText.FontFace = Font.new("rbxassetid://12187365364", Enum.FontWeight.SemiBold, Enum.FontStyle.Normal)
-    ContentText.Text = content
-    ContentText.TextColor3 = Color3.fromRGB(127, 127, 130)
-    ContentText.TextSize = 12
-    ContentText.TextXAlignment = Enum.TextXAlignment.Left
-    ContentText.AutomaticSize = Enum.AutomaticSize.X
-    ContentText.BackgroundTransparency = 1
-    ContentText.Position = UDim2.fromOffset(10, 8)
-    ContentText.Size = UDim2.fromOffset(212, 20)
-    ContentText.Parent = TextHolder
-    
-    local TextPadding = Instance.new("UIPadding")
-    TextPadding.PaddingBottom = UDim.new(0, 25)
-    TextPadding.Parent = TextHolder
-    
-    TextHolder.Parent = Notification
-    
-    local ProgressBar = Instance.new("Frame")
-    ProgressBar.BackgroundColor3 = Color3.fromRGB(44, 38, 44)
-    ProgressBar.BorderSizePixel = 0
-    ProgressBar.Position = UDim2.fromScale(0.0282, 0.8)
-    ProgressBar.Size = UDim2.new(1, -20, 0, 7)
-    
-    local ProgressLayout = Instance.new("UIListLayout")
-    ProgressLayout.Name = "UIListLayout"
-    ProgressLayout.Wraps = true
-    ProgressLayout.FillDirection = Enum.FillDirection.Horizontal
-    ProgressLayout.SortOrder = Enum.SortOrder.LayoutOrder
-    ProgressLayout.VerticalAlignment = Enum.VerticalAlignment.Bottom
-    ProgressLayout.Parent = ProgressBar
-    
-    local ProgressFill = Instance.new("Frame")
-    ProgressFill.BackgroundColor3 = color
-    ProgressFill.BorderSizePixel = 0
-    ProgressFill.Size = UDim2.fromScale(1, 1)
-    
-    local ProgressFillCorner = Instance.new("UICorner")
-    ProgressFillCorner.Parent = ProgressFill
-    
-    local ProgressGradient = Instance.new("UIGradient")
-    ProgressGradient.Color = ColorSequence.new{
-        ColorSequenceKeypoint.new(0, Color3.fromRGB(255, 255, 255)),
-        ColorSequenceKeypoint.new(0.752, Color3.fromRGB(147, 147, 147)),
-        ColorSequenceKeypoint.new(1, Color3.fromRGB(127, 127, 127))
-    }
-    ProgressGradient.Parent = ProgressFill
-    
-    ProgressFill.Parent = ProgressBar
-    
-    local ProgressBarCorner = Instance.new("UICorner")
-    ProgressBarCorner.Parent = ProgressBar
-    
-    ProgressBar.Parent = Notification
-    
-    local NotifCorner = Instance.new("UICorner")
-    NotifCorner.CornerRadius = UDim.new(0, 4)
-    NotifCorner.Parent = Notification
-    
-    local NotifPadding = Instance.new("UIPadding")
-    NotifPadding.PaddingBottom = UDim.new(0, 12)
-    NotifPadding.Parent = Notification
-    
-    local DismissButton = Instance.new("TextButton")
-    DismissButton.Name = "DismissButton"
-    DismissButton.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
-    DismissButton.BackgroundTransparency = 1
-    DismissButton.Size = UDim2.fromScale(1, 1)
-    DismissButton.Text = ""
-    DismissButton.Parent = Notification
-    
-    TweenService:Create(ProgressFill, TweenInfo.new(duration, Enum.EasingStyle.Linear), {Size = UDim2.new(0, 0, 1, 0)}):Play()
-    
-    task.delay(duration, function()
-        TweenService:Create(Notification, TweenInfo.new(0.5), {Position = UDim2.new(1, 25, 1, -25)}):Play()
-        task.wait(0.5)
-        Notification:Destroy()
-    end)
-    
-    DismissButton.MouseButton1Click:Connect(function()
-        TweenService:Create(Notification, TweenInfo.new(0.5), {Position = UDim2.new(1, 25, 1, -25)}):Play()
-        task.wait(0.5)
-        Notification:Destroy()
-    end)
-    
-    DismissButton.MouseEnter:Connect(function()
-        TweenService:Create(DismissButton, TweenInfo.new(0.1), {BackgroundTransparency = 0.65}):Play()
-    end)
-    
-    DismissButton.MouseLeave:Connect(function()
-        TweenService:Create(DismissButton, TweenInfo.new(0.1), {BackgroundTransparency = 1}):Play()
-    end)
-    
-    return Notification
+if not GameId then
+	game:GetService("Players").LocalPlayer:Kick("This game is not supported.")
 end
 
+URLsigma = GameId
+function Library()
+	repeat wait() until game:IsLoaded()
 
-local function getScriptLoaderUrl()
-    local creatorId = game.CreatorId
-    
-    local scriptMap = {
-        [4372130] = "https://api.luarmor.net/files/v3/loaders/e2718ddebf562c5c4080dfce26b09398.lua", -- Blox Fruits
-        [11867394] = "https://api.luarmor.net/files/v3/loaders/98f5c64a0a9ecca29517078597bbcbdb.lua", -- Dead Rails
-        [4294803] = "https://api.luarmor.net/files/v3/loaders/9b64d07193c7c2aef970d57aeb286e70.lua", -- Demonfall
-        [1226491] = "https://api.luarmor.net/files/v3/loaders/fefdf5088c44beb34ef52ed6b520507c.lua", -- Shindo Life
-        [2613928] = "https://api.luarmor.net/files/v3/loaders/0e0166cb8f3c5c189c6a1f2532db2125.lua", -- Counterblox
-        [3229308] = "https://api.luarmor.net/files/v3/loaders/4b2841eb3e1345dd1aa50da164ca2bbe.lua", -- Grand Piece Online
-        [7381705] = "https://api.luarmor.net/files/v3/loaders/8bbc8a7c4e023bc0c80799fec3233162.lua", -- Fisch
-        [15557357] = "https://api.luarmor.net/files/v3/loaders/4fe2dfc202115670b1813277df916ab2.lua", -- JJI
-        [1848960] = "https://api.luarmor.net/files/v3/loaders/9c916252a9f79bbf5a108f97c531e807.lua", -- MM2
-        [3959677] = "https://api.luarmor.net/files/v3/loaders/e95ef6f27596e636a7d706375c040de4.lua", -- PS99
-        [3461453] = "https://api.luarmor.net/files/v3/loaders/3bb7969a9ecb9e317b0a24681327c2e2.lua", -- Rivals
-        [17219742] = "https://api.luarmor.net/files/v3/loaders/ba96a23ddff0c5b40e67eb1c0f2997c4.lua", -- ANime Vanugard
-        [3059674] = "https://api.luarmor.net/files/v3/loaders/21ad7f491e4658e9dc9529a60c887c6e.lua", -- Jailbreak
-        [34644452] = "https://api.luarmor.net/files/v3/loaders/0c8fdf9bb25a6a7071731b72a90e3c69.lua", -- Arise Crossover
-        [3333298] = "https://api.luarmor.net/files/v3/loaders/e1d276b47f79a40a336a530f3bd6268c.lua", -- Bobule gum
-        [35789249] = "https://api.luarmor.net/files/v3/loaders/e4ea33e9eaf0ae943d59ea98f2444ebe.lua", -- Grow a garden
-        [34160477] = "https://api.luarmor.net/files/v3/loaders/22843f88cd6ebbd164621b3c115446c8.lua", -- Ghoul RE
-		[35289532] = "https://api.luarmor.net/files/v3/loaders/17c644b9b443899c429c51b2af748fc6.lua", -- Dig
-        [2782840] = "https://api.luarmor.net/files/v3/loaders/b3400f5a4e28cad1e1110b45004c3837.lua", -- Build a boat
-		[35330702] = "https://api.luarmor.net/files/v3/loaders/036786acbfa6e6e030dce074faa1173f.lua", -- Volleyball pldpaldwdwa
-        [6042520] = "https://api.luarmor.net/files/v3/loaders/00e140acb477c5ecde501c1d448df6f9.lua", -- 99 Days in forest
-		[35558055] = "https://api.luarmor.net/files/v3/loaders/ba4595cfb82d2434a478b9003f3674b4.lua", -- Build a Plane
-		[32740991] = "https://api.luarmor.net/files/v3/loaders/646e60921195f2b2d59015703b0b100a.lua", -- Type Soul
-		[22718068] = "https://api.luarmor.net/files/v3/loaders/c08f7269fc31f6a60ec57ecfacfdb34e.lua", -- 3008
-		[36015593] = "https://api.luarmor.net/files/v3/loaders/283d81b313c32e170c4545392802a347.lua", -- Hunty Zomibes
-	}
-    
-    return scriptMap[creatorId]
+	local status, res1, res2 = pcall(function()
+		local api = loadstring(game:HttpGet("https://sdkapi-public.luarmor.net/library.lua"))()
+		local Library = {}
+		local v1 = {}
+		local variables={}
+		local errorMessages = {
+			KEY_EXPIRED = "Key Expired! Please renew your key.",
+			KEY_BANNED = "Your key has been blacklisted. Contact support for details.",
+			KEY_HWID_LOCKED = "Key linked to a different HWID. Please reset it using our bot.",
+			KEY_INCORRECT = "Key is incorrect or has been deleted.",
+			KEY_INVALID = "The provided key is in an invalid format.",
+			SCRIPT_ID_INCORRECT = "The provided script ID does not exist or was deleted.",
+			SCRIPT_ID_INVALID = "The script has been deleted by owner.",
+			INVALID_EXECUTOR = "HWID header contains invalid data. Executor might not be supported.",
+			SECURITY_ERROR = "Security error detected. Cloudflare validation failed.",
+			TIME_ERROR = "Client time is invalid. Ensure your system clock is correct.",
+			UNKNOWN_ERROR = "Unknown server error. Please contact support."
+		}
+		-------------------------------------------------------------------------------
+		local cloneref = cloneref or function(o) return o end
+		Players = cloneref(game:GetService("Players"))
+		PlayerGui = Players.LocalPlayer:FindFirstChildOfClass("PlayerGui")
+		HttpService = cloneref(game:GetService("HttpService"))
+		TweenService = cloneref(game:GetService("TweenService"))
+		UserInputService = cloneref(game:GetService("UserInputService"))
+		Market = cloneref(game:GetService("MarketplaceService"))
+		RBXAnalyt = cloneref(game:GetService("RbxAnalyticsService"))
+		CoreGui = cloneref(game:GetService("CoreGui"))
+		RunService = cloneref(game:GetService("RunService"))
+		Replicated = cloneref(game:GetService("ReplicatedStorage"))
+		-------------------------------------------------------------------------------
+		v1.__index = v1
+		local v_u_3 = buffer and buffer.tostring or function(b) return tostring(b) end
+		local v_u_4 = buffer and buffer.fromstring or function(s) return s end
+		function v1.revert(p6) return v_u_4(p6) end
+		function v1.convert(p51) return v_u_3(p51) end
+		-------------------------------------------------------------------------------
+		local LSMT = game:GetObjects("rbxassetid://126113170246030")[1]
+
+		function Close(Objectftween)
+			TweenService:Create(Objectftween, TweenInfo.new(0.65, Enum.EasingStyle.Back, Enum.EasingDirection.Out), {
+				AnchorPoint = Vector2.new(0.5, 0.5),
+				Size = UDim2.new(0, 10, 0, 10),
+				Position = UDim2.new(0.5, 0, 0.5, 0)
+			}):Play()
+
+			task.wait(0.1)
+
+			LSMT:Destroy()
+		end
+
+		local NotificationGUI = PlayerGui:FindFirstChild("Notifications") or Instance.new("ScreenGui")
+		NotificationGUI.Name = "Notifications"
+		NotificationGUI.Parent = PlayerGui
+
+		local container = NotificationGUI:FindFirstChild("Container") or Instance.new("Frame")
+		container.Name = "Container"
+		container.AnchorPoint = Vector2.new(1, 0)
+		container.Position = UDim2.new(1, -25, 0, 25)
+		container.BackgroundTransparency = 1
+		container.Size = UDim2.fromOffset(350, 600)
+		container.Parent = NotificationGUI
+
+		if not container:FindFirstChild("UIListLayout") then
+			local layout = Instance.new("UIListLayout")
+			layout.SortOrder = Enum.SortOrder.LayoutOrder
+			layout.Padding = UDim.new(0, 8)
+			layout.VerticalAlignment = Enum.VerticalAlignment.Top
+			layout.HorizontalAlignment = Enum.HorizontalAlignment.Right
+			layout.Parent = container
+		end
+
+		function NotifyCustom(title, content, duration)
+			duration = duration or 5
+			color = color or Color3.fromRGB(255, 188, 254)
+
+			local Notification = Instance.new("Frame")
+			Notification.Name = "Notification"
+			Notification.BackgroundTransparency = 0.06
+			Notification.AutomaticSize = Enum.AutomaticSize.Y
+			Notification.BackgroundColor3 = Color3.fromRGB(16, 16, 16)
+			Notification.BorderSizePixel = 0
+			Notification.Size = UDim2.fromOffset(320, 70)
+			Notification.Parent = container
+
+			local NotifCorner = Instance.new("UICorner")
+			NotifCorner.CornerRadius = UDim.new(0, 8)
+			NotifCorner.Parent = Notification
+
+			local NotifStroke = Instance.new("UIStroke")
+			NotifStroke.Color = Color3.fromRGB(158, 114, 158)
+			NotifStroke.Transparency = 0.8
+			NotifStroke.Parent = Notification
+
+			local TitleText = Instance.new("TextLabel")
+			TitleText.FontFace = Font.new("rbxassetid://12187365364", Enum.FontWeight.SemiBold)
+			TitleText.Text = title
+			TitleText.TextColor3 = Color3.fromRGB(199, 199, 203)
+			TitleText.TextSize = 16
+			TitleText.TextXAlignment = Enum.TextXAlignment.Left
+			TitleText.BackgroundTransparency = 1
+			TitleText.Size = UDim2.new(1, -20, 0, 20)
+			TitleText.Position = UDim2.fromOffset(10, 6)
+			TitleText.Parent = Notification
+
+			local ContentText = Instance.new("TextLabel")
+			ContentText.FontFace = Font.new("rbxassetid://12187365364")
+			ContentText.Text = content
+			ContentText.TextColor3 = Color3.fromRGB(180, 180, 185)
+			ContentText.TextSize = 14
+			ContentText.TextXAlignment = Enum.TextXAlignment.Left
+			ContentText.TextYAlignment = Enum.TextYAlignment.Top
+			ContentText.BackgroundTransparency = 1
+			ContentText.AutomaticSize = Enum.AutomaticSize.Y
+			ContentText.TextWrapped = true
+			ContentText.Size = UDim2.new(1, -20, 0, 0)
+			ContentText.Position = UDim2.fromOffset(10, 28)
+			ContentText.Parent = Notification
+
+			local ProgressBar = Instance.new("Frame")
+			ProgressBar.BackgroundColor3 = Color3.fromRGB(44, 38, 44)
+			ProgressBar.BorderSizePixel = 0
+			ProgressBar.Size = UDim2.new(1, -20, 0, 6)
+			ProgressBar.Position = UDim2.new(0, 10, 1, -12)
+			ProgressBar.Parent = Notification
+
+			local ProgressFill = Instance.new("Frame")
+			ProgressFill.BackgroundColor3 = color
+			ProgressFill.BorderSizePixel = 0
+			ProgressFill.Size = UDim2.fromScale(1, 1)
+			ProgressFill.Parent = ProgressBar
+
+			local ProgressFillCorner = Instance.new("UICorner")
+			ProgressFillCorner.Parent = ProgressFill
+
+			TweenService:Create(ProgressFill, TweenInfo.new(duration, Enum.EasingStyle.Linear), {Size = UDim2.new(0, 0, 1, 0)}):Play()
+
+			task.delay(duration, function()
+				TweenService:Create(Notification, TweenInfo.new(0.3), {BackgroundTransparency = 1}):Play()
+				task.wait(0.3)
+				Notification:Destroy()
+			end)
+
+			return Notification
+		end
+
+		function DraggFunction(object, dragObject, enableTaptic, tapticOffset)
+			local dragging = false
+			local relative = nil
+			local offset = Vector2.zero
+
+			local screenGui = object:FindFirstAncestorWhichIsA("ScreenGui")
+			if screenGui and screenGui.IgnoreGuiInset then
+				offset = game:GetService('GuiService'):GetGuiInset()
+			end
+
+			dragObject.InputBegan:Connect(function(input, processed)
+				if processed then return end
+				if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+					dragging = true
+					relative = object.AbsolutePosition + object.AbsoluteSize * object.AnchorPoint - UserInputService:GetMouseLocation()
+				end
+			end)
+
+			UserInputService.InputEnded:Connect(function(input)
+				if dragging and (input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch) then
+					dragging = false
+				end
+			end)
+
+			RunService.RenderStepped:Connect(function()
+				if dragging then
+					local position = UserInputService:GetMouseLocation() + relative + offset
+					if enableTaptic and tapticOffset then
+						TweenService:Create(object, TweenInfo.new(0.4, Enum.EasingStyle.Exponential, Enum.EasingDirection.Out), {Position = UDim2.fromOffset(position.X, position.Y)}):Play()
+					else
+						object.Position = UDim2.fromOffset(position.X, position.Y)
+					end
+				end
+			end)
+
+			object.Destroying:Connect(function()
+				dragging = false
+			end)
+		end
+
+		local fSetClipboard = setclipboard or toclipboard or set_clipboard or (Clipboard and Clipboard.set)
+		LSMT.Enabled = false
+
+		if gethui then
+			LSMT.Parent = gethui()
+		elseif syn and syn.protect_gui then
+			syn.protect_gui(LSMT)
+			LSMT.Parent = CoreGui
+		else
+			LSMT.Parent = CoreGui
+		end
+
+		pcall(function()
+			LuarmorGot_System:Destroy()
+		end)
+
+		getgenv().LuarmorGot_System = LSMT
+		-------------------------------------------------------------------------------
+		function RandomName(b)
+			local c = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()-_=+[{]}\\|'\";:,<.>/? "
+			local d = ""
+			local f = math.random(0, 5)
+			for g = 1, b - f do
+				local a = math.random(1, #c - 1)
+				d = d .. string.sub(c, a, a)
+			end
+			return d .. string.rep("\003", f)
+		end
+
+		local jas = RandomName(10)
+
+		function Notification(Type, Message)
+			NotifyCustom(Type, Message, 5)
+		end
+
+		function RenameAllChildren(parent)
+			for _, child in pairs(parent:GetChildren()) do
+				child.Name = RandomName(6)
+				RenameAllChildren(child)
+			end
+		end
+
+		function DeleteFile(File)
+			if isfile(File) then
+				delfile(File)
+			end
+		end
+
+		variables[jas] = function(key, FileDirectory)
+			if type(key) ~= "buffer" then
+				Players.LocalPlayer:Kick("Invalid key type detected")
+				return
+			end
+
+			local cleanedKey = v1.convert(key):gsub("%s", "")
+
+			if string.find(cleanedKey, "_") then
+				DeleteFile("solixhub/key.txt")
+				task.wait(1)
+				game:GetService("Players").LocalPlayer:Kick("Make sure you are using the Luarmor key.")
+				return nil
+			end
+
+			if cleanedKey ~= v1.convert(key) then
+				Notification("Info", "Spaces detected in the key. Verifying the key without spaces...")
+			end
+
+			local success, status = pcall(api.check_key, cleanedKey)
+			if not success then
+				Notification("Error", "Failed to check key due to an unexpected error.")
+				return nil
+			end
+
+			if status.code == "KEY_VALID" then
+				if not isfile(FileDirectory) then
+					local saveSuccess, err = pcall(writefile, FileDirectory, cleanedKey)
+					if not saveSuccess then
+						Notification("Error", "Failed to save key: " .. err)
+					end
+				else
+					local currentKey = readfile(FileDirectory)
+					if currentKey ~= cleanedKey then
+						local success, err = pcall(writefile, FileDirectory, cleanedKey)
+						if not success then
+							Notification("Error", "Failed to update key: " .. err)
+						end
+					else
+						Notification("Info", "Key already up-to-date.")
+					end
+				end
+
+				script_key = cleanedKey
+				for _, v in ipairs(game:GetService("CoreGui"):GetChildren()) do
+					if v:FindFirstChild("System") and v.System.Enabled then
+						v.System:Destroy()
+					end
+				end
+
+				local function FormatTime(seconds)
+					local days = math.floor(seconds / 86400)
+					local hours = math.floor((seconds % 86400) / 3600)
+					local minutes = math.floor((seconds % 3600) / 60)
+					local secs = seconds % 60
+
+					if days > 0 then
+						return string.format("%dd %02dh %02dm %02ds", days, hours, minutes, secs)
+					else
+						return string.format("%02dh %02dm %02ds", hours, minutes, secs)
+					end
+				end
+
+				Notification("Info", string.format("Key will expire in: %s", FormatTime(status.data.auth_expire - os.time())))
+				Notification("Info", string.format("Total executions: %s", status.data.total_executions))
+				getgenv().LuarmorNote = status.data.note
+				pcall(function() api.load_script() end)
+				return true
+			end
+
+			if errorMessages[status.code] then
+				DeleteFile(FileDirectory)
+				Notification("Warning", errorMessages[status.code])
+
+				if status.code == "INVALID_EXECUTOR" or status.code == "SECURITY_ERROR" or status.code == "UNKNOWN_ERROR" then
+					Players.LocalPlayer:Kick(errorMessages[status.code])
+				end
+				return nil
+			end
+
+			Players.LocalPlayer:Kick("Key check failed: " .. status.message .. " Code: " .. status.code)
+		end
+		-------------------------------------------------------------------------------
+		local Main = LSMT.Main
+		local DragBar = Main.Movebar
+		local Top = Main.Top
+		local InputBox = Main.Input
+		local Buttons = Main.ButtonContainer
+		local CloseBT = Top.CloseButton
+		local Title = Top.Title
+		local icon = Top.Logo
+		local Keybox = InputBox.TextBox
+		local GetDiscord = Buttons.Discord
+		local Links = Buttons.Links
+		local Rinku = Links.LootLabs
+		local Linkvertise = Links.Linkvertise
+
+		Title.UIGradient.Color = ColorSequence.new{ColorSequenceKeypoint.new(0.000, Color3.fromRGB(180, 91, 255)), ColorSequenceKeypoint.new(1.000, Color3.fromRGB(88, 26, 181))};
+		Title.UIGradient.Rotation = 90;
+
+		Rinku.UIGradient.Color = ColorSequence.new{
+			ColorSequenceKeypoint.new(0, Color3.fromHex("#625409")),
+			ColorSequenceKeypoint.new(1, Color3.fromHex("#530b78"))
+		}
+		Rinku.UIGradient.Rotation = 195
+
+		Linkvertise.UIGradient.Color = ColorSequence.new{
+			ColorSequenceKeypoint.new(0.000, Color3.fromRGB(215, 112, 61)),
+			ColorSequenceKeypoint.new(1.000, Color3.fromRGB(77, 43, 14))
+		}
+		Linkvertise.UIGradient.Rotation = 195
+
+		GetDiscord.UIGradient.Color = ColorSequence.new{
+			ColorSequenceKeypoint.new(0.000, Color3.fromRGB(114, 137, 218)),
+			ColorSequenceKeypoint.new(1.000, Color3.fromRGB(88, 101, 242))
+		}
+		GetDiscord.UIGradient.Rotation = 195
+
+		Links:WaitForChild("LootLabs"):FindFirstChildOfClass("TextLabel").Text = "Rinku"
+		-------------------------------------------------------------------------------
+		function Library:Window(config)
+			config.DisplayName = config.DisplayName or "QuantumPulsar X"
+			config.Discord = config.Discord or ""
+			config.File = config.File or "VaQSys.txt"
+			config.MinIcon = config.MinIcon or "rbxassetid://100569530935041"
+			config.Linkvertise = config.Linkvertise
+			config.Rinku = config.Rinku
+
+			local Window = {}
+
+			api.script_id = URLsigma
+			Top.Logo.Image = config.MinIcon
+			Top.Title.Text = config.DisplayName
+
+			for _,v in pairs(Main:GetDescendants()) do
+				if v:IsA("TextLabel") or v:IsA("TextButton") then
+					v.FontFace = Font.new([[rbxasset://fonts/families/GothamSSm.json]], Enum.FontWeight.Bold, Enum.FontStyle.Normal);
+				end
+			end
+
+			CloseBT.ImageButton.MouseButton1Click:Connect(function()
+				Close(Main)
+			end)
+
+			Keybox.FocusLost:Connect(function()
+				if Keybox.Text ~= "" then
+					if variables[jas](v1.revert(Keybox.Text), config.File) then
+						TweenService:Create(Keybox, TweenInfo.new(0.65), {BackgroundColor3 = Color3.fromRGB(60, 255, 60), BackgroundTransparency = 0.4}):Play()
+						task.wait(0.65)
+						TweenService:Create(Keybox, TweenInfo.new(0.65), {BackgroundColor3 = Color3.fromRGB(255, 255, 255), BackgroundTransparency = 0.9}):Play()
+						pcall(function() Close(Main) end)
+					else
+						Keybox.Text = ""
+						TweenService:Create(Keybox, TweenInfo.new(0.65), {BackgroundColor3 = Color3.fromRGB(255, 60, 60), BackgroundTransparency = 0.4}):Play()
+						task.wait(0.65)
+						TweenService:Create(Keybox, TweenInfo.new(0.65), {BackgroundColor3 = Color3.fromRGB(255, 255, 255), BackgroundTransparency = 0.9}):Play()
+					end
+				end
+			end)
+
+			Rinku.MouseButton1Click:Connect(function()
+				fSetClipboard(config.Rinku)
+				Notification("Success", "Link copied to clipboard!")
+			end)
+
+			Linkvertise.MouseButton1Click:Connect(function()
+				fSetClipboard(config.Linkvertise)
+				Notification("Success", "Link copied to clipboard!")
+			end)
+
+			Buttons.Discord.MouseButton1Click:Connect(function()
+				fSetClipboard(tostring(config.Discord))
+				Notification("Success", "Link copied to clipboard!")
+			end)
+
+			task.spawn(function()
+				local ok, err = pcall(function()
+					local key = (isfile(config.File) and readfile(config.File)) or (script_key ~= "" and script_key) or nil
+					if not key then
+						Notification("Info", "No key found.")
+						LSMT.Enabled = true
+						return
+					end
+
+					local decoded
+					local successDecode, decodeErr = pcall(function()
+						decoded = v1.revert(key)
+					end)
+					if not successDecode or not decoded then
+						Notification("Warning", "Failed to decode key:", decodeErr or "Unknown error")
+						LSMT.Enabled = true
+						return
+					end
+
+					local isValid, validResult = pcall(function()
+						return variables[jas](decoded, config.File)
+					end)
+
+					if decoded ~= nil and (not isValid or validResult ~= true) then
+						Notification("Warning", "Invalid or rejected key.")
+						LSMT.Enabled = true
+						return
+					end
+					pcall(function() if LSMT then LSMT:Destroy() end end)
+				end)
+
+				if not ok then
+					Notification("Warning", "Key system error: " .. tostring(err))
+					if LSMT then
+						LSMT.Enabled = true
+					end
+				end
+			end)
+
+			RenameAllChildren(LSMT)
+			DraggFunction(Main, DragBar, true, 0)
+			return Window
+		end
+		return Library
+	end)
+	if not status then
+		warn("key system failed to load: " .. res1)
+	else
+		return res1, res2
+	end
 end
 
-local function isGameSupported()
-    return getScriptLoaderUrl() ~= nil
-end
-
-local function initLuarmorAPI()
-    local success, result = pcall(function()
-        return loadstring(game:HttpGet("https://sdkapi-public.luarmor.net/library.lua"))()
-    end)
-    
-    if not success then
-        return nil
-    end
-    
-    local scriptUrl = getScriptLoaderUrl()
-    if not scriptUrl then
-        return nil
-    end
-    
-    local scriptId = scriptUrl:match("loaders/([^.]+)%.lua")
-    if not scriptId then
-        return nil
-    end
-    
-    result.script_id = scriptId
-    
-    return result
-end
-
-
-local function executeScript(key)
-    local scriptUrl = getScriptLoaderUrl()
-    
-    if not scriptUrl then
-        return false, "Game not supported"
-    end
-    
-
-    getgenv().script_key = key
-    
-    local success, result = pcall(function()
-        return loadstring(game:HttpGet(scriptUrl))()
-    end)
-    
-    if not success then
-        return false, "Failed to execute script: " .. tostring(result)
-    end
-    
-    return true
-end
-
-
-local function validateKey(key)
-    if not key or key == "" then
-        return false, "KEY_NOT_FOUND"
-    end
-    
-    if not isGameSupported() then
-        return false, "GAME_NOT_SUPPORTED"
-    end
-    
-    local api = initLuarmorAPI()
-    if not api then
-        return false, "API_INIT_FAILED"
-    end
-    
-    local success, status = pcall(function()
-        return api.check_key(key)
-    end)
-    
-    if not success then
-        return false, "API_CALL_FAILED"
-    end
-    
-    if status.code == "KEY_VALID" then
-        return true, status
-    else
-        return false, status.code
-    end
-end
-
-local function main()
-
-    local notifGui = Instance.new("ScreenGui")
-    notifGui.Name = "NotificationGui"
-    notifGui.ResetOnSpawn = false
-    notifGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
-    notifGui.Parent = game:GetService("Players").LocalPlayer:WaitForChild("PlayerGui")
-    
-
-    local keySuccess, keyContent = pcall(function()
-        return readfile("Key.txt")
-    end)
-    
-
-    if not keySuccess or not keyContent or keyContent == "" then
-     
-        if keySuccess then
-            pcall(function() delfile("Key.txt") end)
-        end
-        
-        createNotification("Key System", "No valid key found. Please enter your key.", 5, Color3.fromRGB(255, 85, 85), notifGui)
-        return false
-    end
-    
- 
-    local api = initLuarmorAPI()
-    if not api then
-        createNotification("API Error", "Failed to initialize Luarmor API", 5, Color3.fromRGB(255, 85, 85), notifGui)
-        return false
-    end
-    
-
-    local success, status = pcall(function()
-        return api.check_key(keyContent)
-    end)
-    
-
-    if not success then
-        createNotification("API Error", "Failed to check key with Luarmor", 5, Color3.fromRGB(255, 85, 85), notifGui)
-        pcall(function() delfile("Key.txt") end)
-        return false
-    end
-    
-
-    if status.code ~= "KEY_VALID" then
-        pcall(function() delfile("Key.txt") end)
-        
-        local statusMessage = "Invalid key"
-        if status.code == "KEY_EXPIRED" then
-            statusMessage = "Key expired"
-        elseif status.code == "KEY_HWID_LOCKED" then
-            statusMessage = "Key HWID locked"
-        elseif status.code == "KEY_BANNED" then
-            statusMessage = "Key banned"
-        elseif status.code == "KEY_INCORRECT" or status.code == "KEY_INVALID" then
-            statusMessage = "Invalid key - key does not exist"
-        end
-        
-        createNotification("Key Error", statusMessage, 5, Color3.fromRGB(255, 85, 85), notifGui)
-        return false
-    end
-    
-
-    local saveSuccess, saveError = pcall(function()
-        writefile("Key.txt", keyContent)
-    end)
-    
-    if not saveSuccess then
-        createNotification("Warning", "Failed to save key: " .. tostring(saveError), 5, Color3.fromRGB(255, 170, 0), notifGui)
-    else
-
-        local readSuccess, savedKey = pcall(function()
-            return readfile("Key.txt")
-        end)
-        
-        if not readSuccess or savedKey ~= keyContent then
-            createNotification("Warning", "Key verification failed. Teleport may not  correctly.", 5, Color3.fromRGB(255, 170, 0), notifGui)
-        else
-         
-            
-            
-            createNotification("Info", "Key saved successfully. Ready for teleport.", 3, Color3.fromRGB(85, 255, 127), notifGui)
-        end
-    end
-    
- 
-    local execSuccess, execError = executeScript(keyContent)
-    
-  
-    if not execSuccess then
-        createNotification("Script Error", execError, 5, Color3.fromRGB(255, 85, 85), notifGui)
-        return false
-    end
-    
- 
-    task.delay(1, function()
-        notifGui:Destroy()
-    end)
-    
-    return true
-end
-
-
-if main() then
-    return
-end
-
-
-local ScreenGui = Instance.new("ScreenGui")
-ScreenGui.Name = "SolixHubLogin"
-ScreenGui.ResetOnSpawn = false
-ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
-ScreenGui.Parent = Players.LocalPlayer:WaitForChild("PlayerGui")
-
-local MainFrame = Instance.new("Frame")
-MainFrame.Name = "MainFrame"
-MainFrame.AnchorPoint = Vector2.new(0.5, 0.5)
-MainFrame.BackgroundColor3 = Color3.fromRGB(16, 16, 16)
-MainFrame.BackgroundTransparency = 0.06
-MainFrame.BorderSizePixel = 0
-MainFrame.Position = UDim2.fromScale(0.5, 0.5)
-MainFrame.Size = UDim2.fromOffset(400, 370)
-MainFrame.Parent = ScreenGui
-
-local UICorner = Instance.new("UICorner")
-UICorner.CornerRadius = UDim.new(0, 12)
-UICorner.Parent = MainFrame
-
-local AcrylicEffect1 = Instance.new("ImageLabel")
-AcrylicEffect1.Name = "acrylicthing"
-AcrylicEffect1.Image = "rbxassetid://9968344105"
-AcrylicEffect1.ImageTransparency = 0.98
-AcrylicEffect1.ScaleType = Enum.ScaleType.Tile
-AcrylicEffect1.TileSize = UDim2.fromOffset(128, 128)
-AcrylicEffect1.BackgroundTransparency = 1
-AcrylicEffect1.Size = UDim2.fromScale(1, 1)
-AcrylicEffect1.ZIndex = 0
-AcrylicEffect1.Parent = MainFrame
-
-local AcrylicCorner1 = Instance.new("UICorner")
-AcrylicCorner1.CornerRadius = UDim.new(0, 12)
-AcrylicCorner1.Parent = AcrylicEffect1
-
-local AcrylicEffect2 = Instance.new("ImageLabel")
-AcrylicEffect2.Name = "acrylicthing"
-AcrylicEffect2.Image = "rbxassetid://9968344227"
-AcrylicEffect2.ImageTransparency = 0.9
-AcrylicEffect2.ScaleType = Enum.ScaleType.Tile
-AcrylicEffect2.TileSize = UDim2.fromOffset(128, 128)
-AcrylicEffect2.BackgroundTransparency = 1
-AcrylicEffect2.Size = UDim2.fromScale(1, 1)
-AcrylicEffect2.ZIndex = 0
-AcrylicEffect2.Parent = MainFrame
-
-local AcrylicCorner2 = Instance.new("UICorner")
-AcrylicCorner2.CornerRadius = UDim.new(0, 12)
-AcrylicCorner2.Parent = AcrylicEffect2
-
-local UIStroke = Instance.new("UIStroke")
-UIStroke.Name = "_CHILD"
-UIStroke.Color = Color3.fromRGB(158, 114, 158)
-UIStroke.Transparency = 0.9
-UIStroke.Parent = MainFrame
-
-local SideIndicator = Instance.new("Frame")
-SideIndicator.Name = "sideindicator"
-SideIndicator.AnchorPoint = Vector2.new(0.5, 0)
-SideIndicator.BackgroundColor3 = Color3.fromRGB(255, 188, 254)
-SideIndicator.BorderSizePixel = 0
-SideIndicator.Position = UDim2.fromScale(0.5, 0)
-SideIndicator.Size = UDim2.new(1, -50, 0, 2)
-SideIndicator.Parent = MainFrame
-
-local SideIndicatorCorner = Instance.new("UICorner")
-SideIndicatorCorner.CornerRadius = UDim.new(0, 634)
-SideIndicatorCorner.Parent = SideIndicator
-
-local TitleLabel = Instance.new("TextLabel")
-TitleLabel.Name = "title"
-TitleLabel.FontFace = Font.new("rbxassetid://12187361378", Enum.FontWeight.Medium, Enum.FontStyle.Normal)
-TitleLabel.Text = "SolixHub"
-TitleLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
-TitleLabel.TextSize = 19
-TitleLabel.BackgroundTransparency = 1
-TitleLabel.Position = UDim2.fromOffset(37, 15)
-TitleLabel.Size = UDim2.new(0, 88, 0, 30)
-TitleLabel.TextXAlignment = Enum.TextXAlignment.Left
-TitleLabel.Parent = MainFrame
-
-local ControlsFrame = Instance.new("Frame")
-ControlsFrame.Name = "Frame"
-ControlsFrame.BackgroundTransparency = 1
-ControlsFrame.Position = UDim2.new(1, -75, 0, 15)
-ControlsFrame.Size = UDim2.new(0, 60, 0, 30)
-ControlsFrame.Parent = MainFrame
-
-local ControlsLayout = Instance.new("UIListLayout")
-ControlsLayout.FillDirection = Enum.FillDirection.Horizontal
-ControlsLayout.HorizontalAlignment = Enum.HorizontalAlignment.Center
-ControlsLayout.Padding = UDim.new(0, 6)
-ControlsLayout.SortOrder = Enum.SortOrder.LayoutOrder
-ControlsLayout.VerticalAlignment = Enum.VerticalAlignment.Center
-ControlsLayout.Parent = ControlsFrame
-
-local CloseButton = Instance.new("TextButton")
-CloseButton.Name = "Close"
-CloseButton.Text = ""
-CloseButton.BackgroundColor3 = Color3.fromRGB(252, 95, 83)
-CloseButton.Size = UDim2.fromOffset(7, 7)
-CloseButton.AutoButtonColor = false
-CloseButton.Parent = ControlsFrame
-
-local CloseButtonCorner = Instance.new("UICorner")
-CloseButtonCorner.CornerRadius = UDim.new(0, 50)
-CloseButtonCorner.Parent = CloseButton
-
-local MinimizeButton = Instance.new("TextButton")
-MinimizeButton.Name = "Minimize"
-MinimizeButton.Text = ""
-MinimizeButton.BackgroundColor3 = Color3.fromRGB(242, 191, 60)
-MinimizeButton.Size = UDim2.fromOffset(7, 7)
-MinimizeButton.AutoButtonColor = false
-MinimizeButton.Parent = ControlsFrame
-
-local MinimizeButtonCorner = Instance.new("UICorner")
-MinimizeButtonCorner.CornerRadius = UDim.new(0, 50)
-MinimizeButtonCorner.Parent = MinimizeButton
-
-local OpenButton = Instance.new("TextButton")
-OpenButton.Name = "Open"
-OpenButton.Text = ""
-OpenButton.BackgroundColor3 = Color3.fromRGB(117, 166, 87)
-OpenButton.Size = UDim2.fromOffset(7, 7)
-OpenButton.AutoButtonColor = false
-OpenButton.Parent = ControlsFrame
-
-local OpenButtonCorner = Instance.new("UICorner")
-OpenButtonCorner.CornerRadius = UDim.new(0, 50)
-OpenButtonCorner.Parent = OpenButton
-
-local ContentFrame = Instance.new("Frame")
-ContentFrame.Name = "ContentFrame"
-ContentFrame.BackgroundTransparency = 1
-ContentFrame.Position = UDim2.fromOffset(0, 60)
-ContentFrame.Size = UDim2.new(1, 0, 1, -60)
-ContentFrame.Parent = MainFrame
-
-local GameLabel = Instance.new("TextLabel")
-GameLabel.Name = "GameLabel"
-GameLabel.FontFace = Font.new("rbxassetid://12187365364")
-GameLabel.Text = "Game: " .. game:GetService("MarketplaceService"):GetProductInfo(game.PlaceId).Name
-GameLabel.TextColor3 = Color3.fromRGB(200, 200, 200)
-GameLabel.TextSize = 12
-GameLabel.BackgroundTransparency = 1
-GameLabel.Position = UDim2.fromOffset(20, 0)
-GameLabel.Size = UDim2.new(1, -40, 0, 20)
-GameLabel.Parent = ContentFrame
-
-local KeySection = Instance.new("Frame")
-KeySection.Name = "KeySection"
-KeySection.BackgroundTransparency = 1
-KeySection.Position = UDim2.fromOffset(20, 25) 
-KeySection.Size = UDim2.new(1, -40, 0, 70)
-KeySection.Parent = ContentFrame
-
-local KeyLabel = Instance.new("TextLabel")
-KeyLabel.Name = "KeyLabel"
-KeyLabel.FontFace = Font.new("rbxassetid://12187365364")
-KeyLabel.Text = "Key"
-KeyLabel.TextColor3 = Color3.fromRGB(122, 122, 122)
-KeyLabel.TextSize = 12
-KeyLabel.TextXAlignment = Enum.TextXAlignment.Left
-KeyLabel.BackgroundTransparency = 1
-KeyLabel.Position = UDim2.fromOffset(0, 0)
-KeyLabel.Size = UDim2.new(1, 0, 0, 20)
-KeyLabel.Parent = KeySection
-
-local KeyTextboxHolder = Instance.new("Frame")
-KeyTextboxHolder.Name = "TextboxHolder"
-KeyTextboxHolder.BackgroundColor3 = Color3.fromRGB(86, 86, 86)
-KeyTextboxHolder.BackgroundTransparency = 0.95
-KeyTextboxHolder.BorderSizePixel = 0
-KeyTextboxHolder.Position = UDim2.fromOffset(0, 25)
-KeyTextboxHolder.Size = UDim2.new(1, -80, 0, 30)
-KeyTextboxHolder.Parent = KeySection
-
-local KeyTextboxCorner = Instance.new("UICorner")
-KeyTextboxCorner.CornerRadius = UDim.new(0, 4)
-KeyTextboxCorner.Parent = KeyTextboxHolder
-
-local KeyTextboxStroke = Instance.new("UIStroke")
-KeyTextboxStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
-KeyTextboxStroke.Color = Color3.fromRGB(56, 56, 56)
-KeyTextboxStroke.Transparency = 0.5
-KeyTextboxStroke.Parent = KeyTextboxHolder
-
-local KeyTextbox = Instance.new("TextBox")
-KeyTextbox.Name = "TextBox"
-KeyTextbox.ClearTextOnFocus = false
-KeyTextbox.FontFace = Font.new("rbxassetid://12187365364")
-KeyTextbox.PlaceholderColor3 = Color3.fromRGB(170, 170, 170)
-KeyTextbox.PlaceholderText = "Enter your key..."
-KeyTextbox.Text = ""
-KeyTextbox.TextColor3 = Color3.fromRGB(240, 240, 240)
-KeyTextbox.TextSize = 12
-KeyTextbox.TextXAlignment = Enum.TextXAlignment.Left
-KeyTextbox.BackgroundTransparency = 1
-KeyTextbox.Position = UDim2.fromOffset(10, 0)
-KeyTextbox.Size = UDim2.fromScale(1, 1)
-KeyTextbox.Parent = KeyTextboxHolder
-
-local CheckButton = Instance.new("TextButton")
-CheckButton.Name = "CheckButton"
-CheckButton.FontFace = Font.new("rbxassetid://12187365364")
-CheckButton.Text = "Check"
-CheckButton.TextColor3 = Color3.fromRGB(0, 0, 0)
-CheckButton.TextSize = 12
-CheckButton.BackgroundColor3 = Color3.fromRGB(255, 188, 254)
-CheckButton.BorderSizePixel = 0
-CheckButton.Position = UDim2.new(1, -70, 0, 25)
-CheckButton.Size = UDim2.fromOffset(70, 30)
-CheckButton.Parent = KeySection
-
-local CheckButtonCorner = Instance.new("UICorner")
-CheckButtonCorner.CornerRadius = UDim.new(0, 4)
-CheckButtonCorner.Parent = CheckButton
-
-local StatusLabel = Instance.new("TextLabel")
-StatusLabel.Name = "StatusLabel"
-StatusLabel.FontFace = Font.new("rbxassetid://12187365364")
-StatusLabel.Text = "Key Status: Not Checked"
-StatusLabel.TextColor3 = Color3.fromRGB(120, 120, 120)
-StatusLabel.TextSize = 12
-StatusLabel.BackgroundTransparency = 1
-StatusLabel.Position = UDim2.fromOffset(0, 60)
-StatusLabel.Size = UDim2.new(1, 0, 0, 20)
-StatusLabel.Parent = KeySection
-
-local AutoExecuteHolder = Instance.new("Frame")
-AutoExecuteHolder.Name = "AutoExecuteHolder"
-AutoExecuteHolder.BackgroundTransparency = 1
-AutoExecuteHolder.Position = UDim2.fromOffset(0, 85)
-AutoExecuteHolder.Size = UDim2.new(1, 0, 0, 20)
-AutoExecuteHolder.Parent = KeySection
-
-local AutoExecuteCheckbox = Instance.new("Frame")
-AutoExecuteCheckbox.Name = "Checkbox"
-AutoExecuteCheckbox.BackgroundColor3 = Color3.fromRGB(28, 29, 32)
-AutoExecuteCheckbox.BackgroundTransparency = 0.5
-AutoExecuteCheckbox.BorderSizePixel = 0
-AutoExecuteCheckbox.Position = UDim2.fromOffset(0, 0)
-AutoExecuteCheckbox.Size = UDim2.fromOffset(16, 16)
-AutoExecuteCheckbox.Parent = AutoExecuteHolder
-
-local AutoExecuteCorner = Instance.new("UICorner")
-AutoExecuteCorner.CornerRadius = UDim.new(0, 3)
-AutoExecuteCorner.Parent = AutoExecuteCheckbox
-
-local AutoExecuteCheck = Instance.new("Frame")
-AutoExecuteCheck.Name = "Check"
-AutoExecuteCheck.BackgroundColor3 = Color3.fromRGB(255, 188, 254)
-AutoExecuteCheck.BorderSizePixel = 0
-AutoExecuteCheck.Position = UDim2.fromOffset(3, 3)
-AutoExecuteCheck.Size = UDim2.fromOffset(10, 10)
-AutoExecuteCheck.Visible = true 
-AutoExecuteCheck.Parent = AutoExecuteCheckbox
-
-local AutoExecuteCheckCorner = Instance.new("UICorner")
-AutoExecuteCheckCorner.CornerRadius = UDim.new(0, 2)
-AutoExecuteCheckCorner.Parent = AutoExecuteCheck
-
-local AutoExecuteButton = Instance.new("TextButton")
-AutoExecuteButton.Name = "Button"
-AutoExecuteButton.Text = ""
-AutoExecuteButton.BackgroundTransparency = 1
-AutoExecuteButton.Size = UDim2.fromOffset(16, 16)
-AutoExecuteButton.Parent = AutoExecuteCheckbox
-
-local AutoExecuteLabel = Instance.new("TextLabel")
-AutoExecuteLabel.Name = "Label"
-AutoExecuteLabel.FontFace = Font.new("rbxassetid://12187365364")
-AutoExecuteLabel.Text = "Auto-execute script after validation"
-AutoExecuteLabel.TextColor3 = Color3.fromRGB(200, 200, 200)
-AutoExecuteLabel.TextSize = 12
-AutoExecuteLabel.TextXAlignment = Enum.TextXAlignment.Left
-AutoExecuteLabel.BackgroundTransparency = 1
-AutoExecuteLabel.Position = UDim2.fromOffset(24, 0)
-AutoExecuteLabel.Size = UDim2.new(1, -24, 1, 0)
-AutoExecuteLabel.Parent = AutoExecuteHolder
-
-local ButtonsSection = Instance.new("Frame")
-ButtonsSection.Name = "ButtonsSection"
-ButtonsSection.BackgroundTransparency = 1
-ButtonsSection.Position = UDim2.fromOffset(20, 135) 
-ButtonsSection.Size = UDim2.new(1, -40, 0, 180)
-ButtonsSection.Parent = ContentFrame
-
-local LinkvertiseButton = Instance.new("TextButton")
-LinkvertiseButton.Name = "LinkvertiseButton"
-LinkvertiseButton.FontFace = Font.new("rbxassetid://12187365364")
-LinkvertiseButton.Text = "Get Key (Linkvertise)"
-LinkvertiseButton.TextColor3 = Color3.fromRGB(240, 240, 240)
-LinkvertiseButton.TextSize = 12
-LinkvertiseButton.BackgroundColor3 = Color3.fromRGB(28, 29, 32)
-LinkvertiseButton.BackgroundTransparency = 0.5
-LinkvertiseButton.BorderSizePixel = 0
-LinkvertiseButton.Position = UDim2.fromOffset(0, 0)
-LinkvertiseButton.Size = UDim2.new(1, 0, 0, 40)
-LinkvertiseButton.Parent = ButtonsSection
-
-local LinkvertiseCorner = Instance.new("UICorner")
-LinkvertiseCorner.CornerRadius = UDim.new(0, 6)
-LinkvertiseCorner.Parent = LinkvertiseButton
-
-local lootlabsButton = Instance.new("TextButton")
-lootlabsButton.Name = "Button"
-lootlabsButton.FontFace = Font.new("rbxassetid://12187365364")
-lootlabsButton.Text = "Get Key (lootlabs)"
-lootlabsButton.TextColor3 = Color3.fromRGB(240, 240, 240)
-lootlabsButton.TextSize = 12
-lootlabsButton.BackgroundColor3 = Color3.fromRGB(28, 29, 32)
-lootlabsButton.BackgroundTransparency = 0.5
-lootlabsButton.BorderSizePixel = 0
-lootlabsButton.Position = UDim2.fromOffset(0, 50)
-lootlabsButton.Size = UDim2.new(1, 0, 0, 40)
-lootlabsButton.Parent = ButtonsSection
-
-local lootlabsCorner = Instance.new("UICorner")
-lootlabsCorner.CornerRadius = UDim.new(0, 6)
-lootlabsCorner.Parent = lootlabsButton
-
-local DiscordButton = Instance.new("TextButton")
-DiscordButton.Name = "DiscordButton"
-DiscordButton.FontFace = Font.new("rbxassetid://12187365364")
-DiscordButton.Text = "Join Discord"
-DiscordButton.TextColor3 = Color3.fromRGB(240, 240, 240)
-DiscordButton.TextSize = 12
-DiscordButton.BackgroundColor3 = Color3.fromRGB(28, 29, 32)
-DiscordButton.BackgroundTransparency = 0.5
-DiscordButton.BorderSizePixel = 0
-DiscordButton.Position = UDim2.fromOffset(0, 100)
-DiscordButton.Size = UDim2.new(1, 0, 0, 40)
-DiscordButton.Parent = ButtonsSection
-
-local DiscordCorner = Instance.new("UICorner")
-DiscordCorner.CornerRadius = UDim.new(0, 6)
-DiscordCorner.Parent = DiscordButton
-
-local FooterLabel = Instance.new("TextLabel")
-FooterLabel.Name = "FooterLabel"
-FooterLabel.FontFace = Font.new("rbxassetid://12187365364")
-FooterLabel.Text = "SolixHub © 2025 | All rights reserved"
-FooterLabel.TextColor3 = Color3.fromRGB(120, 120, 120)
-FooterLabel.TextSize = 12
-FooterLabel.BackgroundTransparency = 1
-FooterLabel.Position = UDim2.fromOffset(0, 150)
-FooterLabel.Size = UDim2.new(1, 0, 0, 20)
-FooterLabel.Parent = ButtonsSection
-
-local dragging = false
-local dragInput
-local dragStart
-local startPos
-
-local function updateDrag(input)
-    local delta = input.Position - dragStart
-    MainFrame.Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, startPos.Y.Scale, startPos.Y.Offset + delta.Y)
-end
-
-MainFrame.InputBegan:Connect(function(input)
-    if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
-        dragging = true
-        dragStart = input.Position
-        startPos = MainFrame.Position
-        
-        input.Changed:Connect(function()
-            if input.UserInputState == Enum.UserInputState.End then
-                dragging = false
-            end
-        end)
-    end
-end)
-
-MainFrame.InputChanged:Connect(function(input)
-    if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then
-        dragInput = input
-    end
-end)
-
-UserInputService.InputChanged:Connect(function(input)
-    if input == dragInput and dragging then
-        updateDrag(input)
-    end
-end)
-
-local function applyButtonHoverEffect(button)
-    button.MouseEnter:Connect(function()
-        TweenService:Create(button, TweenInfo.new(0.3), {BackgroundTransparency = 0.4}):Play()
-    end)
-    
-    button.MouseLeave:Connect(function()
-        TweenService:Create(button, TweenInfo.new(0.3), {BackgroundTransparency = 0.5}):Play()
-    end)
-end
-
-applyButtonHoverEffect(LinkvertiseButton)
-applyButtonHoverEffect(lootlabsButton)
-applyButtonHoverEffect(DiscordButton)
-
-local autoExecuteEnabled = true 
-AutoExecuteButton.MouseButton1Click:Connect(function()
-    autoExecuteEnabled = not autoExecuteEnabled
-    AutoExecuteCheck.Visible = autoExecuteEnabled
-end)
-
-CheckButton.MouseButton1Click:Connect(function()
-    local keyText = KeyTextbox.Text
-    
-    if keyText == "" then
-        StatusLabel.Text = "Key Status: Empty"
-        StatusLabel.TextColor3 = Color3.fromRGB(255, 85, 85) 
-        createNotification("Error", "Please enter a key", 5, Color3.fromRGB(255, 85, 85), ScreenGui)
-        return
-    end
-    
-    if not isGameSupported() then
-        StatusLabel.Text = "Key Status: Game Not Supported"
-        StatusLabel.TextColor3 = Color3.fromRGB(255, 85, 85) 
-        createNotification("Error", "This game is not supported by SolixHub.", 5, Color3.fromRGB(255, 85, 85), ScreenGui)
-        return
-    end
-    
-    local api = initLuarmorAPI()
-    if not api then 
-        StatusLabel.Text = "Key Status: API Error"
-        StatusLabel.TextColor3 = Color3.fromRGB(255, 85, 85)
-        createNotification("Error", "Failed to initialize API", 5, Color3.fromRGB(255, 85, 85), ScreenGui)
-        return
-    end
-    
-    StatusLabel.Text = "Key Status: Checking..."
-    StatusLabel.TextColor3 = Color3.fromRGB(255, 255, 255) 
-    
-    local success, status = pcall(function()
-        return api.check_key(keyText)
-    end)
-    
-    if not success then
-        StatusLabel.Text = "Key Status: Error"
-        StatusLabel.TextColor3 = Color3.fromRGB(255, 85, 85) 
-        createNotification("Error", "Failed to check key: " .. tostring(status), 5, Color3.fromRGB(255, 85, 85), ScreenGui)
-        return
-    end
-    
-    if status.code == "KEY_VALID" then
-        StatusLabel.Text = "Key Status: Valid"
-        StatusLabel.TextColor3 = Color3.fromRGB(85, 255, 127) 
-        
-        local expiryInfo = ""
-        if status.data.auth_expire == -1 or status.data.auth_expire == 0 then
-            expiryInfo = "Lifetime key"
-        else
-            local timeLeft = status.data.auth_expire - os.time()
-            if timeLeft > 0 then
-                local days = math.floor(timeLeft / 86400)
-                local hours = math.floor((timeLeft % 86400) / 3600)
-                expiryInfo = days .. "d " .. hours .. "h remaining"
-            else
-                expiryInfo = "Expired"
-            end
-        end
-        
-        createNotification("Success", "Your key is valid! " .. expiryInfo, 5, Color3.fromRGB(85, 255, 127), ScreenGui)
-        
-  
-        local saveSuccess, saveError = pcall(function()
-            writefile("Key.txt", keyText)
-        end)
-        
-        if not saveSuccess then
-            createNotification("Warning", "Failed to save key: " .. tostring(saveError), 5, Color3.fromRGB(255, 170, 0), ScreenGui)
-        else
-          
-            local readSuccess, savedKey = pcall(function()
-                return readfile("Key.txt")
-            end)
-            
-            if not readSuccess or savedKey ~= keyText then
-                createNotification("Warning", "Key verification failed. Teleport may not work correctly.", 5, Color3.fromRGB(255, 170, 0), ScreenGui)
-            else
-                
-                createNotification("Info", "Key saved successfully. Ready for teleport.", 3, Color3.fromRGB(85, 255, 127), ScreenGui)
-            end
-        end
-        
-        if autoExecuteEnabled then
-            local execSuccess, execError = executeScript(keyText)
-            if not execSuccess then
-                createNotification("Script Error", execError, 5, Color3.fromRGB(255, 85, 85), ScreenGui)
-                return
-            end
-            
-            task.delay(1, function()
-                ScreenGui:Destroy()
-            end)
-        end
-        
-    elseif status.code == "KEY_EXPIRED" then
-        StatusLabel.Text = "Key Status: Expired"
-        StatusLabel.TextColor3 = Color3.fromRGB(255, 255, 85) 
-        createNotification("Expired", "Your key has expired.", 5, Color3.fromRGB(255, 255, 85), ScreenGui)
-        pcall(function() delfile("Key.txt") end)
-        
-    elseif status.code == "KEY_HWID_LOCKED" then
-        StatusLabel.Text = "Key Status: HWID Locked"
-        StatusLabel.TextColor3 = Color3.fromRGB(255, 170, 0) 
-        createNotification("HWID Locked", "Key linked to a different device. Please reset it using our bot.", 5, Color3.fromRGB(255, 170, 0), ScreenGui)
-        pcall(function() delfile("Key.txt") end)
-        
-    elseif status.code == "KEY_BANNED" then
-        StatusLabel.Text = "Key Status: Banned"
-        StatusLabel.TextColor3 = Color3.fromRGB(255, 85, 85) 
-        createNotification("Banned", "This key has been blacklisted.", 5, Color3.fromRGB(255, 85, 85), ScreenGui)
-        pcall(function() delfile("Key.txt") end)
-        
-    elseif status.code == "KEY_INCORRECT" or status.code == "KEY_INVALID" then
-        StatusLabel.Text = "Key Status: Invalid"
-        StatusLabel.TextColor3 = Color3.fromRGB(255, 85, 85) 
-        createNotification("Invalid", "The key you entered is invalid or does not exist.", 5, Color3.fromRGB(255, 85, 85), ScreenGui)
-        pcall(function() delfile("Key.txt") end)
-        
-    else
-        StatusLabel.Text = "Key Status: Error"
-        StatusLabel.TextColor3 = Color3.fromRGB(255, 85, 85) 
-        createNotification("Error", status.message or "Unknown error", 5, Color3.fromRGB(255, 85, 85), ScreenGui)
-        pcall(function() delfile("Key.txt") end)
-    end
-end)
-
-LinkvertiseButton.MouseButton1Click:Connect(function()
-    setclipboard("https://ads.luarmor.net/get_key?for=Solixhub_Free_KeySystem-OWlLHDMCHADk")
-    createNotification("Copied", "Linkvertise link copied to clipboard!", 5, Color3.fromRGB(255, 188, 254), ScreenGui)
-end)
-
-lootlabsButton.MouseButton1Click:Connect(function()
-    setclipboard("https://ads.luarmor.net/get_key?for=Solix_Free_Keysystems-pqJCGTqnTsng")
-    createNotification("Copied", "lootlabs link copied to clipboard!", 5, Color3.fromRGB(255, 188, 254), ScreenGui)
-end)
-
-DiscordButton.MouseButton1Click:Connect(function()
-    setclipboard("https://discord.gg/rSZJGSr5FW")
-    createNotification("Copied", "Discord invite copied to clipboard!", 5, Color3.fromRGB(88, 101, 242), ScreenGui)
-end)
-
-KeyTextbox.Focused:Connect(function()
-    TweenService:Create(KeyTextboxHolder, TweenInfo.new(0.2), {BackgroundTransparency = 0.87}):Play()
-    TweenService:Create(KeyLabel, TweenInfo.new(0.2), {TextColor3 = Color3.fromRGB(255, 255, 255)}):Play()
-end)
-
-KeyTextbox.FocusLost:Connect(function()
-    TweenService:Create(KeyTextboxHolder, TweenInfo.new(0.2), {BackgroundTransparency = 0.95}):Play()
-    TweenService:Create(KeyLabel, TweenInfo.new(0.2), {TextColor3 = Color3.fromRGB(122, 122, 122)}):Play()
-end)
-
-CloseButton.MouseButton1Click:Connect(function()
-    ScreenGui:Destroy()
-end)
-
-MinimizeButton.MouseButton1Click:Connect(function()
-    MainFrame.Visible = false
-    
-    local RestoreButton = Instance.new("TextButton")
-    RestoreButton.Name = "RestoreButton"
-    RestoreButton.Text = "SolixHub"
-    RestoreButton.TextColor3 = Color3.fromRGB(255, 255, 255)
-    RestoreButton.TextSize = 14
-    RestoreButton.Font = Enum.Font.Gotham
-    RestoreButton.BackgroundColor3 = Color3.fromRGB(16, 16, 16)
-    RestoreButton.BackgroundTransparency = 0.1
-    RestoreButton.BorderSizePixel = 0
-    RestoreButton.Position = UDim2.new(0, 10, 0, 10)
-    RestoreButton.Size = UDim2.fromOffset(100, 30)
-    RestoreButton.Parent = ScreenGui
-    
-    local RestoreCorner = Instance.new("UICorner")
-    RestoreCorner.CornerRadius = UDim.new(0, 6)
-    RestoreCorner.Parent = RestoreButton
-    
-    RestoreButton.MouseButton1Click:Connect(function()
-        MainFrame.Visible = true
-        RestoreButton:Destroy()
-    end)
-end)
-
-if not isGameSupported() then
-    GameLabel.Text = "Game: " .. game:GetService("MarketplaceService"):GetProductInfo(game.PlaceId).Name .. " (Not Supported)"
-    GameLabel.TextColor3 = Color3.fromRGB(255, 85, 85)
-    
-    createNotification("Warning", "This game is not currently supported by SolixHub.", 5, Color3.fromRGB(255, 170, 0), ScreenGui)
-end
-
-createNotification("SolixHub", "Welcome to SolixHub! Please enter your key to continue.", 5, Color3.fromRGB(255, 188, 254), ScreenGui)
-
-MainFrame.Visible = true
+local Library = Library()
+
+local Window = Library:Window({
+	File = "solixhub/key.txt",
+	Discord = "https://discord.gg/solixhub",
+	DisplayName = "solixhub - Luarmor",
+	MinIcon = "rbxassetid://102391696721436",
+	Linkvertise = "https://ads.luarmor.net/get_key?for=Solixhub_Free_KeySystem-OWlLHDMCHADk",
+	Rinku = "https://ads.luarmor.net/get_key?for=Solix_Free_Keysystems-pqJCGTqnTsng",
+})
