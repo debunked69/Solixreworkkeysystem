@@ -30,12 +30,12 @@ if not GameId then
 end
 
 URLsigma = GameId
-function Library()
+function Task()
 	repeat wait() until game:IsLoaded()
 
 	local status, res1, res2 = pcall(function()
 		local api = loadstring(game:HttpGet("https://sdkapi-public.luarmor.net/library.lua"))()
-		local Library = {}
+		local Task = {}
 		local v1 = {}
 		local variables={}
 		local errorMessages = {
@@ -387,7 +387,7 @@ function Library()
 
 		Links:WaitForChild("LootLabs"):FindFirstChildOfClass("TextLabel").Text = "Rinku"
 		-------------------------------------------------------------------------------
-		function Library:Window(config)
+		function Task:Window(config)
 			config.DisplayName = config.DisplayName or "QuantumPulsar X"
 			config.Discord = config.Discord or ""
 			config.File = config.File or "VaQSys.txt"
@@ -485,7 +485,7 @@ function Library()
 			DraggFunction(Main, DragBar, true, 0)
 			return Window
 		end
-		return Library
+		return Task
 	end)
 	if not status then
 		warn("key system failed to load: " .. res1)
@@ -494,9 +494,9 @@ function Library()
 	end
 end
 
-local Library = Library()
+local Task = Task()
 
-local Window = Library:Window({
+local Window = Task:Window({
 	File = "solixhub/key.txt",
 	Discord = "https://discord.gg/solixhub",
 	DisplayName = "solixhub - Luarmor",
