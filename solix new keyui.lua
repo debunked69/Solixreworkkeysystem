@@ -20,6 +20,7 @@ local ListGame = {
 	["5578556129"] = "ba96a23ddff0c5b40e67eb1c0f2997c4", -- Anime Vanguards
 	["1000233041"] = "c08f7269fc31f6a60ec57ecfacfdb34e", -- 3008
 	["7750955984"] = "283d81b313c32e170c4545392802a347", -- Hunty Zombie
+	["6701277882"] = "05cd4dda96ee6767cd1903587da139fc", -- Fish it!
 }
 
 local URLsigma
