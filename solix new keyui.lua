@@ -9,17 +9,14 @@ local ListGame = {
 	["6035872082"] = "3bb7969a9ecb9e317b0a24681327c2e2", -- Rivals
 	["245662005"]  = "21ad7f491e4658e9dc9529a60c887c6e", -- Jailbreak
 	["7018190066"] = "98f5c64a0a9ecca29517078597bbcbdb", -- Dead Rails
-	["7074860883"] = "0c8fdf9bb25a6a7071731b72a90e3c69", -- Anime Crossover
 	["7436755782"] = "e4ea33e9eaf0ae943d59ea98f2444ebe", -- Grow a Garden
 	["210851291"]  = "b3400f5a4e28cad1e1110b45004c3837", -- Build a Boat
-	-- ? idk Dig game
 	["6931042565"] = "036786acbfa6e6e030dce074faa1173f", -- Volleyball Legends
 	["7326934954"] = "00e140acb477c5ecde501c1d448df6f9", -- 99 Nights in the Forest
 	["7822444776"] = "ba4595cfb82d2434a478b9003f3674b4", -- Build a Plane
 	["4871329703"] = "646e60921195f2b2d59015703b0b100a", -- TypeSoul
-	["5578556129"] = "ba96a23ddff0c5b40e67eb1c0f2997c4", -- Anime Vanguards
 	["1000233041"] = "c08f7269fc31f6a60ec57ecfacfdb34e", -- 3008
-	["7750955984"] = "283d81b313c32e170c4545392802a347", -- Hunty Zombie
+	["7750955984"] = "b8432035965d96be10e70bfb63a6964b", -- Hunty Zombie
 	["6701277882"] = "05cd4dda96ee6767cd1903587da139fc", -- Fish it!
 }
 
