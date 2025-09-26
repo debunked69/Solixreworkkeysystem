@@ -498,7 +498,7 @@ local Window = Task:Window({
 	File = "solixhub/key.txt",
 	Discord = "https://discord.gg/solixhub",
 	DisplayName = "solixhub - Luarmor",
-	MinIcon = "rbxassetid://102391696721436",
+	MinIcon = "rbxassetid://125461954813959",
 	Linkvertise = "https://ads.luarmor.net/get_key?for=Solixhub_Free_KeySystem-OWlLHDMCHADk",
 	Rinku = "https://ads.luarmor.net/get_key?for=Solix_Free_Keysystems-pqJCGTqnTsng",
 })
