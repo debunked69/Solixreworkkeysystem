@@ -7,7 +7,7 @@ local ListGame = {
 	["3317771874"] = "e95ef6f27596e636a7d706375c040de4", -- Pet Simulator 99
 	["1511883870"] = "fefdf5088c44beb34ef52ed6b520507c", -- Shindo Life
 	["6035872082"] = "3bb7969a9ecb9e317b0a24681327c2e2", -- Rivals
-	["245662005"]  = "21ad7f491e4658e9dc9529a60c887c6e", -- Jailbreak
+	["245662005"]  = "21ad7f491e4658e9dc9529a60c887c6e", -- Jailbreak 
 	["7018190066"] = "98f5c64a0a9ecca29517078597bbcbdb", -- Dead Rails
 	["7436755782"] = "e4ea33e9eaf0ae943d59ea98f2444ebe", -- Grow a Garden
 	["210851291"]  = "b3400f5a4e28cad1e1110b45004c3837", -- Build a Boat
@@ -19,7 +19,7 @@ local ListGame = {
 	["7750955984"] = "b8432035965d96be10e70bfb63a6964b", -- Hunty Zombie
 	["6701277882"] = "05cd4dda96ee6767cd1903587da139fc", -- Fish it!
 	["6884266247"] = "f8c8b872fe2939eb1e39457f2766862e", -- Anime Rangers X,
-	["8316902627"] = "122bede7f2ef8e17f063be0fdf6b5ae6", -- Plants vs BrainRot
+	["8316902627"] = "641e8d02ffba666d731614a32c08eacf", -- Plants vs BrainRot
 }
 
 local URLsigma
