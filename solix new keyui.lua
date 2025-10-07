@@ -18,8 +18,9 @@ local ListGame = {
 	["1000233041"] = "c08f7269fc31f6a60ec57ecfacfdb34e", -- 3008
 	["7750955984"] = "b8432035965d96be10e70bfb63a6964b", -- Hunty Zombie
 	["6701277882"] = "05cd4dda96ee6767cd1903587da139fc", -- Fish it!
-	["6884266247"] = "f8c8b872fe2939eb1e39457f2766862e", -- Anime Rangers X,
+	["6884266247"] = "f8c8b872fe2939eb1e39457f2766862e", -- Anime Rangers X
 	["8316902627"] = "641e8d02ffba666d731614a32c08eacf", -- Plants vs BrainRot
+	["6216468795"] = "97722a63586043c0780da54598487218", -- Weak Legacy 2
 }
 
 local URLsigma
