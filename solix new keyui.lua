@@ -38,11 +38,12 @@ function GetExecutor()
 end
 
 local URLsigma
+local Exec = GetExecutor()
 local Id = tostring(game.GameId)
 local GameId = ListGame[tostring(game.GameId)]
 
 if not (Id == "994732206" or Id == "1511883870" or Id == "7018190066") then
-	if string.find(GetExecutor(), "Xeno") or string.find(GetExecutor(), "Solara") then
+	if string.find(Exec, "Xeno") or string.find(Exec, "Solara") then
 		game:GetService("Players").LocalPlayer:Kick("This executor is not supported for this game.")
 	end
 end
