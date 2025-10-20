@@ -9,6 +9,7 @@ local ListGame = {
 	["6035872082"] = "3bb7969a9ecb9e317b0a24681327c2e2", -- Rivals
 	["245662005"]  = "21ad7f491e4658e9dc9529a60c887c6e", -- Jailbreak 
 	["7018190066"] = "98f5c64a0a9ecca29517078597bbcbdb", -- Dead Rails
+	["7074860883"] = "0c8fdf9bb25a6a7071731b72a90e3c69", -- Grow a Garden
 	["7436755782"] = "e4ea33e9eaf0ae943d59ea98f2444ebe", -- Grow a Garden
 	["210851291"]  = "b3400f5a4e28cad1e1110b45004c3837", -- Build a Boat
 	["6931042565"] = "036786acbfa6e6e030dce074faa1173f", -- Volleyball Legends
