@@ -42,7 +42,7 @@ local Exec = GetExecutor()
 local Id = tostring(game.GameId)
 local GameId = ListGame[tostring(game.GameId)]
 
-if not (Id == "994732206" or Id == "1511883870" or Id == "7018190066") then
+if not (Id == "994732206" or Id == "1511883870" or Id == "7018190066" or Id == "1650291138" or Id == "7436755782") then
 	if string.find(Exec, "Xeno") or string.find(Exec, "Solara") then
 		game:GetService("Players").LocalPlayer:Kick("This executor is not supported for this game.")
 	end
@@ -520,7 +520,7 @@ end
 local Task = Task()
 
 local Window = Task:Window({
-	File = "solixhub/key.txt",
+	File = "solixhub/savedkey.txt",
 	Discord = "https://discord.gg/solixhub",
 	DisplayName = "solixhub - Luarmor",
 	MinIcon = "rbxassetid://125461954813959",
