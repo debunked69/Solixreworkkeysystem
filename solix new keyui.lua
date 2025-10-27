@@ -38,7 +38,7 @@ function GetExecutor()
 end
 
 local URLsigma
-local Exec = GetExecutor()
+local Exec = GetExecutor() or "nigga"
 local Id = tostring(game.GameId)
 local GameId = ListGame[tostring(game.GameId)]
 
