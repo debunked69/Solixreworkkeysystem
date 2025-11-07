@@ -524,6 +524,6 @@ local Window = Task:Window({
 	Discord = "https://discord.gg/solixhub",
 	DisplayName = "solixhub - Luarmor",
 	MinIcon = "rbxassetid://125461954813959",
-	Linkvertise = "https://rkns.link/9oxrr",
-	Rinku = "https://rkns.link/l6i9e",
+	Linkvertise = "https://ads.luarmor.net/get_key?for=Solixhub_Free_KeySystem-OWlLHDMCHADk",
+	Rinku = "https://ads.luarmor.net/get_key?for=Solix_Free_Keysystems-pqJCGTqnTsng",
 })
