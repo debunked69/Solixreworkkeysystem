@@ -1,3 +1,17 @@
+repeat wait() until game:IsLoaded()
+
+local cloneref = cloneref or function(o) return o end
+Players = cloneref(game:GetService("Players"))
+PlayerGui = Players.LocalPlayer:FindFirstChildOfClass("PlayerGui")
+HttpService = cloneref(game:GetService("HttpService"))
+TweenService = cloneref(game:GetService("TweenService"))
+UserInputService = cloneref(game:GetService("UserInputService"))
+Market = cloneref(game:GetService("MarketplaceService"))
+RBXAnalyt = cloneref(game:GetService("RbxAnalyticsService"))
+CoreGui = cloneref(game:GetService("CoreGui"))
+RunService = cloneref(game:GetService("RunService"))
+Replicated = cloneref(game:GetService("ReplicatedStorage"))
+
 local ListGame = {
 	["3808223175"] = "4fe2dfc202115670b1813277df916ab2", -- Jujutsu Infinite
 	["994732206"]  = "e2718ddebf562c5c4080dfce26b09398", -- Blox Fruits
@@ -15,7 +29,7 @@ local ListGame = {
 	["6931042565"] = "036786acbfa6e6e030dce074faa1173f", -- Volleyball Legends
 	["7326934954"] = "00e140acb477c5ecde501c1d448df6f9", -- 99 Nights in the Forest
 	["7822444776"] = "ba4595cfb82d2434a478b9003f3674b4", -- Build a Plane
-	["4871329703"] = "646e60921195f2b2d59015703b0b100a", -- TypeSoul
+	["4871329703"] = "646e60921195f2b2d59015703b0b100a", -- Type Soul
 	["1000233041"] = "c08f7269fc31f6a60ec57ecfacfdb34e", -- 3008
 	["7750955984"] = "b8432035965d96be10e70bfb63a6964b", -- Hunty Zombie
 	["6701277882"] = "05cd4dda96ee6767cd1903587da139fc", -- Fish it!
@@ -25,67 +39,41 @@ local ListGame = {
 	["8066283370"] = "c0e023292c5ede5fd683fc0cdc1b5eb0", -- Build a Zoo
 }
 
-function GetExecutor()
-	if identifyexecutor then
-		local ok, n = pcall(identifyexecutor)
-		if ok and type(n) == "string" then return n end
-	end
-	if getexecutor then
-		local ok, n = pcall(getexecutor)
-		if ok and type(n) == "string" then return n end
-	end
-	return "Unknown"
+local script_id
+local executor_name = getexecutorname():match("^%s*(.-)%s*$") or "nigga"
+local game_id = tostring(game.GameId)
+local list_id = ListGame[tostring(game.GameId)]
+
+if not list_id then
+	Players.LocalPlayer:Kick("This game is not supported.")
 end
 
-local URLsigma
-local Exec = GetExecutor() or "nigga"
-local Id = tostring(game.GameId)
-local GameId = ListGame[tostring(game.GameId)]
-
-if not (Id == "994732206" or Id == "1511883870" or Id == "7018190066" or Id == "1650291138" or Id == "7436755782") then
-	if string.find(Exec, "Xeno") or string.find(Exec, "Solara") then
-		game:GetService("Players").LocalPlayer:Kick("This executor is not supported for this game.")
-	end
+if CoreGui:FindFirstChild("System") then
+	CoreGui.System:Destroy()
 end
 
-if not GameId then
-	game:GetService("Players").LocalPlayer:Kick("This game is not supported.")
-end
+script_id = list_id
 
-URLsigma = GameId
 function Task()
-	repeat wait() until game:IsLoaded()
-
 	local status, res1, res2 = pcall(function()
 		local api = loadstring(game:HttpGet("https://sdkapi-public.luarmor.net/library.lua"))()
 		local Task = {}
 		local v1 = {}
-		local variables={}
-		local errorMessages = {
-			KEY_EXPIRED = "Key Expired! Please renew your key.",
-			KEY_BANNED = "Your key has been blacklisted. Contact support for details.",
-			KEY_HWID_LOCKED = "Key linked to a different HWID. Please reset it using our bot.",
-			KEY_INCORRECT = "Key is incorrect or has been deleted.",
-			KEY_INVALID = "The provided key is in an invalid format.",
-			SCRIPT_ID_INCORRECT = "The provided script ID does not exist or was deleted.",
-			SCRIPT_ID_INVALID = "The script has been deleted by owner.",
-			INVALID_EXECUTOR = "HWID header contains invalid data. Executor might not be supported.",
-			SECURITY_ERROR = "Security error detected. Cloudflare validation failed.",
-			TIME_ERROR = "Client time is invalid. Ensure your system clock is correct.",
-			UNKNOWN_ERROR = "Unknown server error. Please contact support."
+		local variables = {}
+
+		local error_messages = {
+			KEY_EXPIRED = "Your key has expired\nPlease renew it to continue.",
+			KEY_BANNED = "This key has been blacklisted.\nContact support for assistance.",
+			KEY_HWID_LOCKED = "This key is linked to a different HWID.\nPlease reset it via our bot.",
+			KEY_INCORRECT = "The provided key is incorrect or no longer valid.",
+			KEY_INVALID = "Invalid key format.\nPlease check your key and try again.",
+			SCRIPT_ID_INCORRECT = "The provided script ID does not exist or has been removed.",
+			SCRIPT_ID_INVALID = "This script has been deleted by its owner.",
+			INVALID_EXECUTOR = "Invalid HWID header detected.\nYour executor may not be supported.",
+			SECURITY_ERROR = "Security validation failed (Cloudflare check).\nPlease retry.",
+			TIME_ERROR = "Invalid client time detected.\nPlease sync your system clock.",
+			UNKNOWN_ERROR = "An unknown error occurred.\nPlease contact support."
 		}
-		-------------------------------------------------------------------------------
-		local cloneref = cloneref or function(o) return o end
-		Players = cloneref(game:GetService("Players"))
-		PlayerGui = Players.LocalPlayer:FindFirstChildOfClass("PlayerGui")
-		HttpService = cloneref(game:GetService("HttpService"))
-		TweenService = cloneref(game:GetService("TweenService"))
-		UserInputService = cloneref(game:GetService("UserInputService"))
-		Market = cloneref(game:GetService("MarketplaceService"))
-		RBXAnalyt = cloneref(game:GetService("RbxAnalyticsService"))
-		CoreGui = cloneref(game:GetService("CoreGui"))
-		RunService = cloneref(game:GetService("RunService"))
-		Replicated = cloneref(game:GetService("ReplicatedStorage"))
 		-------------------------------------------------------------------------------
 		v1.__index = v1
 		local v_u_3 = buffer and buffer.tostring or function(b) return tostring(b) end
@@ -111,21 +99,21 @@ function Task()
 		NotificationGUI.Name = "Notifications"
 		NotificationGUI.Parent = PlayerGui
 
-		local container = NotificationGUI:FindFirstChild("Container") or Instance.new("Frame")
-		container.Name = "Container"
-		container.AnchorPoint = Vector2.new(1, 0)
-		container.Position = UDim2.new(1, -25, 0, 25)
-		container.BackgroundTransparency = 1
-		container.Size = UDim2.fromOffset(350, 600)
-		container.Parent = NotificationGUI
+		local Container = NotificationGUI:FindFirstChild("Container") or Instance.new("Frame")
+		Container.Name = "Container"
+		Container.AnchorPoint = Vector2.new(1, 0)
+		Container.Position = UDim2.new(1, -25, 0, 25)
+		Container.BackgroundTransparency = 1
+		Container.Size = UDim2.fromOffset(350, 600)
+		Container.Parent = NotificationGUI
 
-		if not container:FindFirstChild("UIListLayout") then
-			local layout = Instance.new("UIListLayout")
-			layout.SortOrder = Enum.SortOrder.LayoutOrder
-			layout.Padding = UDim.new(0, 8)
-			layout.VerticalAlignment = Enum.VerticalAlignment.Top
-			layout.HorizontalAlignment = Enum.HorizontalAlignment.Right
-			layout.Parent = container
+		if not Container:FindFirstChild("UIListLayout") then
+			local Layout = Instance.new("UIListLayout")
+			Layout.SortOrder = Enum.SortOrder.LayoutOrder
+			Layout.Padding = UDim.new(0, 8)
+			Layout.VerticalAlignment = Enum.VerticalAlignment.Top
+			Layout.HorizontalAlignment = Enum.HorizontalAlignment.Right
+			Layout.Parent = Container
 		end
 
 		function NotifyCustom(title, content, duration)
@@ -139,7 +127,7 @@ function Task()
 			Notification.BackgroundColor3 = Color3.fromRGB(16, 16, 16)
 			Notification.BorderSizePixel = 0
 			Notification.Size = UDim2.fromOffset(320, 70)
-			Notification.Parent = container
+			Notification.Parent = Container
 
 			local NotifCorner = Instance.new("UICorner")
 			NotifCorner.CornerRadius = UDim.new(0, 8)
@@ -202,17 +190,17 @@ function Task()
 			return Notification
 		end
 
-		function DraggFunction(object, dragObject, enableTaptic, tapticOffset)
+		function DraggFunction(object, drag_object, enable_taptic, taptic_offset)
 			local dragging = false
 			local relative = nil
-			local offset = Vector2.zero
+			local off_set = Vector2.zero
 
-			local screenGui = object:FindFirstAncestorWhichIsA("ScreenGui")
-			if screenGui and screenGui.IgnoreGuiInset then
-				offset = game:GetService('GuiService'):GetGuiInset()
+			local ScreenGui = object:FindFirstAncestorWhichIsA("ScreenGui")
+			if ScreenGui and ScreenGui.IgnoreGuiInset then
+				off_set = game:GetService('GuiService'):GetGuiInset()
 			end
 
-			dragObject.InputBegan:Connect(function(input, processed)
+			drag_object.InputBegan:Connect(function(input, processed)
 				if processed then return end
 				if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
 					dragging = true
@@ -228,8 +216,8 @@ function Task()
 
 			RunService.RenderStepped:Connect(function()
 				if dragging then
-					local position = UserInputService:GetMouseLocation() + relative + offset
-					if enableTaptic and tapticOffset then
+					local position = UserInputService:GetMouseLocation() + relative + off_set
+					if enable_taptic and taptic_offset then
 						TweenService:Create(object, TweenInfo.new(0.4, Enum.EasingStyle.Exponential, Enum.EasingDirection.Out), {Position = UDim2.fromOffset(position.X, position.Y)}):Play()
 					else
 						object.Position = UDim2.fromOffset(position.X, position.Y)
@@ -242,11 +230,11 @@ function Task()
 			end)
 		end
 
-		local fSetClipboard = setclipboard or toclipboard or set_clipboard or (Clipboard and Clipboard.set)
+		local coppy = setclipboard or toclipboard or set_clipboard or (Clipboard and Clipboard.set)
 		LSMT.Enabled = false
 
-		if gethui then
-			LSMT.Parent = gethui()
+		if get_ui then
+			LSMT.Parent = get_ui()
 		elseif syn and syn.protect_gui then
 			syn.protect_gui(LSMT)
 			LSMT.Parent = CoreGui
@@ -290,57 +278,68 @@ function Task()
 			end
 		end
 
-		variables[jas] = function(key, FileDirectory)
+		variables[jas] = function(key, file_directory)
 			if type(key) ~= "buffer" then
 				Players.LocalPlayer:Kick("Invalid key type detected")
 				return
 			end
 
-			local cleanedKey = v1.convert(key):gsub("%s", "")
+			local cleaned_key = v1.convert(key):gsub("%s", "")
 
-			if string.find(cleanedKey, "_") then
+			if not string.match(cleaned_key, "^[A-Za-z]+$") or #cleaned_key ~= 32 then
 				DeleteFile("solixhub/key.txt")
 				task.wait(1)
-				game:GetService("Players").LocalPlayer:Kick("Make sure you are using the Luarmor key.")
+				Players.LocalPlayer:Kick("Invalid key format.\nPlease make sure you are using a valid key.")
 				return nil
 			end
 
-			if cleanedKey ~= v1.convert(key) then
-				Notification("Info", "Spaces detected in the key. Verifying the key without spaces...")
+			if cleaned_key ~= v1.convert(key) then
+				Notification("Info", "Extra spaces detected in the key. Verifying without spaces...")
 			end
 
-			local success, status = pcall(api.check_key, cleanedKey)
+			local success, status = pcall(api.check_key, cleaned_key)
 			if not success then
-				Notification("Error", "Failed to check key due to an unexpected error.")
+				Notification("Error", "An unexpected error occurred while verifying the key.")
 				return nil
 			end
 
 			if status.code == "KEY_VALID" then
-				if not isfile(FileDirectory) then
-					local saveSuccess, err = pcall(writefile, FileDirectory, cleanedKey)
-					if not saveSuccess then
-						Notification("Error", "Failed to save key: " .. err)
+
+				if CoreGui:FindFirstChild("System") then
+					CoreGui.System:Destroy()
+				end
+
+				if not (game_id == "994732206" 
+					or game_id == "1511883870" 
+					or game_id == "7018190066" 
+					or game_id == "1650291138" 
+					or game_id == "7436755782") then
+					for _, exec in ipairs({"Xeno", "Solara"}) do
+						if string.find(executor_name, exec) then
+							Players.LocalPlayer:Kick("This executor is not supported for this game.")
+							break
+						end
+					end
+				end
+
+				if not isfile(file_directory) then
+					local save_success, err = pcall(writefile, file_directory, cleaned_key)
+					if not save_success then
+						Notification("Error", "Failed to save key:\n" .. err)
 					end
 				else
-					local currentKey = readfile(FileDirectory)
-					if currentKey ~= cleanedKey then
-						local success, err = pcall(writefile, FileDirectory, cleanedKey)
+					local current_key = readfile(file_directory)
+					if current_key ~= cleaned_key then
+						local success, err = pcall(writefile, file_directory, cleaned_key)
 						if not success then
-							Notification("Error", "Failed to update key: " .. err)
+							Notification("Error", "Failed to update key:\n" .. err)
 						end
-					else
-						Notification("Info", "Key already up-to-date.")
 					end
 				end
 
-				script_key = cleanedKey
-				for _, v in ipairs(game:GetService("CoreGui"):GetChildren()) do
-					if v:FindFirstChild("System") and v.System.Enabled then
-						v.System:Destroy()
-					end
-				end
+				script_key = cleaned_key
 
-				local function FormatTime(seconds)
+				local function ToTime(seconds)
 					local days = math.floor(seconds / 86400)
 					local hours = math.floor((seconds % 86400) / 3600)
 					local minutes = math.floor((seconds % 3600) / 60)
@@ -353,24 +352,28 @@ function Task()
 					end
 				end
 
-				Notification("Info", string.format("Key will expire in: %s", FormatTime(status.data.auth_expire - os.time())))
-				Notification("Info", string.format("Total executions: %s", status.data.total_executions))
+				Notification("Info", string.format("Key will expire in: %s", ToTime(status.data.auth_expire - os.time())))
 				getgenv().LuarmorNote = status.data.note
 				pcall(function() api.load_script() end)
 				return true
 			end
 
-			if errorMessages[status.code] then
-				DeleteFile(FileDirectory)
-				Notification("Warning", errorMessages[status.code])
+			if error_messages[status.code] then
+				DeleteFile(file_directory)
+				Notification("Warning", error_messages[status.code])
+
+				if status.code == "KEY_HWID_LOCKED" then
+					Players.LocalPlayer:Kick(error_messages[status.code])
+				end
 
 				if status.code == "INVALID_EXECUTOR" or status.code == "SECURITY_ERROR" or status.code == "UNKNOWN_ERROR" then
-					Players.LocalPlayer:Kick(errorMessages[status.code])
+					Players.LocalPlayer:Kick(error_messages[status.code])
 				end
+
 				return nil
 			end
 
-			Players.LocalPlayer:Kick("Key check failed: " .. status.message .. " Code: " .. status.code)
+			Players.LocalPlayer:Kick("Key check failed:\nCode: " .. status.code)
 		end
 		-------------------------------------------------------------------------------
 		local Main = LSMT.Main
@@ -420,7 +423,7 @@ function Task()
 
 			local Window = {}
 
-			api.script_id = URLsigma
+			api.script_id = script_id
 			Top.Logo.Image = config.MinIcon
 			Top.Title.Text = config.DisplayName
 
@@ -451,17 +454,17 @@ function Task()
 			end)
 
 			Rinku.MouseButton1Click:Connect(function()
-				fSetClipboard(config.Rinku)
+				coppy(config.Rinku)
 				Notification("Success", "Link copied to clipboard!")
 			end)
 
 			Linkvertise.MouseButton1Click:Connect(function()
-				fSetClipboard(config.Linkvertise)
+				coppy(config.Linkvertise)
 				Notification("Success", "Link copied to clipboard!")
 			end)
 
 			Buttons.Discord.MouseButton1Click:Connect(function()
-				fSetClipboard(tostring(config.Discord))
+				coppy(tostring(config.Discord))
 				Notification("Success", "Link copied to clipboard!")
 			end)
 
@@ -469,26 +472,25 @@ function Task()
 				local ok, err = pcall(function()
 					local key = (isfile(config.File) and readfile(config.File)) or (script_key ~= "" and script_key) or nil
 					if not key then
-						Notification("Info", "No key found.")
 						LSMT.Enabled = true
 						return
 					end
 
 					local decoded
-					local successDecode, decodeErr = pcall(function()
+					local success_decode, decode_error = pcall(function()
 						decoded = v1.revert(key)
 					end)
-					if not successDecode or not decoded then
-						Notification("Warning", "Failed to decode key:", decodeErr or "Unknown error")
+					if not success_decode or not decoded then
+						Notification("Warning", "Failed to decode key:\n" .. (decode_error or "Unknown error"))
 						LSMT.Enabled = true
 						return
 					end
 
-					local isValid, validResult = pcall(function()
+					local is_valid, valid_result = pcall(function()
 						return variables[jas](decoded, config.File)
 					end)
 
-					if decoded ~= nil and (not isValid or validResult ~= true) then
+					if decoded ~= nil and (not is_valid or valid_result ~= true) then
 						Notification("Warning", "Invalid or rejected key.")
 						LSMT.Enabled = true
 						return
@@ -497,7 +499,7 @@ function Task()
 				end)
 
 				if not ok then
-					Notification("Warning", "Key system error: " .. tostring(err))
+					Notification("Warning", "Key system error:\n" .. tostring(err))
 					if LSMT then
 						LSMT.Enabled = true
 					end
@@ -511,7 +513,7 @@ function Task()
 		return Task
 	end)
 	if not status then
-		warn("key system failed to load: " .. res1)
+		Notification("Warning", "Key system failed to load:\n" .. res1)
 	else
 		return res1, res2
 	end
@@ -522,8 +524,8 @@ local Task = Task()
 local Window = Task:Window({
 	File = "solixhub/savedkey.txt",
 	Discord = "https://discord.gg/solixhub",
-	DisplayName = "solixhub - Luarmor",
-	MinIcon = "rbxassetid://125461954813959",
+	DisplayName = "               solix hub key system",
+	MinIcon = "rbxassetid://9e9",
 	Linkvertise = "https://ads.luarmor.net/get_key?for=Solixhub_Free_KeySystem-OWlLHDMCHADk",
 	Rinku = "https://ads.luarmor.net/get_key?for=Solix_Free_Keysystems-pqJCGTqnTsng",
 })
