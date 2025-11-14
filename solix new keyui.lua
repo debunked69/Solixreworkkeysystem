@@ -38,6 +38,7 @@ local ListGame = {
 	["8316902627"] = "641e8d02ffba666d731614a32c08eacf", -- Plants vs Brainrot
 	["6216468795"] = "97722a63586043c0780da54598487218", -- Weak Legacy 2
 	["8066283370"] = "c0e023292c5ede5fd683fc0cdc1b5eb0", -- Build a Zoo
+	["8321616508"] = "2cd0668c5caf66913e7314cdb6d1eb9b",
 }
 
 local script_id
