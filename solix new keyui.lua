@@ -38,7 +38,7 @@ local ListGame = {
 	["8316902627"] = "641e8d02ffba666d731614a32c08eacf", -- Plants vs Brainrot
 	["6216468795"] = "97722a63586043c0780da54598487218", -- Weak Legacy 2
 	["8066283370"] = "c0e023292c5ede5fd683fc0cdc1b5eb0", -- Build a Zoo
-	["8321616508"] = "2cd0668c5caf66913e7314cdb6d1eb9b",
+	["8321616508"] = "2cd0668c5caf66913e7314cdb6d1eb9b", -- Rogue Piece
 }
 
 local script_id
@@ -321,7 +321,8 @@ function Task()
 				if not (game_id == "994732206" -- Blox Fruits
 					or game_id == "1511883870" -- Shindo Life
 					or game_id == "7018190066" -- Dead Rails
-					or game_id == "1650291138") -- Demon Fall
+					or game_id == "1650291138" -- Demon Fall
+					or game_id == "8321616508") -- Rogue Piece
 					and Workspace:GetAttribute("low") then
 					Players.LocalPlayer:Kick("This executor is not supported for this game.")
 				end
@@ -528,8 +529,8 @@ local Task = Task()
 local Window = Task:Window({
 	File = "solixhub/savedkey.txt",
 	Discord = "https://discord.gg/solixhub",
-	DisplayName = "               solix hub key system",
-	MinIcon = "rbxassetid://9e9",
+	DisplayName = "solix hub key system pro femboy hh",
+	MinIcon = "rbxassetid://boiii",
 	Linkvertise = "https://ads.luarmor.net/get_key?for=Solixhub_Free_KeySystem-OWlLHDMCHADk",
 	Rinku = "https://ads.luarmor.net/get_key?for=Solix_Free_Keysystems-pqJCGTqnTsng",
 })
