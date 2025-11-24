@@ -39,10 +39,11 @@ local ListGame = {
 	["6216468795"] = "97722a63586043c0780da54598487218", -- Weak Legacy 2
 	["8066283370"] = "c0e023292c5ede5fd683fc0cdc1b5eb0", -- Build a Zoo
 	["8321616508"] = "2cd0668c5caf66913e7314cdb6d1eb9b", -- Rogue Piece
+	["3457700596"] = "639c0b275001182cca67ac85f5bd529f", -- Fruit Battlegrounds
 }
 
 local script_id
-local executor_name = getexecutorname():match("^%s*(.-)%s*$") or "nigga"
+local executor_name = getexecutorname():match("^%s*(.-)%s*$") or "nigger"
 local game_id = tostring(game.GameId)
 local list_id = ListGame[tostring(game.GameId)]
 
@@ -322,7 +323,8 @@ function Task()
 					or game_id == "1511883870" -- Shindo Life
 					or game_id == "7018190066" -- Dead Rails
 					or game_id == "1650291138" -- Demon Fall
-					or game_id == "8321616508") -- Rogue Piece
+					or game_id == "8321616508" -- Rogue Piece
+					or game_id == "3457700596") -- Fruit Battlegrounds
 					and Workspace:GetAttribute("low") then
 					Players.LocalPlayer:Kick("This executor is not supported for this game.")
 				end
