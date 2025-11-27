@@ -40,6 +40,7 @@ local ListGame = {
 	["8066283370"] = "c0e023292c5ede5fd683fc0cdc1b5eb0", -- Build a Zoo
 	["8321616508"] = "2cd0668c5caf66913e7314cdb6d1eb9b", -- Rogue Piece
 	["3457700596"] = "639c0b275001182cca67ac85f5bd529f", -- Fruit Battlegrounds
+	["7671049560"] = "c0b41e859f576fb70183206224d4a75f", -- The Forge
 }
 
 local script_id
