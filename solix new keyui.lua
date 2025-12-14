@@ -322,7 +322,7 @@ function Task()
 
 				if not (
 					game_id == "3808223175" -- Jujutsu Infinite
-					    or game_id == "994732206" -- Blox Fruits
+						or game_id == "994732206" -- Blox Fruits
 						or game_id == "1511883870" -- Shindo Life
 						or game_id == "7018190066" -- Dead Rails
 						or game_id == "1650291138" -- Demon Fall
