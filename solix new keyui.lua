@@ -129,7 +129,7 @@ function Task()
 
 		function NotifyCustom(title, content, duration)
 			duration = duration or 5
-			local color = Color3.fromRGB(255, 188, 254)
+			color = color or Color3.fromRGB(255, 188, 254)
 
 			local Notification = Instance.new("Frame")
 			Notification.Name = "Notification"
@@ -241,16 +241,6 @@ function Task()
 			end)
 		end
 
-		function ToTime(seconds)
-			seconds = math.max(0, math.floor(seconds))
-			local hours = math.floor(seconds / 3600)
-			seconds = seconds % 3600
-			local minutes = math.floor(seconds / 60)
-			local secs = seconds % 60
-
-			return string.format("%02d:%02d:%02d", hours, minutes, secs)
-		end
-
 		local coppy = setclipboard or toclipboard or set_clipboard or (Clipboard and Clipboard.set)
 		LSMT.Enabled = false
 
@@ -352,14 +342,29 @@ function Task()
 				else
 					local current_key = readfile(file_directory)
 					if current_key ~= cleaned_key then
-						local success_write, err = pcall(writefile, file_directory, cleaned_key)
-						if not success_write then
+						local success, err = pcall(writefile, file_directory, cleaned_key)
+						if not success then
 							Notification("Error", "Failed to update key:\n" .. err)
 						end
 					end
 				end
 
 				script_key = cleaned_key
+
+				local function ToTime(seconds)
+			seconds = math.max(0, math.floor(seconds))
+			local hours = math.floor(seconds / 3600)
+			seconds = seconds % 3600
+			local minutes = math.floor(seconds / 60)
+			local secs = seconds % 60
+
+			return string.format("%02d:%02d:%02d", hours, minutes, secs)
+		end
+
+		print(status.data.auth_expire - os.time())
+				Notification("Info", string.format("Key will expire in: %s", ToTime(status.data.auth_expire - os.time())))
+				getgenv().LuarmorNote = status.data.note
+				pcall(function() api.load_script() end)
 				return true
 			end
 
@@ -379,7 +384,6 @@ function Task()
 			end
 
 			Players.LocalPlayer:Kick("Key check failed:\nCode: " .. status.code)
-			return nil
 		end
 		-------------------------------------------------------------------------------
 		local Main = LSMT.Main
@@ -396,8 +400,8 @@ function Task()
 		local Rinku = Links.LootLabs
 		local Linkvertise = Links.Linkvertise
 
-		Title.UIGradient.Color = ColorSequence.new{ColorSequenceKeypoint.new(0.000, Color3.fromRGB(180, 91, 255)), ColorSequenceKeypoint.new(1.000, Color3.fromRGB(88, 26, 181))}
-		Title.UIGradient.Rotation = 90
+		Title.UIGradient.Color = ColorSequence.new{ColorSequenceKeypoint.new(0.000, Color3.fromRGB(180, 91, 255)), ColorSequenceKeypoint.new(1.000, Color3.fromRGB(88, 26, 181))};
+		Title.UIGradient.Rotation = 90;
 
 		Rinku.UIGradient.Color = ColorSequence.new{
 			ColorSequenceKeypoint.new(0, Color3.fromHex("#625409")),
@@ -435,7 +439,7 @@ function Task()
 
 			for _,v in pairs(Main:GetDescendants()) do
 				if v:IsA("TextLabel") or v:IsA("TextButton") then
-					v.FontFace = Font.new([[rbxasset://fonts/families/GothamSSm.json]], Enum.FontWeight.Bold, Enum.FontStyle.Normal)
+					v.FontFace = Font.new([[rbxasset://fonts/families/GothamSSm.json]], Enum.FontWeight.Bold, Enum.FontStyle.Normal);
 				end
 			end
 
@@ -516,10 +520,8 @@ function Task()
 			DraggFunction(Main, DragBar, true, 0)
 			return Window
 		end
-
 		return Task
 	end)
-
 	if not status then
 		Notification("Warning", "Key system failed to load:\n" .. res1)
 	else
@@ -527,10 +529,10 @@ function Task()
 	end
 end
 
-local TaskModule = Task()
+local Task = Task()
 
-local Window = TaskModule:Window({
-	File = "solixhub/key.txt",
+local Window = Task:Window({
+	File = "solixhub/savedkey.txt",
 	Discord = "https://discord.gg/solixhub",
 	DisplayName = "solix hub key system relix xxx lilix",
 	MinIcon = "rbxassetid://boiii",
