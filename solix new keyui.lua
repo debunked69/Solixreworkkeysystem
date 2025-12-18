@@ -94,7 +94,7 @@ function Task()
 		-------------------------------------------------------------------------------
 		local LSMT = game:GetObjects("rbxassetid://126113170246030")[1]
 
-		function Close(Objectftween)
+		local function Close(Objectftween)
 			TweenService:Create(Objectftween, TweenInfo.new(0.65, Enum.EasingStyle.Back, Enum.EasingDirection.Out), {
 				AnchorPoint = Vector2.new(0.5, 0.5),
 				Size = UDim2.new(0, 10, 0, 10),
@@ -127,7 +127,7 @@ function Task()
 			Layout.Parent = Container
 		end
 
-		function NotifyCustom(title, content, duration)
+		local function NotifyCustom(title, content, duration)
 			duration = duration or 5
 			color = color or Color3.fromRGB(255, 188, 254)
 
@@ -201,7 +201,7 @@ function Task()
 			return Notification
 		end
 
-		function DraggFunction(object, drag_object, enable_taptic, taptic_offset)
+		local function DraggFunction(object, drag_object, enable_taptic, taptic_offset)
 			local dragging = false
 			local relative = nil
 			local off_set = Vector2.zero
@@ -259,7 +259,7 @@ function Task()
 
 		getgenv().LuarmorGot_System = LSMT
 		-------------------------------------------------------------------------------
-		function RandomName(b)
+		local function RandomName(b)
 			local c = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()-_=+[{]}\\|'\";:,<.>/? "
 			local d = ""
 			local f = math.random(0, 5)
@@ -272,20 +272,40 @@ function Task()
 
 		local jas = RandomName(10)
 
-		function Notification(Type, Message)
+		local function Notification(Type, Message)
 			NotifyCustom(Type, Message, 5)
 		end
 
-		function RenameAllChildren(parent)
+		local function RenameAllChildren(parent)
 			for _, child in pairs(parent:GetChildren()) do
 				child.Name = RandomName(6)
 				RenameAllChildren(child)
 			end
 		end
 
-		function DeleteFile(File)
+		local function DeleteFile(File)
 			if isfile(File) then
 				delfile(File)
+			end
+		end
+
+		local function ToTime(s)
+			if s < 0 then
+				return "Never"
+			end
+
+			s = math.floor(s)
+			local days = math.floor(s / 86400)
+			s = s % 86400
+			local hours = math.floor(s / 3600)
+			s = s % 3600
+			local minutes = math.floor(s / 60)
+			local secs = s % 60
+
+			if days > 0 then
+				return string.format("%dd %02dh %02dm %02ds", days, hours, minutes, secs)
+			else
+				return string.format("%02dh %02dm %02ds", hours, minutes, secs)
 			end
 		end
 
@@ -298,7 +318,7 @@ function Task()
 			local cleaned_key = v1.convert(key):gsub("%s", "")
 
 			if not string.match(cleaned_key, "^[A-Za-z]+$") or #cleaned_key ~= 32 then
-				DeleteFile("solixhub/key.txt")
+				DeleteFile("solixhub/savedkey.txt")
 				task.wait(1)
 				Players.LocalPlayer:Kick("Invalid key format.\nPlease make sure you are using a valid key.")
 				return nil
@@ -351,19 +371,7 @@ function Task()
 
 				script_key = cleaned_key
 
-				local function ToTime(seconds)
-			seconds = math.max(0, math.floor(seconds))
-			local hours = math.floor(seconds / 3600)
-			seconds = seconds % 3600
-			local minutes = math.floor(seconds / 60)
-			local secs = seconds % 60
-
-			return string.format("%02d:%02d:%02d", hours, minutes, secs)
-		end
-
-		print(status.data.auth_expire - os.time())
 				Notification("Info", string.format("Key will expire in: %s", ToTime(status.data.auth_expire - os.time())))
-				getgenv().LuarmorNote = status.data.note
 				pcall(function() api.load_script() end)
 				return true
 			end
@@ -534,8 +542,8 @@ local Task = Task()
 local Window = Task:Window({
 	File = "solixhub/savedkey.txt",
 	Discord = "https://discord.gg/solixhub",
-	DisplayName = "solix hub key system relix xxx lilix",
-	MinIcon = "rbxassetid://boiii",
+	DisplayName = "                             solix hub",
+	MinIcon = "rbxassetid://129420862771843",
 	Linkvertise = "https://ads.luarmor.net/get_key?for=Solixhub_Free_KeySystem-OWlLHDMCHADk",
 	Rinku = "https://ads.luarmor.net/get_key?for=Solix_Free_Keysystems-pqJCGTqnTsng",
 })
