@@ -352,178 +352,170 @@ function Task()
 				script_key = cleaned_key
 
 				local function ToTime(seconds)
-					local days = math.floor(seconds / 86400)
-					local hours = math.floor((seconds % 86400) / 3600)
-					local minutes = math.floor((seconds % 3600) / 60)
+					seconds = math.max(0, math.floor(seconds))
+					seconds = seconds % 3600
+
+					local hours = math.floor(seconds / 3600)
+					local minutes = math.floor(seconds / 60)
 					local secs = seconds % 60
 
-					if days > 0 then
-						return string.format("%dd %02dh %02dm %02ds", days, hours, minutes, secs)
-					else
-						return string.format("%02dh %02dm %02ds", hours, minutes, secs)
-					end
+					return string.format("%02d:%02d:%02d", hours, minutes, secs)
 				end
 
-				Notification("Info", string.format("Key will expire in: %s", ToTime(status.data.auth_expire - os.time())))
-				getgenv().LuarmorNote = status.data.note
-				pcall(function() api.load_script() end)
-				return true
+				if error_messages[status.code] then
+					DeleteFile(file_directory)
+					Notification("Warning", error_messages[status.code])
+
+					if status.code == "KEY_HWID_LOCKED" then
+						Players.LocalPlayer:Kick(error_messages[status.code])
+					end
+
+					if status.code == "INVALID_EXECUTOR" or status.code == "SECURITY_ERROR" or status.code == "UNKNOWN_ERROR" then
+						Players.LocalPlayer:Kick(error_messages[status.code])
+					end
+
+					return nil
+				end
+
+				Players.LocalPlayer:Kick("Key check failed:\nCode: " .. status.code)
 			end
+			-------------------------------------------------------------------------------
+			local Main = LSMT.Main
+			local DragBar = Main.Movebar
+			local Top = Main.Top
+			local InputBox = Main.Input
+			local Buttons = Main.ButtonContainer
+			local CloseBT = Top.CloseButton
+			local Title = Top.Title
+			local icon = Top.Logo
+			local Keybox = InputBox.TextBox
+			local GetDiscord = Buttons.Discord
+			local Links = Buttons.Links
+			local Rinku = Links.LootLabs
+			local Linkvertise = Links.Linkvertise
 
-			if error_messages[status.code] then
-				DeleteFile(file_directory)
-				Notification("Warning", error_messages[status.code])
+			Title.UIGradient.Color = ColorSequence.new{ColorSequenceKeypoint.new(0.000, Color3.fromRGB(180, 91, 255)), ColorSequenceKeypoint.new(1.000, Color3.fromRGB(88, 26, 181))};
+			Title.UIGradient.Rotation = 90;
 
-				if status.code == "KEY_HWID_LOCKED" then
-					Players.LocalPlayer:Kick(error_messages[status.code])
-				end
+			Rinku.UIGradient.Color = ColorSequence.new{
+				ColorSequenceKeypoint.new(0, Color3.fromHex("#625409")),
+				ColorSequenceKeypoint.new(1, Color3.fromHex("#530b78"))
+			}
+			Rinku.UIGradient.Rotation = 195
 
-				if status.code == "INVALID_EXECUTOR" or status.code == "SECURITY_ERROR" or status.code == "UNKNOWN_ERROR" then
-					Players.LocalPlayer:Kick(error_messages[status.code])
-				end
+			Linkvertise.UIGradient.Color = ColorSequence.new{
+				ColorSequenceKeypoint.new(0.000, Color3.fromRGB(215, 112, 61)),
+				ColorSequenceKeypoint.new(1.000, Color3.fromRGB(77, 43, 14))
+			}
+			Linkvertise.UIGradient.Rotation = 195
 
-				return nil
-			end
+			GetDiscord.UIGradient.Color = ColorSequence.new{
+				ColorSequenceKeypoint.new(0.000, Color3.fromRGB(114, 137, 218)),
+				ColorSequenceKeypoint.new(1.000, Color3.fromRGB(88, 101, 242))
+			}
+			GetDiscord.UIGradient.Rotation = 195
 
-			Players.LocalPlayer:Kick("Key check failed:\nCode: " .. status.code)
-		end
-		-------------------------------------------------------------------------------
-		local Main = LSMT.Main
-		local DragBar = Main.Movebar
-		local Top = Main.Top
-		local InputBox = Main.Input
-		local Buttons = Main.ButtonContainer
-		local CloseBT = Top.CloseButton
-		local Title = Top.Title
-		local icon = Top.Logo
-		local Keybox = InputBox.TextBox
-		local GetDiscord = Buttons.Discord
-		local Links = Buttons.Links
-		local Rinku = Links.LootLabs
-		local Linkvertise = Links.Linkvertise
+			Links:WaitForChild("LootLabs"):FindFirstChildOfClass("TextLabel").Text = "Rinku"
+			-------------------------------------------------------------------------------
+			function Task:Window(config)
+				config.DisplayName = config.DisplayName or "QuantumPulsar X"
+				config.Discord = config.Discord or ""
+				config.File = config.File or "VaQSys.txt"
+				config.MinIcon = config.MinIcon or "rbxassetid://100569530935041"
+				config.Linkvertise = config.Linkvertise
+				config.Rinku = config.Rinku
 
-		Title.UIGradient.Color = ColorSequence.new{ColorSequenceKeypoint.new(0.000, Color3.fromRGB(180, 91, 255)), ColorSequenceKeypoint.new(1.000, Color3.fromRGB(88, 26, 181))};
-		Title.UIGradient.Rotation = 90;
+				local Window = {}
 
-		Rinku.UIGradient.Color = ColorSequence.new{
-			ColorSequenceKeypoint.new(0, Color3.fromHex("#625409")),
-			ColorSequenceKeypoint.new(1, Color3.fromHex("#530b78"))
-		}
-		Rinku.UIGradient.Rotation = 195
+				api.script_id = script_id
+				Top.Logo.Image = config.MinIcon
+				Top.Title.Text = config.DisplayName
 
-		Linkvertise.UIGradient.Color = ColorSequence.new{
-			ColorSequenceKeypoint.new(0.000, Color3.fromRGB(215, 112, 61)),
-			ColorSequenceKeypoint.new(1.000, Color3.fromRGB(77, 43, 14))
-		}
-		Linkvertise.UIGradient.Rotation = 195
-
-		GetDiscord.UIGradient.Color = ColorSequence.new{
-			ColorSequenceKeypoint.new(0.000, Color3.fromRGB(114, 137, 218)),
-			ColorSequenceKeypoint.new(1.000, Color3.fromRGB(88, 101, 242))
-		}
-		GetDiscord.UIGradient.Rotation = 195
-
-		Links:WaitForChild("LootLabs"):FindFirstChildOfClass("TextLabel").Text = "Rinku"
-		-------------------------------------------------------------------------------
-		function Task:Window(config)
-			config.DisplayName = config.DisplayName or "QuantumPulsar X"
-			config.Discord = config.Discord or ""
-			config.File = config.File or "VaQSys.txt"
-			config.MinIcon = config.MinIcon or "rbxassetid://100569530935041"
-			config.Linkvertise = config.Linkvertise
-			config.Rinku = config.Rinku
-
-			local Window = {}
-
-			api.script_id = script_id
-			Top.Logo.Image = config.MinIcon
-			Top.Title.Text = config.DisplayName
-
-			for _,v in pairs(Main:GetDescendants()) do
-				if v:IsA("TextLabel") or v:IsA("TextButton") then
-					v.FontFace = Font.new([[rbxasset://fonts/families/GothamSSm.json]], Enum.FontWeight.Bold, Enum.FontStyle.Normal);
-				end
-			end
-
-			CloseBT.ImageButton.MouseButton1Click:Connect(function()
-				Close(Main)
-			end)
-
-			Keybox.FocusLost:Connect(function()
-				if Keybox.Text ~= "" then
-					if variables[jas](v1.revert(Keybox.Text), config.File) then
-						TweenService:Create(Keybox, TweenInfo.new(0.65), {BackgroundColor3 = Color3.fromRGB(60, 255, 60), BackgroundTransparency = 0.4}):Play()
-						task.wait(0.65)
-						TweenService:Create(Keybox, TweenInfo.new(0.65), {BackgroundColor3 = Color3.fromRGB(255, 255, 255), BackgroundTransparency = 0.9}):Play()
-						pcall(function() Close(Main) end)
-					else
-						Keybox.Text = ""
-						TweenService:Create(Keybox, TweenInfo.new(0.65), {BackgroundColor3 = Color3.fromRGB(255, 60, 60), BackgroundTransparency = 0.4}):Play()
-						task.wait(0.65)
-						TweenService:Create(Keybox, TweenInfo.new(0.65), {BackgroundColor3 = Color3.fromRGB(255, 255, 255), BackgroundTransparency = 0.9}):Play()
+				for _,v in pairs(Main:GetDescendants()) do
+					if v:IsA("TextLabel") or v:IsA("TextButton") then
+						v.FontFace = Font.new([[rbxasset://fonts/families/GothamSSm.json]], Enum.FontWeight.Bold, Enum.FontStyle.Normal);
 					end
 				end
-			end)
 
-			Rinku.MouseButton1Click:Connect(function()
-				coppy(config.Rinku)
-				Notification("Success", "Link copied to clipboard!")
-			end)
-
-			Linkvertise.MouseButton1Click:Connect(function()
-				coppy(config.Linkvertise)
-				Notification("Success", "Link copied to clipboard!")
-			end)
-
-			Buttons.Discord.MouseButton1Click:Connect(function()
-				coppy(tostring(config.Discord))
-				Notification("Success", "Link copied to clipboard!")
-			end)
-
-			task.spawn(function()
-				local ok, err = pcall(function()
-					local key = (isfile(config.File) and readfile(config.File)) or (script_key ~= "" and script_key) or nil
-					if not key then
-						LSMT.Enabled = true
-						return
-					end
-
-					local decoded
-					local success_decode, decode_error = pcall(function()
-						decoded = v1.revert(key)
-					end)
-					if not success_decode or not decoded then
-						Notification("Warning", "Failed to decode key:\n" .. (decode_error or "Unknown error"))
-						LSMT.Enabled = true
-						return
-					end
-
-					local is_valid, valid_result = pcall(function()
-						return variables[jas](decoded, config.File)
-					end)
-
-					if decoded ~= nil and (not is_valid or valid_result ~= true) then
-						Notification("Warning", "Invalid or rejected key.")
-						LSMT.Enabled = true
-						return
-					end
-					pcall(function() if LSMT then LSMT:Destroy() end end)
+				CloseBT.ImageButton.MouseButton1Click:Connect(function()
+					Close(Main)
 				end)
 
-				if not ok then
-					Notification("Warning", "Key system error:\n" .. tostring(err))
-					if LSMT then
-						LSMT.Enabled = true
+				Keybox.FocusLost:Connect(function()
+					if Keybox.Text ~= "" then
+						if variables[jas](v1.revert(Keybox.Text), config.File) then
+							TweenService:Create(Keybox, TweenInfo.new(0.65), {BackgroundColor3 = Color3.fromRGB(60, 255, 60), BackgroundTransparency = 0.4}):Play()
+							task.wait(0.65)
+							TweenService:Create(Keybox, TweenInfo.new(0.65), {BackgroundColor3 = Color3.fromRGB(255, 255, 255), BackgroundTransparency = 0.9}):Play()
+							pcall(function() Close(Main) end)
+						else
+							Keybox.Text = ""
+							TweenService:Create(Keybox, TweenInfo.new(0.65), {BackgroundColor3 = Color3.fromRGB(255, 60, 60), BackgroundTransparency = 0.4}):Play()
+							task.wait(0.65)
+							TweenService:Create(Keybox, TweenInfo.new(0.65), {BackgroundColor3 = Color3.fromRGB(255, 255, 255), BackgroundTransparency = 0.9}):Play()
+						end
 					end
-				end
-			end)
+				end)
 
-			RenameAllChildren(LSMT)
-			DraggFunction(Main, DragBar, true, 0)
-			return Window
-		end
-		return Task
-	end)
+				Rinku.MouseButton1Click:Connect(function()
+					coppy(config.Rinku)
+					Notification("Success", "Link copied to clipboard!")
+				end)
+
+				Linkvertise.MouseButton1Click:Connect(function()
+					coppy(config.Linkvertise)
+					Notification("Success", "Link copied to clipboard!")
+				end)
+
+				Buttons.Discord.MouseButton1Click:Connect(function()
+					coppy(tostring(config.Discord))
+					Notification("Success", "Link copied to clipboard!")
+				end)
+
+				task.spawn(function()
+					local ok, err = pcall(function()
+						local key = (isfile(config.File) and readfile(config.File)) or (script_key ~= "" and script_key) or nil
+						if not key then
+							LSMT.Enabled = true
+							return
+						end
+
+						local decoded
+						local success_decode, decode_error = pcall(function()
+							decoded = v1.revert(key)
+						end)
+						if not success_decode or not decoded then
+							Notification("Warning", "Failed to decode key:\n" .. (decode_error or "Unknown error"))
+							LSMT.Enabled = true
+							return
+						end
+
+						local is_valid, valid_result = pcall(function()
+							return variables[jas](decoded, config.File)
+						end)
+
+						if decoded ~= nil and (not is_valid or valid_result ~= true) then
+							Notification("Warning", "Invalid or rejected key.")
+							LSMT.Enabled = true
+							return
+						end
+						pcall(function() if LSMT then LSMT:Destroy() end end)
+					end)
+
+					if not ok then
+						Notification("Warning", "Key system error:\n" .. tostring(err))
+						if LSMT then
+							LSMT.Enabled = true
+						end
+					end
+				end)
+
+				RenameAllChildren(LSMT)
+				DraggFunction(Main, DragBar, true, 0)
+				return Window
+			end
+			return Task
+		end)
 	if not status then
 		Notification("Warning", "Key system failed to load:\n" .. res1)
 	else
