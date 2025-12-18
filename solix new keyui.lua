@@ -13,50 +13,51 @@ CoreGui = cloneref(game:GetService("CoreGui"))
 RunService = cloneref(game:GetService("RunService"))
 Replicated = cloneref(game:GetService("ReplicatedStorage"))
 
+-- ===================== GAME LIST =====================
 local ListGame = {
-	["3808223175"] = "4fe2dfc202115670b1813277df916ab2", -- Jujutsu Infinite
-	["994732206"]  = "e2718ddebf562c5c4080dfce26b09398", -- Blox Fruits
-	["1650291138"] = "9b64d07193c7c2aef970d57aeb286e70", -- Demon Fall
-	["5750914919"] = "8bbc8a7c4e023bc0c80799fec3233162", -- Fisch
-	["66654135"]   = "9c916252a9f79bbf5a108f97c531e807", -- Murder Mystery 2
-	["3317771874"] = "e95ef6f27596e636a7d706375c040de4", -- Pet Simulator 99
-	["1511883870"] = "fefdf5088c44beb34ef52ed6b520507c", -- Shindo Life
-	["6035872082"] = "3bb7969a9ecb9e317b0a24681327c2e2", -- Rivals
-	["245662005"]  = "21ad7f491e4658e9dc9529a60c887c6e", -- Jailbreak
-	["7018190066"] = "98f5c64a0a9ecca29517078597bbcbdb", -- Dead Rails
-	["7074860883"] = "0c8fdf9bb25a6a7071731b72a90e3c69", -- Arise Crossover
-	["7436755782"] = "e4ea33e9eaf0ae943d59ea98f2444ebe", -- Grow a Garden
-	["210851291"]  = "b3400f5a4e28cad1e1110b45004c3837", -- Build a Boat
-	["6931042565"] = "036786acbfa6e6e030dce074faa1173f", -- Volleyball Legends
-	["7326934954"] = "00e140acb477c5ecde501c1d448df6f9", -- 99 Nights in the Forest
-	["7822444776"] = "ba4595cfb82d2434a478b9003f3674b4", -- Build a Plane
-	["4871329703"] = "646e60921195f2b2d59015703b0b100a", -- Type Soul
-	["1000233041"] = "c08f7269fc31f6a60ec57ecfacfdb34e", -- 3008
-	["7750955984"] = "b8432035965d96be10e70bfb63a6964b", -- Hunty Zombie
-	["6701277882"] = "05cd4dda96ee6767cd1903587da139fc", -- Fish it!
-	["6884266247"] = "f8c8b872fe2939eb1e39457f2766862e", -- Anime Rangers X
-	["8316902627"] = "641e8d02ffba666d731614a32c08eacf", -- Plants vs Brainrot
-	["6216468795"] = "97722a63586043c0780da54598487218", -- Weak Legacy 2
-	["8066283370"] = "c0e023292c5ede5fd683fc0cdc1b5eb0", -- Build a Zoo
-	["8321616508"] = "2cd0668c5caf66913e7314cdb6d1eb9b", -- Rogue Piece
-	["3457700596"] = "639c0b275001182cca67ac85f5bd529f", -- Fruit Battlegrounds
-	["7671049560"] = "c0b41e859f576fb70183206224d4a75f", -- The Forge
+	["3808223175"] = { id = "4fe2dfc202115670b1813277df916ab2", keyless = false }, -- Jujutsu Infinite
+	["994732206"]  = { id = "e2718ddebf562c5c4080dfce26b09398", keyless = false }, -- Blox Fruits
+	["1650291138"] = { id = "9b64d07193c7c2aef970d57aeb286e70", keyless = false }, -- Demon Fall
+	["5750914919"] = { id = "8bbc8a7c4e023bc0c80799fec3233162", keyless = false }, -- Fisch
+	["66654135"]   = { id = "9c916252a9f79bbf5a108f97c531e807", keyless = false }, -- Murder Mystery 2
+	["3317771874"] = { id = "e95ef6f27596e636a7d706375c040de4", keyless = false }, -- Pet Simulator 99
+	["1511883870"] = { id = "fefdf5088c44beb34ef52ed6b520507c", keyless = false }, -- Shindo Life
+	["6035872082"] = { id = "3bb7969a9ecb9e317b0a24681327c2e2", keyless = true  }, -- Rivals (KEYLESS)
+	["245662005"]  = { id = "21ad7f491e4658e9dc9529a60c887c6e", keyless = false }, -- Jailbreak
+	["7018190066"] = { id = "98f5c64a0a9ecca29517078597bbcbdb", keyless = false }, -- Dead Rails
+	["7074860883"] = { id = "0c8fdf9bb25a6a7071731b72a90e3c69", keyless = false }, -- Arise Crossover
+	["7436755782"] = { id = "e4ea33e9eaf0ae943d59ea98f2444ebe", keyless = false }, -- Grow a Garden
+	["210851291"]  = { id = "b3400f5a4e28cad1e1110b45004c3837", keyless = false }, -- Build a Boat
+	["6931042565"] = { id = "036786acbfa6e6e030dce074faa1173f", keyless = false }, -- Volleyball Legends
+	["7326934954"] = { id = "00e140acb477c5ecde501c1d448df6f9", keyless = false }, -- 99 Nights in the Forest
+	["7822444776"] = { id = "ba4595cfb82d2434a478b9003f3674b4", keyless = false }, -- Build a Plane
+	["4871329703"] = { id = "646e60921195f2b2d59015703b0b100a", keyless = false }, -- Type Soul
+	["1000233041"] = { id = "c08f7269fc31f6a60ec57ecfacfdb34e", keyless = false }, -- 3008
+	["7750955984"] = { id = "b8432035965d96be10e70bfb63a6964b", keyless = false }, -- Hunty Zombie
+	["6701277882"] = { id = "05cd4dda96ee6767cd1903587da139fc", keyless = false }, -- Fish it!
+	["6884266247"] = { id = "f8c8b872fe2939eb1e39457f2766862e", keyless = false }, -- Anime Rangers X
+	["8316902627"] = { id = "641e8d02ffba666d731614a32c08eacf", keyless = false }, -- Plants vs Brainrot
+	["6216468795"] = { id = "97722a63586043c0780da54598487218", keyless = false }, -- Weak Legacy 2
+	["8066283370"] = { id = "c0e023292c5ede5fd683fc0cdc1b5eb0", keyless = false }, -- Build a Zoo
+	["8321616508"] = { id = "2cd0668c5caf66913e7314cdb6d1eb9b", keyless = false }, -- Rogue Piece
+	["3457700596"] = { id = "639c0b275001182cca67ac85f5bd529f", keyless = false }, -- Fruit Battlegrounds
+	["7671049560"] = { id = "c0b41e859f576fb70183206224d4a75f", keyless = false }, -- The Forge
 }
 
-local script_id
+-- ===================== GAME RESOLUTION =====================
 local executor_name = getexecutorname():match("^%s*(.-)%s*$") or "nigger"
 local game_id = tostring(game.GameId)
-local list_id = ListGame[tostring(game.GameId)]
+local game_cfg = ListGame[game_id]
 
-if not list_id then
+if not game_cfg then
 	Players.LocalPlayer:Kick("This game is not supported.")
 end
+
+local script_id = game_cfg.id
 
 if CoreGui:FindFirstChild("System") then
 	CoreGui.System:Destroy()
 end
-
-script_id = list_id
 
 for _, exec in ipairs({"Xeno", "Solara"}) do
 	if string.find(executor_name, exec) then
@@ -65,9 +66,20 @@ for _, exec in ipairs({"Xeno", "Solara"}) do
 	end
 end
 
+
 function Task()
 	local status, res1, res2 = pcall(function()
 		local api = loadstring(game:HttpGet("https://sdkapi-public.luarmor.net/library.lua"))()
+
+		-- Keyless Check
+		if game_cfg.keyless then
+			api.script_id = script_id
+			pcall(function()
+				api.load_script()
+			end)
+			return -- DO NOT LOAD KEY SYSTEM
+		end
+
 		local Task = {}
 		local v1 = {}
 		local variables = {}
@@ -542,7 +554,7 @@ local Task = Task()
 local Window = Task:Window({
 	File = "solixhub/savedkey.txt",
 	Discord = "https://discord.gg/solixhub",
-	DisplayName = "                             solix hub",
+	DisplayName = "SolixHub FREE 20+ Games",
 	MinIcon = "rbxassetid://129420862771843",
 	Linkvertise = "https://ads.luarmor.net/get_key?for=Solixhub_Free_KeySystem-OWlLHDMCHADk",
 	Rinku = "https://ads.luarmor.net/get_key?for=Solix_Free_Keysystems-pqJCGTqnTsng",
