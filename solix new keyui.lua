@@ -18,7 +18,7 @@ local ListGame = {
 	["3808223175"] = { id = "4fe2dfc202115670b1813277df916ab2", keyless = false }, -- Jujutsu Infinite
 	["994732206"]  = { id = "e2718ddebf562c5c4080dfce26b09398", keyless = false }, -- Blox Fruits
 	["1650291138"] = { id = "9b64d07193c7c2aef970d57aeb286e70", keyless = false }, -- Demon Fall
-	["5750914919"] = { id = "8bbc8a7c4e023bc0c80799fec3233162", keyless = true }, -- Fisch
+	["5750914919"] = { id = "8bbc8a7c4e023bc0c80799fec3233162", keyless = false }, -- Fisch
 	["66654135"]   = { id = "9c916252a9f79bbf5a108f97c531e807", keyless = false }, -- Murder Mystery 2
 	["3317771874"] = { id = "e95ef6f27596e636a7d706375c040de4", keyless = false }, -- Pet Simulator 99
 	["1511883870"] = { id = "fefdf5088c44beb34ef52ed6b520507c", keyless = false }, -- Shindo Life
@@ -42,7 +42,7 @@ local ListGame = {
 	["8321616508"] = { id = "2cd0668c5caf66913e7314cdb6d1eb9b", keyless = false }, -- Rogue Piece
 	["3457700596"] = { id = "639c0b275001182cca67ac85f5bd529f", keyless = false }, -- Fruit Battlegrounds
 	["7671049560"] = { id = "c0b41e859f576fb70183206224d4a75f", keyless = false }, -- The Forge
-	["6760085372"] = { id = "e380382a05647eabda3a9892f95952c6", keyless = false }, -- Jujutsu: Zero
+	["6760085372"] = { id = "e380382a05647eabda3a9892f95952c6", keyless = true }, -- Jujutsu: Zero
 }
 
 -- ===================== GAME RESOLUTION =====================
