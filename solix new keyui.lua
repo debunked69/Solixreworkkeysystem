@@ -304,7 +304,7 @@ function Task()
 
 		local function ToTime(s)
 			if s < 0 then
-				return "Never"
+				return "I don't know either 😑"
 			end
 
 			s = math.floor(s)
