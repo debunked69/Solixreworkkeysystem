@@ -29,7 +29,7 @@ local ListGame = {
 	["7436755782"] = { id = "e4ea33e9eaf0ae943d59ea98f2444ebe", keyless = false }, -- Grow a Garden
 	["210851291"]  = { id = "b3400f5a4e28cad1e1110b45004c3837", keyless = false }, -- Build a Boat
 	["6931042565"] = { id = "036786acbfa6e6e030dce074faa1173f", keyless = false }, -- Volleyball Legends
-	["7326934954"] = { id = "00e140acb477c5ecde501c1d448df6f9", keyless = false }, -- 99 Nights in the Forest
+	["7326934954"] = { id = "00e140acb477c5ecde501c1d448df6f9", keyless = true }, -- 99 Nights in the Forest
 	["7822444776"] = { id = "ba4595cfb82d2434a478b9003f3674b4", keyless = false }, -- Build a Plane
 	["4871329703"] = { id = "646e60921195f2b2d59015703b0b100a", keyless = false }, -- Type Soul
 	["1000233041"] = { id = "c08f7269fc31f6a60ec57ecfacfdb34e", keyless = false }, -- 3008
