@@ -43,6 +43,7 @@ local ListGame = {
 	["3457700596"] = { id = "639c0b275001182cca67ac85f5bd529f", keyless = false }, -- Fruit Battlegrounds
 	["7671049560"] = { id = "c0b41e859f576fb70183206224d4a75f", keyless = false }, -- The Forge
 	["6760085372"] = { id = "e380382a05647eabda3a9892f95952c6", keyless = true }, -- Jujutsu: Zero
+	["9266873836"] = { id = "3f9d315017ec895ded5c3350fd6e45a0", keyless = true }, -- Anime Fighting Simulator
 }
 
 -- ===================== GAME RESOLUTION =====================
