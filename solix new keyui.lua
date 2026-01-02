@@ -68,7 +68,6 @@ for _, exec in ipairs({"Xeno", "Solara"}) do
 	end
 end
 
-
 function Task()
 	local status, res1, res2 = pcall(function()
 		local api = loadstring(game:HttpGet("https://sdkapi-public.luarmor.net/library.lua"))()
