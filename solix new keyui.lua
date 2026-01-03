@@ -18,7 +18,7 @@ local ListGame = {
 	["3808223175"] = { id = "4fe2dfc202115670b1813277df916ab2", keyless = false }, -- Jujutsu Infinite
 	["994732206"]  = { id = "e2718ddebf562c5c4080dfce26b09398", keyless = false }, -- Blox Fruits
 	["1650291138"] = { id = "9b64d07193c7c2aef970d57aeb286e70", keyless = false }, -- Demon Fall
-	["5750914919"] = { id = "8bbc8a7c4e023bc0c80799fec3233162", keyless = true }, -- Fisch
+	["5750914919"] = { id = "8bbc8a7c4e023bc0c80799fec3233162", keyless = false }, -- Fisch
 	["66654135"]   = { id = "9c916252a9f79bbf5a108f97c531e807", keyless = false }, -- Murder Mystery 2
 	["3317771874"] = { id = "e95ef6f27596e636a7d706375c040de4", keyless = false }, -- Pet Simulator 99
 	["1511883870"] = { id = "fefdf5088c44beb34ef52ed6b520507c", keyless = false }, -- Shindo Life
