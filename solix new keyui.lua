@@ -33,12 +33,8 @@ local ListGame = {
 	["7822444776"] = { id = "ba4595cfb82d2434a478b9003f3674b4", keyless = false }, -- Build a Plane
 	["4871329703"] = { id = "646e60921195f2b2d59015703b0b100a", keyless = false }, -- Type Soul
 	["1000233041"] = { id = "c08f7269fc31f6a60ec57ecfacfdb34e", keyless = false }, -- 3008
-	["7750955984"] = { id = "b8432035965d96be10e70bfb63a6964b", keyless = false }, -- Hunty Zombie
 	["6701277882"] = { id = "05cd4dda96ee6767cd1903587da139fc", keyless = false }, -- Fish it!
-	["6884266247"] = { id = "f8c8b872fe2939eb1e39457f2766862e", keyless = false }, -- Anime Rangers X
 	["8316902627"] = { id = "641e8d02ffba666d731614a32c08eacf", keyless = false }, -- Plants vs Brainrot
-	["6216468795"] = { id = "97722a63586043c0780da54598487218", keyless = false }, -- Weak Legacy 2
-	["8066283370"] = { id = "c0e023292c5ede5fd683fc0cdc1b5eb0", keyless = false }, -- Build a Zoo
 	["8321616508"] = { id = "2cd0668c5caf66913e7314cdb6d1eb9b", keyless = false }, -- Rogue Piece
 	["3457700596"] = { id = "639c0b275001182cca67ac85f5bd529f", keyless = false }, -- Fruit Battlegrounds
 	["7671049560"] = { id = "c0b41e859f576fb70183206224d4a75f", keyless = true }, -- The Forge
