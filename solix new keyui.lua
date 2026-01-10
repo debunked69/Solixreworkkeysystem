@@ -19,7 +19,6 @@ local ListGame = {
 	["994732206"]  = { id = "e2718ddebf562c5c4080dfce26b09398", keyless = false }, -- Blox Fruits
 	["1650291138"] = { id = "9b64d07193c7c2aef970d57aeb286e70", keyless = false }, -- Demon Fall
 	["5750914919"] = { id = "8bbc8a7c4e023bc0c80799fec3233162", keyless = false }, -- Fisch
-	["66654135"]   = { id = "9c916252a9f79bbf5a108f97c531e807", keyless = false }, -- Murder Mystery 2
 	["3317771874"] = { id = "e95ef6f27596e636a7d706375c040de4", keyless = false }, -- Pet Simulator 99
 	["1511883870"] = { id = "fefdf5088c44beb34ef52ed6b520507c", keyless = false }, -- Shindo Life
 	["6035872082"] = { id = "3bb7969a9ecb9e317b0a24681327c2e2", keyless = true  }, -- Rivals (KEYLESS)
@@ -27,13 +26,7 @@ local ListGame = {
 	["7018190066"] = { id = "98f5c64a0a9ecca29517078597bbcbdb", keyless = false }, -- Dead Rails
 	["7074860883"] = { id = "0c8fdf9bb25a6a7071731b72a90e3c69", keyless = false }, -- Arise Crossover
 	["7436755782"] = { id = "e4ea33e9eaf0ae943d59ea98f2444ebe", keyless = false }, -- Grow a Garden
-	["210851291"]  = { id = "b3400f5a4e28cad1e1110b45004c3837", keyless = false }, -- Build a Boat
-	["6931042565"] = { id = "036786acbfa6e6e030dce074faa1173f", keyless = false }, -- Volleyball Legends
 	["7326934954"] = { id = "00e140acb477c5ecde501c1d448df6f9", keyless = true }, -- 99 Nights in the Forest
-	["7822444776"] = { id = "ba4595cfb82d2434a478b9003f3674b4", keyless = false }, -- Build a Plane
-	["4871329703"] = { id = "646e60921195f2b2d59015703b0b100a", keyless = false }, -- Type Soul
-	["1000233041"] = { id = "c08f7269fc31f6a60ec57ecfacfdb34e", keyless = false }, -- 3008
-	["6701277882"] = { id = "05cd4dda96ee6767cd1903587da139fc", keyless = false }, -- Fish it!
 	["8316902627"] = { id = "641e8d02ffba666d731614a32c08eacf", keyless = false }, -- Plants vs Brainrot
 	["8321616508"] = { id = "2cd0668c5caf66913e7314cdb6d1eb9b", keyless = false }, -- Rogue Piece
 	["3457700596"] = { id = "639c0b275001182cca67ac85f5bd529f", keyless = false }, -- Fruit Battlegrounds
