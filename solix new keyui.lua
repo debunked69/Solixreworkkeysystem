@@ -30,7 +30,7 @@ local ListGame = {
 	["8316902627"] = { id = "641e8d02ffba666d731614a32c08eacf", keyless = false }, -- Plants vs Brainrot
 	["8321616508"] = { id = "2cd0668c5caf66913e7314cdb6d1eb9b", keyless = false }, -- Rogue Piece
 	["3457700596"] = { id = "639c0b275001182cca67ac85f5bd529f", keyless = false }, -- Fruit Battlegrounds
-	["7671049560"] = { id = "c0b41e859f576fb70183206224d4a75f", keyless = true }, -- The Forge
+	["7671049560"] = { id = "c0b41e859f576fb70183206224d4a75f", keyless = false }, -- The Forge
 	["6760085372"] = { id = "e380382a05647eabda3a9892f95952c6", keyless = true }, -- Jujutsu: Zero
 	["9266873836"] = { id = "3f9d315017ec895ded5c3350fd6e45a0", keyless = true }, -- Anime Fighting Simulator
 }
