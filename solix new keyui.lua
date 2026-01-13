@@ -1,17 +1,20 @@
 repeat wait() until game:IsLoaded()
 
 local cloneref = cloneref or function(o) return o end
-Workspace = cloneref(game:GetService("Workspace"))
-Players = cloneref(game:GetService("Players"))
-PlayerGui = Players.LocalPlayer:FindFirstChildOfClass("PlayerGui")
-HttpService = cloneref(game:GetService("HttpService"))
-TweenService = cloneref(game:GetService("TweenService"))
-UserInputService = cloneref(game:GetService("UserInputService"))
-Market = cloneref(game:GetService("MarketplaceService"))
-RBXAnalyt = cloneref(game:GetService("RbxAnalyticsService"))
-CoreGui = cloneref(game:GetService("CoreGui"))
-RunService = cloneref(game:GetService("RunService"))
-Replicated = cloneref(game:GetService("ReplicatedStorage"))
+local wait = task.wait
+local spawn = task.spawn
+
+local CoreGui = cloneref(game:GetService("CoreGui"))
+local HttpService = cloneref(game:GetService("HttpService"))
+local Players = cloneref(game:GetService("Players"))
+local PlayerGui = Players.LocalPlayer:FindFirstChildOfClass("PlayerGui")
+local RunService = cloneref(game:GetService("RunService"))
+local StarterGui = cloneref(game:GetService("StarterGui"))
+local TweenService = cloneref(game:GetService("TweenService"))
+local UserInputService = cloneref(game:GetService("UserInputService"))
+local Workspace = cloneref(game:GetService("Workspace"))
+
+local BindableFunction = Instance.new("BindableFunction")
 
 -- ===================== GAME LIST =====================
 local ListGame = {
@@ -54,6 +57,17 @@ for _, exec in ipairs({"Xeno", "Solara"}) do
 	if string.find(executor_name, exec) then
 		workspace:SetAttribute("low", true)
 		break
+	end
+end
+
+function DeleteAll(path)
+	for _, v in ipairs(listfiles(path)) do
+		if isfile(v) then
+			delfile(v)
+		elseif isfolder(v) then
+			DeleteAll(v)
+			delfolder(v)
+		end
 	end
 end
 
@@ -103,7 +117,7 @@ function Task()
 				Position = UDim2.new(0.5, 0, 0.5, 0)
 			}):Play()
 
-			task.wait(0.1)
+			wait(0.1)
 
 			LSMT:Destroy()
 		end
@@ -196,7 +210,7 @@ function Task()
 
 			task.delay(duration, function()
 				TweenService:Create(Notification, TweenInfo.new(0.3), {BackgroundTransparency = 1}):Play()
-				task.wait(0.3)
+				wait(0.3)
 				Notification:Destroy()
 			end)
 
@@ -321,7 +335,7 @@ function Task()
 
 			if not string.match(cleaned_key, "^[A-Za-z]+$") or #cleaned_key ~= 32 then
 				DeleteFile("solixhub/savedkey.txt")
-				task.wait(1)
+				wait(1)
 				Players.LocalPlayer:Kick("Invalid key format.\nPlease make sure you are using a valid key.")
 				return nil
 			end
@@ -461,13 +475,13 @@ function Task()
 				if Keybox.Text ~= "" then
 					if variables[jas](v1.revert(Keybox.Text), config.File) then
 						TweenService:Create(Keybox, TweenInfo.new(0.65), {BackgroundColor3 = Color3.fromRGB(60, 255, 60), BackgroundTransparency = 0.4}):Play()
-						task.wait(0.65)
+						wait(0.65)
 						TweenService:Create(Keybox, TweenInfo.new(0.65), {BackgroundColor3 = Color3.fromRGB(255, 255, 255), BackgroundTransparency = 0.9}):Play()
 						pcall(function() Close(Main) end)
 					else
 						Keybox.Text = ""
 						TweenService:Create(Keybox, TweenInfo.new(0.65), {BackgroundColor3 = Color3.fromRGB(255, 60, 60), BackgroundTransparency = 0.4}):Play()
-						task.wait(0.65)
+						wait(0.65)
 						TweenService:Create(Keybox, TweenInfo.new(0.65), {BackgroundColor3 = Color3.fromRGB(255, 255, 255), BackgroundTransparency = 0.9}):Play()
 					end
 				end
@@ -488,7 +502,7 @@ function Task()
 				Notification("Success", "Link copied to clipboard!")
 			end)
 
-			task.spawn(function()
+			spawn(function()
 				local ok, err = pcall(function()
 					local key = (isfile(config.File) and readfile(config.File)) or (script_key ~= "" and script_key) or nil
 					if not key then
@@ -545,9 +559,27 @@ local Window = Task:Window({
 	File = "solixhub/savedkey.txt",
 	Discord = "https://discord.gg/solixhub",
 	DisplayName = "SolixHub FREE 20+ Games",
-	MinIcon = "rbxassetid://129420862771843",
+	MinIcon = "rbxassetid://102391696721436",
 	Linkvertise = "https://ads.luarmor.net/get_key?for=Solixhub_Free_KeySystem-OWlLHDMCHADk",
 	Rinku = "https://ads.luarmor.net/get_key?for=Solix_Free_Keysystems-pqJCGTqnTsng",
+})
+
+BindableFunction.OnInvoke = function(v)
+	if v == "Yes" then
+		DeleteAll("")
+		wait(0.3)
+		Players.LocalPlayer:Kick("Files deleted successfully, please rejoin.")
+	end
+end
+
+StarterGui:SetCore("SendNotification", {
+	Title = "Solix Hub",
+	Text = "Delete workspace files?",
+	Icon = "rbxassetid://102391696721436",
+	Duration = 13,
+	Button1 = "Yes",
+	Button2 = "No",
+	Callback = BindableFunction
 })
 
 loadstring(game:HttpGet("https://raw.githubusercontent.com/debunked69/Solixreworkkeysystem/refs/heads/main/Loading%20Screen"))()
