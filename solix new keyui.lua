@@ -366,7 +366,7 @@ function Task()
 						or game_id == "8321616508" -- Rogue Piece
 						or game_id == "3457700596" -- Fruit Battlegrounds
 						or game_id == "7671049560" -- The Forge
-						or game_id == "9363735110" --Escape-Tsunami-For-Brainrots
+						or game_id == "9363735110" -- Escape Tsunami For Brainrots!
 					)
 						and Workspace:GetAttribute("low") then
 					Players.LocalPlayer:Kick("This executor is not supported for this game.")
