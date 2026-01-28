@@ -40,7 +40,7 @@ local ListGame = {
 }
 
 -- ===================== GAME RESOLUTION =====================
-local executor_name = getexecutorname():match("^%s*(.-)%s*$") or "SolixHub"
+local executor_name = getexecutorname():match("^%s*(.-)%s*$") or "nigger"
 local game_id = tostring(game.GameId)
 local game_cfg = ListGame[game_id]
 
