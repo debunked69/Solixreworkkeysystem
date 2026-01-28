@@ -586,4 +586,4 @@ StarterGui:SetCore("SendNotification", {
 
 loadstring(game:HttpGet("https://raw.githubusercontent.com/debunked69/Solixreworkkeysystem/refs/heads/main/Loading%20Screen"))()
 
-Notification("SolixHub", "Tired Of Keysystem? Buy Lifetime Solix At solixhub.com")
+
