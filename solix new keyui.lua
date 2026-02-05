@@ -630,13 +630,11 @@ for _, v in ipairs(Buttons) do
 end
 
 spawn(function()
-	if isfile(Config.File) then
-		local saved_key = readfile(Config.File)
+	while task.wait(0.3) do
+		local saved_key = (isfile(config.File) and readfile(config.File)) or (script_key ~= "" and script_key) or nil
 
-		if saved_key and saved_key ~= "" then
-			if ValidateKey(saved_key) then
-				return
-			end
+		if saved_key and ValidateKey(saved_key) then
+			return 
 		end
 	end
 end)
