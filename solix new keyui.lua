@@ -631,7 +631,7 @@ end
 
 spawn(function()
 	while task.wait(0.3) do
-		local saved_key = (isfile(config.File) and readfile(config.File)) or (script_key ~= "" and script_key) or nil
+		local saved_key = (isfile(Config.File) and readfile(Config.File)) or (script_key ~= "" and script_key) or nil
 
 		if saved_key and ValidateKey(saved_key) then
 			return 
