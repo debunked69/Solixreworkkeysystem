@@ -33,7 +33,7 @@ local GameList = {
 	["6760085372"] = { id = "e380382a05647eabda3a9892f95952c6", keyless = true }, -- Jujutsu: Zero
 	["9266873836"] = { id = "3f9d315017ec895ded5c3350fd6e45a0", keyless = true }, -- Anime Fighting Simulator
 	["9363735110"] = {id = "4948419832e0bd4aa588e628c45b6f8d", keyless = true }, -- Escape Tsunami For Brainrots!
-	["8144728961"] = {id = "50721a1cda76bf61b31ae6e7284a5ea3", keyless = true }, -- Abyss
+	["8144728961"] = {id = "50721a1cda76bf61b31ae6e7284a5ea3", keyless = true }, -- Abyss 67
 }
 
 local executor_name = getexecutorname():match("^%s*(.-)%s*$") or "Unknown"
