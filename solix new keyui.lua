@@ -18,13 +18,13 @@ local GameList = {
 	["994732206"]  = { id = "e2718ddebf562c5c4080dfce26b09398", keyless = false }, -- Blox Fruits
 	["1650291138"] = { id = "9b64d07193c7c2aef970d57aeb286e70", keyless = false }, -- Demon Fall
 	["5750914919"] = { id = "8bbc8a7c4e023bc0c80799fec3233162", keyless = false }, -- Fisch
-	["3317771874"] = { id = "e95ef6f27596e636a7d706375c040de4", keyless = false }, -- Pet Simulator 99
+	["3317771874"] = { id = "e95ef6f27596e636a7d706375c040de4", keyless = true }, -- Pet Simulator 99
 	["1511883870"] = { id = "fefdf5088c44beb34ef52ed6b520507c", keyless = false }, -- Shindo Life
 	["6035872082"] = { id = "3bb7969a9ecb9e317b0a24681327c2e2", keyless = false }, -- Rivals
 	["245662005"]  = { id = "21ad7f491e4658e9dc9529a60c887c6e", keyless = true }, -- Jailbreak
-	["7018190066"] = { id = "98f5c64a0a9ecca29517078597bbcbdb", keyless = false }, -- Dead Rails
+	["7018190066"] = { id = "98f5c64a0a9ecca29517078597bbcbdb", keyless = true }, -- Dead Rails
 	["7074860883"] = { id = "0c8fdf9bb25a6a7071731b72a90e3c69", keyless = false }, -- Arise Crossover
-	["7436755782"] = { id = "e4ea33e9eaf0ae943d59ea98f2444ebe", keyless = false }, -- Grow a Garden
+	["7436755782"] = { id = "e4ea33e9eaf0ae943d59ea98f2444ebe", keyless = true }, -- Grow a Garden
 	["7326934954"] = { id = "00e140acb477c5ecde501c1d448df6f9", keyless = true }, -- 99 Nights in the Forest
 	["8316902627"] = { id = "641e8d02ffba666d731614a32c08eacf", keyless = false }, -- Plants vs Brainrot
 	["8321616508"] = { id = "2cd0668c5caf66913e7314cdb6d1eb9b", keyless = false }, -- Rogue Piece
