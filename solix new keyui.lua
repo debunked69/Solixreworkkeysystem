@@ -529,7 +529,6 @@ local function ValidateKey(key)
 				or game_id == "1511883870" -- Shindo Life
 				or game_id == "7018190066" -- Dead Rails
 				or game_id == "1650291138" -- Demon Fall
-				or game_id == "8321616508" -- Rogue Piece
 				or game_id == "3457700596" -- Fruit Battlegrounds
 				or game_id == "7671049560" -- The Forge
 				or game_id == "9363735110" -- Escape Tsunami For Brainrots!
