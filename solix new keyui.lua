@@ -29,7 +29,7 @@ local GameList = {
 	["6760085372"] = { id = "e380382a05647eabda3a9892f95952c6", keyless = true },  -- Jujutsu: Zero
 	["9266873836"] = { id = "3f9d315017ec895ded5c3350fd6e45a0", keyless = true },  -- Anime Fighting Simulator
 	["3317771874"] = { id = "e95ef6f27596e636a7d706375c040de4", keyless = true },  -- Pet Simulator 99
-},
+}
 
 local executor_name = getexecutorname():match("^%s*(.-)%s*$") or "Unknown"
 local game_id = tostring(game.GameId)
