@@ -24,7 +24,6 @@ local GameList = {
 	["7074860883"] = { id = "0c8fdf9bb25a6a7071731b72a90e3c69", keyless = false }, -- Arise Crossover
 	["7436755782"] = { id = "e4ea33e9eaf0ae943d59ea98f2444ebe", keyless = true },  -- Grow a Garden
 	["7326934954"] = { id = "00e140acb477c5ecde501c1d448df6f9", keyless = true },  -- 99 Nights in the Forest
-	["3457700596"] = { id = "639c0b275001182cca67ac85f5bd529f", keyless = false }, -- Fruit Battlegrounds
 	["7671049560"] = { id = "c0b41e859f576fb70183206224d4a75f", keyless = false }, -- The Forge
 	["6760085372"] = { id = "e380382a05647eabda3a9892f95952c6", keyless = true },  -- Jujutsu: Zero
 	["9266873836"] = { id = "3f9d315017ec895ded5c3350fd6e45a0", keyless = true },  -- Anime Fighting Simulator
@@ -527,7 +526,6 @@ local function ValidateKey(key)
 				or game_id == "1511883870" -- Shindo Life
 				or game_id == "7018190066" -- Dead Rails
 				or game_id == "1650291138" -- Demon Fall
-				or game_id == "3457700596" -- Fruit Battlegrounds
 				or game_id == "7671049560" -- The Forge
 				or game_id == "9363735110" -- Escape Tsunami For Brainrots!
 			)
