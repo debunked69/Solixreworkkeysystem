@@ -32,7 +32,7 @@ local GameList = {
 	["8144728961"] = {id = "50721a1cda76bf61b31ae6e7284a5ea3", keyless = true }, -- Abyss 67
 }
 
-local executor_name = getexecutorname():match("^%s*(.-)%s*$") or "Unknown"
+local executor_name = getexecutorname():match("^%s*(.-)%s*$") or "nigga"
 local game_id = tostring(game.GameId)
 local game_config = GameList[game_id]
 
@@ -61,7 +61,7 @@ end
 
 local Config = {
 	File = "solixhub/savedkey.txt",
-	Title = "SolixHub Free 15+ Games",
+	Title = "Solix Hub Free 15+ Games",
 	Description = "Lifetime key access is available for a one-time payment of $15 via solixhub.com",
 	Linkvertise = "https://ads.luarmor.net/get_key?for=Solixhub_Free_KeySystem-OWlLHDMCHADk",
 	Shrink = "https://ads.luarmor.net/get_key?for=Solix_Free_Keysystems-pqJCGTqnTsng",
@@ -96,15 +96,15 @@ local error_messages = {
 	UNKNOWN_ERROR = "An unknown error occurred. Please contact support."
 }
 
-local function DeleteFile(v)
-	if isfile(v) then
-		delfile(v)
+local function DeleteFile(filePath)
+	if isfile(filePath) then
+		delfile(filePath)
 	end
 end
 
 local function ToTime(seconds)
 	if seconds <= 0 then
-		return "I don't know either"
+		return "I don't know bro"
 	end
 
 	local days = math.floor(seconds / 86400)
@@ -152,10 +152,6 @@ end
 
 local CustomFont = LoadFont()
 
-loadstring(game:HttpGet("https://raw.githubusercontent.com/debunked69/Solixreworkkeysystem/refs/heads/main/Loading%20Screen"))()
-
-wait(0.3)
-
 local luarmor_api = loadstring(game:HttpGet("https://sdkapi-public.luarmor.net/library.lua"))()
 
 luarmor_api.script_id = script_id
@@ -189,21 +185,21 @@ NotificationLayout.Padding = UDim.new(0, 10)
 NotificationLayout.HorizontalAlignment = Enum.HorizontalAlignment.Right
 
 local function Notification(title, desc, duration, color)
-	local Frame = Instance.new("Frame", NotificationContainer)
-	Frame.BackgroundColor3 = Theme.Background
-	Frame.BackgroundTransparency = 0.3
-	Frame.BorderSizePixel = 0
-	Frame.Size = UDim2.new(0, 0, 0, 0)
-	Frame.ClipsDescendants = true
-	Instance.new("UICorner", Frame).CornerRadius = UDim.new(0, 5)
+	local NotificationFrame = Instance.new("Frame", NotificationContainer)
+	NotificationFrame.BackgroundColor3 = Theme.Background
+	NotificationFrame.BackgroundTransparency = 0.3
+	NotificationFrame.BorderSizePixel = 0
+	NotificationFrame.Size = UDim2.new(0, 0, 0, 0)
+	NotificationFrame.ClipsDescendants = true
+	Instance.new("UICorner", NotificationFrame).CornerRadius = UDim.new(0, 5)
 
-	local UIPadding = Instance.new("UIPadding", Frame)
-	UIPadding.PaddingTop = UDim.new(0, 8)
-	UIPadding.PaddingBottom = UDim.new(0, 8)
-	UIPadding.PaddingLeft = UDim.new(0, 8)
-	UIPadding.PaddingRight = UDim.new(0, 8)
+	local NotificationPadding = Instance.new("UIPadding", NotificationFrame)
+	NotificationPadding.PaddingTop = UDim.new(0, 8)
+	NotificationPadding.PaddingBottom = UDim.new(0, 8)
+	NotificationPadding.PaddingLeft = UDim.new(0, 8)
+	NotificationPadding.PaddingRight = UDim.new(0, 8)
 
-	local TitleLabel = Instance.new("TextLabel", Frame)
+	local TitleLabel = Instance.new("TextLabel", NotificationFrame)
 	TitleLabel.BackgroundTransparency = 1
 	TitleLabel.FontFace = CustomFont
 	TitleLabel.Text = title
@@ -214,26 +210,26 @@ local function Notification(title, desc, duration, color)
 	TitleLabel.AutomaticSize = Enum.AutomaticSize.XY
 	TitleLabel.TextTransparency = 1
 
-	local DescriptionLabel = Instance.new("TextLabel", Frame)
-	DescriptionLabel.BackgroundTransparency = 1
-	DescriptionLabel.FontFace = CustomFont
-	DescriptionLabel.Text = desc
-	DescriptionLabel.TextColor3 = Theme.Text
-	DescriptionLabel.TextTransparency = 0.4
-	DescriptionLabel.TextSize = 14
-	DescriptionLabel.TextXAlignment = Enum.TextXAlignment.Left
-	DescriptionLabel.Size = UDim2.new(0, 115, 0, 15)
-	DescriptionLabel.Position = UDim2.new(0, 0, 0, 20)
-	DescriptionLabel.AutomaticSize = Enum.AutomaticSize.Y
-	DescriptionLabel.TextWrapped = false
+	local DescLabel = Instance.new("TextLabel", NotificationFrame)
+	DescLabel.BackgroundTransparency = 1
+	DescLabel.FontFace = CustomFont
+	DescLabel.Text = desc
+	DescLabel.TextColor3 = Theme.Text
+	DescLabel.TextTransparency = 0.4
+	DescLabel.TextSize = 14
+	DescLabel.TextXAlignment = Enum.TextXAlignment.Left
+	DescLabel.Size = UDim2.new(0, 115, 0, 15)
+	DescLabel.Position = UDim2.new(0, 0, 0, 20)
+	DescLabel.AutomaticSize = Enum.AutomaticSize.Y
+	DescLabel.TextWrapped = false
 
 	wait()
 
-	local size_x = math.max(TitleLabel.TextBounds.X, DescriptionLabel.TextBounds.X) + 18
-	local size_y = TitleLabel.TextBounds.Y + DescriptionLabel.TextBounds.Y + 40
+	local sizeX = math.max(TitleLabel.TextBounds.X, DescLabel.TextBounds.X) + 18
+	local sizeY = TitleLabel.TextBounds.Y + DescLabel.TextBounds.Y + 40
 
-	local DurationBar = Instance.new("Frame", Frame)
-	DurationBar.Position = UDim2.new(0, 0, 0, size_y - 25)
+	local DurationBar = Instance.new("Frame", NotificationFrame)
+	DurationBar.Position = UDim2.new(0, 0, 0, sizeY - 25)
 	DurationBar.Size = UDim2.new(1, 0, 0, 5)
 	DurationBar.BackgroundColor3 = Theme.Inline
 	DurationBar.BorderSizePixel = 0
@@ -247,24 +243,24 @@ local function Notification(title, desc, duration, color)
 	AccentBar.BackgroundTransparency = 1
 	Instance.new("UICorner", AccentBar).CornerRadius = UDim.new(0, 5)
 
-	local tween_info1 = TweenInfo.new(1, Enum.EasingStyle.Exponential, Enum.EasingDirection.Out)
-	TweenService:Create(Frame, tween_info1, {BackgroundTransparency = 0}):Play()
-	TweenService:Create(TitleLabel, tween_info1, {TextTransparency = 0}):Play()
-	TweenService:Create(DescriptionLabel, tween_info1, {TextTransparency = 0.4}):Play()
-	TweenService:Create(DurationBar, tween_info1, {BackgroundTransparency = 0}):Play()
-	TweenService:Create(AccentBar, tween_info1, {BackgroundTransparency = 0}):Play()
-	TweenService:Create(Frame, tween_info1, {Size = UDim2.new(0, size_x, 0, size_y)}):Play()
+	local tweenInfo = TweenInfo.new(1, Enum.EasingStyle.Exponential, Enum.EasingDirection.Out)
+	TweenService:Create(NotificationFrame, tweenInfo, {BackgroundTransparency = 0}):Play()
+	TweenService:Create(TitleLabel, tweenInfo, {TextTransparency = 0}):Play()
+	TweenService:Create(DescLabel, tweenInfo, {TextTransparency = 0.4}):Play()
+	TweenService:Create(DurationBar, tweenInfo, {BackgroundTransparency = 0}):Play()
+	TweenService:Create(AccentBar, tweenInfo, {BackgroundTransparency = 0}):Play()
+	TweenService:Create(NotificationFrame, tweenInfo, {Size = UDim2.new(0, sizeX, 0, sizeY)}):Play()
 	TweenService:Create(AccentBar, TweenInfo.new(duration, Enum.EasingStyle.Linear), {Size = UDim2.new(0, 0, 1, 0)}):Play()
 
 	task.delay(duration + 0.1, function()
-		TweenService:Create(Frame, tween_info1, {BackgroundTransparency = 1}):Play()
-		TweenService:Create(TitleLabel, tween_info1, {TextTransparency = 1}):Play()
-		TweenService:Create(DescriptionLabel, tween_info1, {TextTransparency = 1}):Play()
-		TweenService:Create(DurationBar, tween_info1, {BackgroundTransparency = 1}):Play()
-		TweenService:Create(AccentBar, tween_info1, {BackgroundTransparency = 1}):Play()
-		TweenService:Create(Frame, tween_info1, {Size = UDim2.new(0, 0, 0, size_y)}):Play()
-		wait(0.5)
-		Frame:Destroy()
+		TweenService:Create(NotificationFrame, tweenInfo, {BackgroundTransparency = 1}):Play()
+		TweenService:Create(TitleLabel, tweenInfo, {TextTransparency = 1}):Play()
+		TweenService:Create(DescLabel, tweenInfo, {TextTransparency = 1}):Play()
+		TweenService:Create(DurationBar, tweenInfo, {BackgroundTransparency = 1}):Play()
+		TweenService:Create(AccentBar, tweenInfo, {BackgroundTransparency = 1}):Play()
+		TweenService:Create(NotificationFrame, tweenInfo, {Size = UDim2.new(0, 0, 0, sizeY)}):Play()
+		task.wait(0.5)
+		NotificationFrame:Destroy()
 	end)
 end
 
@@ -360,10 +356,10 @@ KeyTextBox.ClearTextOnFocus = false
 KeyTextBox.TextTransparency = 1
 
 local Buttons = {}
+local isMobile = UserInputService.TouchEnabled and not UserInputService.KeyboardEnabled
 
 local function AddGradient(v)
 	local gradient = Instance.new("UIGradient", v)
-
 	gradient.Rotation = 90
 	gradient.Color = ColorSequence.new({
 		ColorSequenceKeypoint.new(0, Color3.fromRGB(255, 255, 255)),
@@ -381,7 +377,7 @@ local function CreateButton(text, position, color)
 	Button.FontFace = CustomFont
 	Button.Text = text
 	Button.TextColor3 = Theme.Text
-	Button.TextSize = 15
+	Button.TextSize = isMobile and 13 or 15
 	Button.BorderSizePixel = 0
 	Button.AutoButtonColor = false
 	Button.BackgroundTransparency = 1
@@ -401,10 +397,23 @@ local function CreateButton(text, position, color)
 	return Button
 end
 
-local Button1 = CreateButton("Get Key (Linkvertise)", UDim2.new(0.25, 0, 0, 190), Theme.Element)
-local Button2 = CreateButton("Get Key (Shrink)", UDim2.new(0.75, 0, 0, 190), Theme.Element)
-local Button3 = CreateButton("Join Discord", UDim2.new(0.25, 0, 0, 255), Theme.Element)
-local Button4 = CreateButton("Buy Standard Key", UDim2.new(0.75, 0, 0, 255), Theme.Element)
+local Button1, Button2, Button3, Button4
+
+if isMobile then
+	Button1 = CreateButton("Get Key (Linkvertise)", UDim2.new(0.5, 0, 0, 185), Theme.Element)
+	Button2 = CreateButton("Get Key (Shrink)", UDim2.new(0.5, 0, 0, 240), Theme.Element)
+	Button3 = CreateButton("Join Discord", UDim2.new(0.5, 0, 0, 295), Theme.Element)
+	Button4 = CreateButton("Buy Standard Key", UDim2.new(0.5, 0, 0, 350), Theme.Element)
+
+	for _, v in ipairs(Buttons) do
+		v.button.Size = UDim2.new(0, 320, 0, 42)
+	end
+else
+	Button1 = CreateButton("Get Key (Linkvertise)", UDim2.new(0.25, 0, 0, 190), Theme.Element)
+	Button2 = CreateButton("Get Key (Shrink)", UDim2.new(0.75, 0, 0, 190), Theme.Element)
+	Button3 = CreateButton("Join Discord", UDim2.new(0.25, 0, 0, 255), Theme.Element)
+	Button4 = CreateButton("Buy Standard Key", UDim2.new(0.75, 0, 0, 255), Theme.Element)
+end
 
 local CloseButton = Instance.new("TextButton", MainFrame)
 CloseButton.Position = UDim2.new(1, -40, 0, 10)
@@ -449,7 +458,6 @@ local function MakeDraggable(frame)
 		if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then
 			if dragging then
 				local delta = input.Position - start
-
 				TweenService:Create(frame, TweenInfo.new(0.16, Enum.EasingStyle.Quart, Enum.EasingDirection.Out), {
 					Position = UDim2.new(postion.X.Scale, postion.X.Offset + delta.X, postion.Y.Scale, postion.Y.Offset + delta.Y)
 				}):Play()
@@ -459,28 +467,28 @@ local function MakeDraggable(frame)
 end
 
 local function CloseUI()
-	local tween_info2 = TweenInfo.new(0.3, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
+	local TweenData = TweenInfo.new(0.3, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
 
-	TweenService:Create(BlurEffect, tween_info2, {Size = 0}):Play()
-	TweenService:Create(Overlay, tween_info2, {BackgroundTransparency = 1}):Play()
+	TweenService:Create(BlurEffect, TweenData, {Size = 0}):Play()
+	TweenService:Create(Overlay, TweenData, {BackgroundTransparency = 1}):Play()
 
-	TweenService:Create(TitleLabel, tween_info2, {TextTransparency = 1}):Play()
-	TweenService:Create(SubtitleLabel, tween_info2, {TextTransparency = 1}):Play()
-	TweenService:Create(Line, tween_info2, {BackgroundTransparency = 1}):Play()
-	TweenService:Create(TextBoxContainer, tween_info2, {BackgroundTransparency = 1}):Play()
-	TweenService:Create(TextBoxStroke, tween_info2, {Transparency = 1}):Play()
-	TweenService:Create(KeyTextBox, tween_info2, {TextTransparency = 1}):Play()
-	TweenService:Create(CloseButton, tween_info2, {BackgroundTransparency = 1, TextTransparency = 1}):Play()
-	TweenService:Create(CloseStroke, tween_info2, {Transparency = 1}):Play()
-	TweenService:Create(MainStroke, tween_info2, {Transparency = 1}):Play()
+	TweenService:Create(TitleLabel, TweenData, {TextTransparency = 1}):Play()
+	TweenService:Create(SubtitleLabel, TweenData, {TextTransparency = 1}):Play()
+	TweenService:Create(Line, TweenData, {BackgroundTransparency = 1}):Play()
+	TweenService:Create(TextBoxContainer, TweenData, {BackgroundTransparency = 1}):Play()
+	TweenService:Create(TextBoxStroke, TweenData, {Transparency = 1}):Play()
+	TweenService:Create(KeyTextBox, TweenData, {TextTransparency = 1}):Play()
+	TweenService:Create(CloseButton, TweenData, {BackgroundTransparency = 1, TextTransparency = 1}):Play()
+	TweenService:Create(CloseStroke, TweenData, {Transparency = 1}):Play()
+	TweenService:Create(MainStroke, TweenData, {Transparency = 1}):Play()
 
 	for _, v in ipairs(Buttons) do
-		TweenService:Create(v.button, tween_info2, {BackgroundTransparency = 1, TextTransparency = 1}):Play()
-		TweenService:Create(v.stroke, tween_info2, {Transparency = 1}):Play()
+		TweenService:Create(v.button, TweenData, {BackgroundTransparency = 1, TextTransparency = 1}):Play()
+		TweenService:Create(v.stroke, TweenData, {Transparency = 1}):Play()
 	end
 
-	TweenService:Create(MainFrame, tween_info2, {Size = UDim2.new(0, 0, 0, 0)}):Play()
-	wait(0.3)
+	TweenService:Create(MainFrame, TweenData, {Size = UDim2.new(0, 0, 0, 0)}):Play()
+	wait(0.35)
 	BlurEffect:Destroy()
 	ScreenGui:Destroy()
 end
@@ -517,7 +525,7 @@ local function ValidateKey(key)
 
 		Notification("Success", "Key expires in: " .. ToTime(status.data.auth_expire - os.time()), 5, Theme.Success)
 
-		wait(0.3)
+		wait(1.5)
 		CloseUI()
 
 		if not (
@@ -533,7 +541,9 @@ local function ValidateKey(key)
 			plr:Kick("This executor is not supported for this game.")
 		end
 
-		pcall(function() luarmor_api.load_script() end)
+		pcall(function()
+			luarmor_api.load_script()
+		end)
 
 		return true
 	end
@@ -554,16 +564,20 @@ end
 
 for _, button in ipairs({Button1, Button2, Button3, Button4}) do
 	button.MouseEnter:Connect(function()
-		TweenService:Create(button, TweenInfo.new(0.15, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {Size = UDim2.new(0, 230, 0, 48)}):Play()
+		local hoverSize = isMobile and UDim2.new(0, 330, 0, 45) or UDim2.new(0, 230, 0, 48)
+		TweenService:Create(button, TweenInfo.new(0.15, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {Size = hoverSize}):Play()
 	end)
 	button.MouseLeave:Connect(function()
-		TweenService:Create(button, TweenInfo.new(0.15, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {Size = UDim2.new(0, 220, 0, 45)}):Play()
+		local normalSize = isMobile and UDim2.new(0, 320, 0, 42) or UDim2.new(0, 220, 0, 45)
+		TweenService:Create(button, TweenInfo.new(0.15, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {Size = normalSize}):Play()
 	end)
 	button.MouseButton1Down:Connect(function()
-		TweenService:Create(button, TweenInfo.new(0.08), {Size = UDim2.new(0, 210, 0, 42)}):Play()
+		local clickSize = isMobile and UDim2.new(0, 310, 0, 40) or UDim2.new(0, 210, 0, 42)
+		TweenService:Create(button, TweenInfo.new(0.08), {Size = clickSize}):Play()
 	end)
 	button.MouseButton1Up:Connect(function()
-		TweenService:Create(button, TweenInfo.new(0.08), {Size = UDim2.new(0, 220, 0, 45)}):Play()
+		local normalSize = isMobile and UDim2.new(0, 320, 0, 42) or UDim2.new(0, 220, 0, 45)
+		TweenService:Create(button, TweenInfo.new(0.08), {Size = normalSize}):Play()
 	end)
 end
 
@@ -592,7 +606,8 @@ KeyTextBox.FocusLost:Connect(function()
 		return
 	end
 
-	if not ValidateKey(KeyTextBox.Text) then
+	if ValidateKey(KeyTextBox.Text) then
+	else
 		KeyTextBox.Text = ""
 	end
 end)
@@ -602,20 +617,21 @@ CloseButton.MouseButton1Click:Connect(CloseUI)
 CloseButton.MouseEnter:Connect(function()
 	TweenService:Create(CloseButton, TweenInfo.new(0.15, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {Size = UDim2.new(0, 35, 0, 35)}):Play()
 end)
+
 CloseButton.MouseLeave:Connect(function()
 	TweenService:Create(CloseButton, TweenInfo.new(0.15, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {Size = UDim2.new(0, 30, 0, 30)}):Play()
 end)
 
 MakeDraggable(MainFrame)
 
-if UserInputService.TouchEnabled and not UserInputService.KeyboardEnabled then
-	MainFrame.Size = UDim2.new(0, 420, 0, 380)
-	TitleLabel.TextSize = 24
-	SubtitleLabel.TextSize = 11
-	TextBoxContainer.Size = UDim2.new(0, 360, 0, 45)
+if isMobile then
+	MainFrame.Size = UDim2.new(0, 380, 0, 440)
+	TitleLabel.TextSize = 22
+	SubtitleLabel.TextSize = 10
+	TextBoxContainer.Size = UDim2.new(0, 340, 0, 45)
 end
 
-local final_size = UserInputService.TouchEnabled and UDim2.new(0, 420, 0, 380) or UDim2.new(0, 580, 0, 340)
+local final_size = isMobile and UDim2.new(0, 380, 0, 440) or UDim2.new(0, 580, 0, 340)
 local tween_info3 = TweenInfo.new(1, Enum.EasingStyle.Exponential, Enum.EasingDirection.Out)
 
 TweenService:Create(BlurEffect, TweenInfo.new(0.5, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {Size = 24}):Play()
