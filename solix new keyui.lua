@@ -3,6 +3,9 @@ repeat wait() until game:IsLoaded()
 local wait = task.wait
 local spawn = task.spawn
 
+loadstring(game:HttpGet("https://raw.githubusercontent.com/debunked69/Solixreworkkeysystem/refs/heads/main/Loading%20Screen"))()
+wait(0.3)
+
 local CoreGui = cloneref(game:GetService("CoreGui"))
 local HttpService = cloneref(game:GetService("HttpService"))
 local Lighting = cloneref(game:GetService("Lighting"))
