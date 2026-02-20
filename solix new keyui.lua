@@ -21,7 +21,7 @@ local GameList = {
 	["994732206"]  = { id = "e2718ddebf562c5c4080dfce26b09398", keyless = false }, -- Blox Fruits
 	["1650291138"] = { id = "9b64d07193c7c2aef970d57aeb286e70", keyless = false }, -- Demon Fall
 	["1511883870"] = { id = "fefdf5088c44beb34ef52ed6b520507c", keyless = false }, -- Shindo Life
-	["6035872082"] = { id = "3bb7969a9ecb9e317b0a24681327c2e2", keyless = true }, -- Rivals
+	["6035872082"] = { id = "3bb7969a9ecb9e317b0a24681327c2e2", keyless = false }, -- Rivals
 	["245662005"]  = { id = "21ad7f491e4658e9dc9529a60c887c6e", keyless = true },  -- Jailbreak
 	["7018190066"] = { id = "98f5c64a0a9ecca29517078597bbcbdb", keyless = true },  -- Dead Rails
 	["7074860883"] = { id = "0c8fdf9bb25a6a7071731b72a90e3c69", keyless = false }, -- Arise Crossover
