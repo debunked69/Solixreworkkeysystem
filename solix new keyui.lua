@@ -33,6 +33,7 @@ local GameList = {
 	["3317771874"] = { id = "e95ef6f27596e636a7d706375c040de4", keyless = true },  -- Pet Simulator 99
 	["9363735110"] = {id = "4948419832e0bd4aa588e628c45b6f8d", keyless = true }, -- Escape Tsunami For Brainrots!
 	["8144728961"] = {id = "50721a1cda76bf61b31ae6e7284a5ea3", keyless = true }, -- Abyss 67
+	["9509842868"] = {id = "cda910bd16c73785463fbe982d64994d", keyless = true }, -- Gaarden horizon
 }
 
 local executor_name = getexecutorname():match("^%s*(.-)%s*$") or "nigga"
