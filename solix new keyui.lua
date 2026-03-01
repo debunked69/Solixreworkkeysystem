@@ -19,7 +19,6 @@ local plr = Players.LocalPlayer
 local GameList = {
 	["3808223175"] = { id = "4fe2dfc202115670b1813277df916ab2", keyless = false }, -- Jujutsu Infinite
 	["994732206"]  = { id = "e2718ddebf562c5c4080dfce26b09398", keyless = false }, -- Blox Fruits
-	["1650291138"] = { id = "9b64d07193c7c2aef970d57aeb286e70", keyless = false }, -- Demon Fall
 	["1511883870"] = { id = "fefdf5088c44beb34ef52ed6b520507c", keyless = false }, -- Shindo Life
 	["6035872082"] = { id = "3bb7969a9ecb9e317b0a24681327c2e2", keyless = false }, -- Rivals
 	["245662005"]  = { id = "21ad7f491e4658e9dc9529a60c887c6e", keyless = true },  -- Jailbreak
@@ -29,11 +28,10 @@ local GameList = {
 	["7326934954"] = { id = "00e140acb477c5ecde501c1d448df6f9", keyless = true },  -- 99 Nights in the Forest
 	["7671049560"] = { id = "c0b41e859f576fb70183206224d4a75f", keyless = false }, -- The Forge
 	["6760085372"] = { id = "e380382a05647eabda3a9892f95952c6", keyless = true },  -- Jujutsu: Zero
-	["9266873836"] = { id = "3f9d315017ec895ded5c3350fd6e45a0", keyless = true },  -- Anime Fighting Simulator
 	["3317771874"] = { id = "e95ef6f27596e636a7d706375c040de4", keyless = true },  -- Pet Simulator 99
 	["9363735110"] = {id = "4948419832e0bd4aa588e628c45b6f8d", keyless = false }, -- Escape Tsunami For Brainrots!
-	["8144728961"] = {id = "50721a1cda76bf61b31ae6e7284a5ea3", keyless = true }, -- Abyss 67
 	["9509842868"] = {id = "ad4ccd094f8b6f972bff36de80475abe", keyless = true }, -- Garden Horizons
+	["5130394318"] = {id = "3e7a75a970118d0f0cf629369524dc7d", keyless = true }, -- Bizarre Lineage
 }
 
 local executor_name = getexecutorname():match("^%s*(.-)%s*$") or "nigga"
@@ -537,9 +535,10 @@ local function ValidateKey(key)
 				or game_id == "994732206" -- Blox Fruits
 				or game_id == "1511883870" -- Shindo Life
 				or game_id == "7018190066" -- Dead Rails
-				or game_id == "1650291138" -- Demon Fall
 				or game_id == "7671049560" -- The Forge
 				or game_id == "9363735110" -- Escape Tsunami For Brainrots!
+				or game_id == "9509842868" -- Garden Horizons
+				or game_id == "5130394318" -- Bizarre Lineage
 			)
 				and Workspace:GetAttribute("low") then
 			plr:Kick("This executor is not supported for this game.")
