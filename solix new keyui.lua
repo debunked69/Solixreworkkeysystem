@@ -16,7 +16,7 @@ local Workspace = cloneref(game:GetService("Workspace"))
 
 local plr = Players.LocalPlayer
 
-local GameList = {
+local list = {
 	["3808223175"] = { id = "4fe2dfc202115670b1813277df916ab2", keyless = false }, -- Jujutsu Infinite
 	["994732206"]  = { id = "e2718ddebf562c5c4080dfce26b09398", keyless = false }, -- Blox Fruits
 	["1511883870"] = { id = "fefdf5088c44beb34ef52ed6b520507c", keyless = false }, -- Shindo Life
@@ -36,7 +36,7 @@ local GameList = {
 
 local executor_name = getexecutorname():match("^%s*(.-)%s*$") or "nigga"
 local game_id = tostring(game.GameId)
-local game_config = GameList[game_id]
+local game_config = list[game_id]
 
 if not game_config then
 	plr:Kick("This game is not supported.")
@@ -48,7 +48,7 @@ local is_key_less = game_config.keyless
 
 for _, exec in ipairs({"Xeno", "Solara"}) do
 	if string.find(executor_name, exec) then
-		game:GetService("Workspace"):SetAttribute("low", true)
+		Workspace:SetAttribute("low", true)
 		break
 	end
 end
@@ -61,17 +61,17 @@ if CoreGui:FindFirstChild("Solix Notification") then
 	CoreGui["Solix Notification"]:Destroy()
 end
 
-local Config = {
+local config = {
 	File = "solixhub/savedkey.txt",
 	Title = "Solix Hub Free 15+ Games",
-	Description = "Lifetime key access is available for a one-time payment of $15 via solixhub.com",
+	Description = "Lifetime key access is available for a one time payment of $15 via solixhub.com",
 	Linkvertise = "https://ads.luarmor.net/get_key?for=Solixhub_Free_KeySystem-OWlLHDMCHADk",
 	Shrink = "https://ads.luarmor.net/get_key?for=Solix_Free_Keysystems-pqJCGTqnTsng",
 	Discord = "https://discord.gg/solixhub",
 	Shop = "https://solixhub.com/",
 }
 
-local Theme = {
+local theme = {
 	Background = Color3.fromRGB(15, 12, 16),
 	Inline = Color3.fromRGB(22, 20, 24),
 	Border = Color3.fromRGB(41, 37, 45),
@@ -98,20 +98,20 @@ local error_messages = {
 	UNKNOWN_ERROR = "An unknown error occurred. Please contact support."
 }
 
-local function DeleteFile(filePath)
-	if isfile(filePath) then
-		delfile(filePath)
+local function DeleteFile(v)
+	if isfile(v) then
+		delfile(v)
 	end
 end
 
-local function ToTime(seconds)
-	if seconds <= 0 then
+local function ToTime(v)
+	if v <= 0 then
 		return "I don't know bro"
 	end
 
-	local days = math.floor(seconds / 86400)
-	local hours = math.floor((seconds % 86400) / 3600)
-	local minutes = math.floor((seconds % 3600) / 60)
+	local days = math.floor(v / 86400)
+	local hours = math.floor((v % 86400) / 3600)
+	local minutes = math.floor((v % 3600) / 60)
 
 	if days > 0 then
 		return string.format("%dd %dh %dm", days, hours, minutes)
@@ -152,7 +152,7 @@ local function LoadFont()
 	return Font.new(getcustomasset("solixhub/Assets/InterSemiBold.font"))
 end
 
-local CustomFont = LoadFont()
+local font = LoadFont()
 
 local luarmor_api = loadstring(game:HttpGet("https://sdkapi-public.luarmor.net/library.lua"))()
 
@@ -188,7 +188,7 @@ NotificationLayout.HorizontalAlignment = Enum.HorizontalAlignment.Right
 
 local function Notification(title, desc, duration, color)
 	local NotificationFrame = Instance.new("Frame", NotificationContainer)
-	NotificationFrame.BackgroundColor3 = Theme.Background
+	NotificationFrame.BackgroundColor3 = theme.Background
 	NotificationFrame.BackgroundTransparency = 0.3
 	NotificationFrame.BorderSizePixel = 0
 	NotificationFrame.Size = UDim2.new(0, 0, 0, 0)
@@ -203,9 +203,9 @@ local function Notification(title, desc, duration, color)
 
 	local TitleLabel = Instance.new("TextLabel", NotificationFrame)
 	TitleLabel.BackgroundTransparency = 1
-	TitleLabel.FontFace = CustomFont
+	TitleLabel.FontFace = font
 	TitleLabel.Text = title
-	TitleLabel.TextColor3 = Theme.Text
+	TitleLabel.TextColor3 = theme.Text
 	TitleLabel.TextSize = 14
 	TitleLabel.TextXAlignment = Enum.TextXAlignment.Left
 	TitleLabel.Size = UDim2.new(0, 0, 0, 15)
@@ -214,9 +214,9 @@ local function Notification(title, desc, duration, color)
 
 	local DescLabel = Instance.new("TextLabel", NotificationFrame)
 	DescLabel.BackgroundTransparency = 1
-	DescLabel.FontFace = CustomFont
+	DescLabel.FontFace = font
 	DescLabel.Text = desc
-	DescLabel.TextColor3 = Theme.Text
+	DescLabel.TextColor3 = theme.Text
 	DescLabel.TextTransparency = 0.4
 	DescLabel.TextSize = 14
 	DescLabel.TextXAlignment = Enum.TextXAlignment.Left
@@ -233,34 +233,34 @@ local function Notification(title, desc, duration, color)
 	local DurationBar = Instance.new("Frame", NotificationFrame)
 	DurationBar.Position = UDim2.new(0, 0, 0, sizeY - 25)
 	DurationBar.Size = UDim2.new(1, 0, 0, 5)
-	DurationBar.BackgroundColor3 = Theme.Inline
+	DurationBar.BackgroundColor3 = theme.Inline
 	DurationBar.BorderSizePixel = 0
 	DurationBar.BackgroundTransparency = 1
 	Instance.new("UICorner", DurationBar).CornerRadius = UDim.new(0, 5)
 
 	local AccentBar = Instance.new("Frame", DurationBar)
 	AccentBar.Size = UDim2.new(1, 0, 1, 0)
-	AccentBar.BackgroundColor3 = color
+	AccentBar.BackgroundColor3 = Color3.fromRGB(math.random(0, 255), math.random(0, 255), math.random(0, 255))
 	AccentBar.BorderSizePixel = 0
 	AccentBar.BackgroundTransparency = 1
 	Instance.new("UICorner", AccentBar).CornerRadius = UDim.new(0, 5)
 
-	local tweenInfo = TweenInfo.new(1, Enum.EasingStyle.Exponential, Enum.EasingDirection.Out)
-	TweenService:Create(NotificationFrame, tweenInfo, {BackgroundTransparency = 0}):Play()
-	TweenService:Create(TitleLabel, tweenInfo, {TextTransparency = 0}):Play()
-	TweenService:Create(DescLabel, tweenInfo, {TextTransparency = 0.4}):Play()
-	TweenService:Create(DurationBar, tweenInfo, {BackgroundTransparency = 0}):Play()
-	TweenService:Create(AccentBar, tweenInfo, {BackgroundTransparency = 0}):Play()
-	TweenService:Create(NotificationFrame, tweenInfo, {Size = UDim2.new(0, sizeX, 0, sizeY)}):Play()
+	local tween_info = TweenInfo.new(1, Enum.EasingStyle.Exponential, Enum.EasingDirection.Out)
+	TweenService:Create(NotificationFrame, tween_info, {BackgroundTransparency = 0}):Play()
+	TweenService:Create(TitleLabel, tween_info, {TextTransparency = 0}):Play()
+	TweenService:Create(DescLabel, tween_info, {TextTransparency = 0.4}):Play()
+	TweenService:Create(DurationBar, tween_info, {BackgroundTransparency = 0}):Play()
+	TweenService:Create(AccentBar, tween_info, {BackgroundTransparency = 0}):Play()
+	TweenService:Create(NotificationFrame, tween_info, {Size = UDim2.new(0, sizeX, 0, sizeY)}):Play()
 	TweenService:Create(AccentBar, TweenInfo.new(duration, Enum.EasingStyle.Linear), {Size = UDim2.new(0, 0, 1, 0)}):Play()
 
 	task.delay(duration + 0.1, function()
-		TweenService:Create(NotificationFrame, tweenInfo, {BackgroundTransparency = 1}):Play()
-		TweenService:Create(TitleLabel, tweenInfo, {TextTransparency = 1}):Play()
-		TweenService:Create(DescLabel, tweenInfo, {TextTransparency = 1}):Play()
-		TweenService:Create(DurationBar, tweenInfo, {BackgroundTransparency = 1}):Play()
-		TweenService:Create(AccentBar, tweenInfo, {BackgroundTransparency = 1}):Play()
-		TweenService:Create(NotificationFrame, tweenInfo, {Size = UDim2.new(0, 0, 0, sizeY)}):Play()
+		TweenService:Create(NotificationFrame, tween_info, {BackgroundTransparency = 1}):Play()
+		TweenService:Create(TitleLabel, tween_info, {TextTransparency = 1}):Play()
+		TweenService:Create(DescLabel, tween_info, {TextTransparency = 1}):Play()
+		TweenService:Create(DurationBar, tween_info, {BackgroundTransparency = 1}):Play()
+		TweenService:Create(AccentBar, tween_info, {BackgroundTransparency = 1}):Play()
+		TweenService:Create(NotificationFrame, tween_info, {Size = UDim2.new(0, 0, 0, sizeY)}):Play()
 		task.wait(0.5)
 		NotificationFrame:Destroy()
 	end)
@@ -284,13 +284,13 @@ MainFrame.Name = "Main"
 MainFrame.AnchorPoint = Vector2.new(0.5, 0.5)
 MainFrame.Position = UDim2.new(0.5, 0, 0.5, 0)
 MainFrame.Size = UDim2.new(0, 0, 0, 0)
-MainFrame.BackgroundColor3 = Theme.Background
+MainFrame.BackgroundColor3 = theme.Background
 MainFrame.BackgroundTransparency = 0.15
 MainFrame.BorderSizePixel = 0
 Instance.new("UICorner", MainFrame).CornerRadius = UDim.new(0, 8)
 
 local MainStroke = Instance.new("UIStroke", MainFrame)
-MainStroke.Color = Theme.Border
+MainStroke.Color = theme.Border
 MainStroke.Thickness = 1
 MainStroke.Transparency = 1
 MainStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
@@ -299,9 +299,9 @@ local TitleLabel = Instance.new("TextLabel", MainFrame)
 TitleLabel.Position = UDim2.new(0, 0, 0, 20)
 TitleLabel.Size = UDim2.new(1, 0, 0, 40)
 TitleLabel.BackgroundTransparency = 1
-TitleLabel.FontFace = CustomFont
-TitleLabel.Text = Config.Title
-TitleLabel.TextColor3 = Theme.Accent
+TitleLabel.FontFace = font
+TitleLabel.Text = config.Title
+TitleLabel.TextColor3 = theme.Accent
 TitleLabel.TextSize = 28
 TitleLabel.TextTransparency = 1
 
@@ -309,16 +309,16 @@ local SubtitleLabel = Instance.new("TextLabel", MainFrame)
 SubtitleLabel.Position = UDim2.new(0, 0, 0, 65)
 SubtitleLabel.Size = UDim2.new(1, 0, 0, 20)
 SubtitleLabel.BackgroundTransparency = 1
-SubtitleLabel.FontFace = CustomFont
-SubtitleLabel.Text = Config.Description
-SubtitleLabel.TextColor3 = Theme.InactiveText
+SubtitleLabel.FontFace = font
+SubtitleLabel.Text = config.Description
+SubtitleLabel.TextColor3 = theme.InactiveText
 SubtitleLabel.TextSize = 13
 SubtitleLabel.TextTransparency = 1
 
 local Line = Instance.new("Frame", MainFrame)
 Line.Position = UDim2.new(0.08, 0, 0, 95)
 Line.Size = UDim2.new(0.84, 0, 0, 1)
-Line.BackgroundColor3 = Theme.Border
+Line.BackgroundColor3 = theme.Border
 Line.BorderSizePixel = 0
 Line.BackgroundTransparency = 1
 
@@ -326,7 +326,7 @@ local TextBoxContainer = Instance.new("Frame", MainFrame)
 TextBoxContainer.Position = UDim2.new(0.5, 0, 0, 115)
 TextBoxContainer.AnchorPoint = Vector2.new(0.5, 0)
 TextBoxContainer.Size = UDim2.new(0, 480, 0, 50)
-TextBoxContainer.BackgroundColor3 = Theme.Element
+TextBoxContainer.BackgroundColor3 = theme.Element
 TextBoxContainer.BorderSizePixel = 0
 TextBoxContainer.BackgroundTransparency = 1
 Instance.new("UICorner", TextBoxContainer).CornerRadius = UDim.new(0, 5)
@@ -339,7 +339,7 @@ TextBoxGradient.Color = ColorSequence.new({
 })
 
 local TextBoxStroke = Instance.new("UIStroke", TextBoxContainer)
-TextBoxStroke.Color = Theme.Border
+TextBoxStroke.Color = theme.Border
 TextBoxStroke.Thickness = 1
 TextBoxStroke.Transparency = 1
 TextBoxStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
@@ -348,20 +348,25 @@ local KeyTextBox = Instance.new("TextBox", TextBoxContainer)
 KeyTextBox.Size = UDim2.new(1, -24, 1, 0)
 KeyTextBox.Position = UDim2.new(0, 12, 0, 0)
 KeyTextBox.BackgroundTransparency = 1
-KeyTextBox.FontFace = CustomFont
+KeyTextBox.FontFace = font
 KeyTextBox.PlaceholderText = "Paste your key here..."
-KeyTextBox.PlaceholderColor3 = Theme.InactiveText
+KeyTextBox.PlaceholderColor3 = theme.InactiveText
 KeyTextBox.Text = ""
-KeyTextBox.TextColor3 = Theme.Text
+KeyTextBox.TextColor3 = theme.Text
 KeyTextBox.TextSize = 15
 KeyTextBox.ClearTextOnFocus = false
 KeyTextBox.TextTransparency = 1
 
 local Buttons = {}
-local isMobile = UserInputService.TouchEnabled and not UserInputService.KeyboardEnabled
+local IsMobile = UserInputService.TouchEnabled and not UserInputService.KeyboardEnabled
+
+if IsMobile then
+	Workspace:SetAttribute("mobile", true)
+end
 
 local function AddGradient(v)
 	local gradient = Instance.new("UIGradient", v)
+
 	gradient.Rotation = 90
 	gradient.Color = ColorSequence.new({
 		ColorSequenceKeypoint.new(0, Color3.fromRGB(255, 255, 255)),
@@ -372,14 +377,15 @@ end
 
 local function CreateButton(text, position, color)
 	local Button = Instance.new("TextButton", MainFrame)
+
 	Button.Position = position
 	Button.AnchorPoint = Vector2.new(0.5, 0)
 	Button.Size = UDim2.new(0, 220, 0, 45)
 	Button.BackgroundColor3 = color
-	Button.FontFace = CustomFont
+	Button.FontFace = font
 	Button.Text = text
-	Button.TextColor3 = Theme.Text
-	Button.TextSize = isMobile and 13 or 15
+	Button.TextColor3 = theme.Text
+	Button.TextSize = IsMobile and 13 or 15
 	Button.BorderSizePixel = 0
 	Button.AutoButtonColor = false
 	Button.BackgroundTransparency = 1
@@ -390,7 +396,8 @@ local function CreateButton(text, position, color)
 	AddGradient(Button)
 
 	local ButtonStroke = Instance.new("UIStroke", Button)
-	ButtonStroke.Color = Theme.Border
+
+	ButtonStroke.Color = theme.Border
 	ButtonStroke.Thickness = 1
 	ButtonStroke.Transparency = 1
 	ButtonStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
@@ -401,29 +408,29 @@ end
 
 local Button1, Button2, Button3, Button4
 
-if isMobile then
-	Button1 = CreateButton("Get Key (Linkvertise)", UDim2.new(0.5, 0, 0, 185), Theme.Element)
-	Button2 = CreateButton("Get Key (Shrink)", UDim2.new(0.5, 0, 0, 240), Theme.Element)
-	Button3 = CreateButton("Join Discord", UDim2.new(0.5, 0, 0, 295), Theme.Element)
-	Button4 = CreateButton("Buy Standard Key", UDim2.new(0.5, 0, 0, 350), Theme.Element)
+if IsMobile then
+	Button1 = CreateButton("Get Key (Linkvertise)", UDim2.new(0.5, 0, 0, 185), theme.Element)
+	Button2 = CreateButton("Get Key (Shrink)", UDim2.new(0.5, 0, 0, 240), theme.Element)
+	Button3 = CreateButton("Join Discord", UDim2.new(0.5, 0, 0, 295), theme.Element)
+	Button4 = CreateButton("Buy Standard Key", UDim2.new(0.5, 0, 0, 350), theme.Element)
 
 	for _, v in ipairs(Buttons) do
 		v.button.Size = UDim2.new(0, 320, 0, 42)
 	end
 else
-	Button1 = CreateButton("Get Key (Linkvertise)", UDim2.new(0.25, 0, 0, 190), Theme.Element)
-	Button2 = CreateButton("Get Key (Shrink)", UDim2.new(0.75, 0, 0, 190), Theme.Element)
-	Button3 = CreateButton("Join Discord", UDim2.new(0.25, 0, 0, 255), Theme.Element)
-	Button4 = CreateButton("Buy Standard Key", UDim2.new(0.75, 0, 0, 255), Theme.Element)
+	Button1 = CreateButton("Get Key (Linkvertise)", UDim2.new(0.25, 0, 0, 190), theme.Element)
+	Button2 = CreateButton("Get Key (Shrink)", UDim2.new(0.75, 0, 0, 190), theme.Element)
+	Button3 = CreateButton("Join Discord", UDim2.new(0.25, 0, 0, 255), theme.Element)
+	Button4 = CreateButton("Buy Standard Key", UDim2.new(0.75, 0, 0, 255), theme.Element)
 end
 
 local CloseButton = Instance.new("TextButton", MainFrame)
 CloseButton.Position = UDim2.new(1, -40, 0, 10)
 CloseButton.Size = UDim2.new(0, 30, 0, 30)
-CloseButton.BackgroundColor3 = Theme.Element
-CloseButton.FontFace = CustomFont
+CloseButton.BackgroundColor3 = theme.Element
+CloseButton.FontFace = font
 CloseButton.Text = "X"
-CloseButton.TextColor3 = Theme.Text
+CloseButton.TextColor3 = theme.Text
 CloseButton.TextSize = 18
 CloseButton.BorderSizePixel = 0
 CloseButton.AutoButtonColor = false
@@ -432,7 +439,7 @@ CloseButton.TextTransparency = 1
 Instance.new("UICorner", CloseButton).CornerRadius = UDim.new(0, 5)
 
 local CloseStroke = Instance.new("UIStroke", CloseButton)
-CloseStroke.Color = Theme.Border
+CloseStroke.Color = theme.Border
 CloseStroke.Thickness = 1
 CloseStroke.Transparency = 1
 CloseStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
@@ -460,6 +467,7 @@ local function MakeDraggable(frame)
 		if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then
 			if dragging then
 				local delta = input.Position - start
+
 				TweenService:Create(frame, TweenInfo.new(0.16, Enum.EasingStyle.Quart, Enum.EasingDirection.Out), {
 					Position = UDim2.new(postion.X.Scale, postion.X.Offset + delta.X, postion.Y.Scale, postion.Y.Offset + delta.Y)
 				}):Play()
@@ -499,33 +507,33 @@ local function ValidateKey(key)
 	local cleaned_key = key:gsub("%s", "")
 
 	if not string.match(cleaned_key, "^[A-Za-z0-9]+$") or #cleaned_key ~= 32 then
-		Notification("Error", "Invalid key format. Key must be 32 characters.", 5, Theme.Error)
+		Notification("Error", "Invalid key format. Key must be 32 characters.", 5)
 		return false
 	end
 
 	if cleaned_key ~= key then
-		Notification("Info", "Extra spaces detected, verifying without spaces...", 5, Theme.Accent)
+		Notification("Info", "Extra spaces detected, verifying without spaces...", 5)
 	end
 
 	local success, status = pcall(luarmor_api.check_key, cleaned_key)
 
 	if not success then
-		Notification("Error", "Network error. Please try again.", 5, Theme.Error)
+		Notification("Error", "Network error. Please try again.", 5)
 		return false
 	end
 
 	if status.code == "KEY_VALID" then
-		if not isfile(Config.File) then
-			pcall(writefile, Config.File, cleaned_key)
+		if not isfile(config.File) then
+			pcall(writefile, config.File, cleaned_key)
 		else
-			if readfile(Config.File) ~= cleaned_key then
-				pcall(writefile, Config.File, cleaned_key)
+			if readfile(config.File) ~= cleaned_key then
+				pcall(writefile, config.File, cleaned_key)
 			end
 		end
 
 		script_key = cleaned_key
 
-		Notification("Success", "Key expires in: " .. ToTime(status.data.auth_expire - os.time()), 5, Theme.Success)
+		Notification("Success", "Key expires in: " .. ToTime(status.data.auth_expire - os.time()), 5)
 
 		wait(1.5)
 		CloseUI()
@@ -555,8 +563,8 @@ local function ValidateKey(key)
 		if status.code == "KEY_HWID_LOCKED" or status.code == "INVALID_EXECUTOR" or status.code == "SECURITY_ERROR" or status.code == "UNKNOWN_ERROR" then
 			plr:Kick(error_messages[status.code])
 		else
-			DeleteFile(Config.File)
-			Notification("Error", error_messages[status.code], 5, Theme.Error)
+			DeleteFile(config.File)
+			Notification("Error", error_messages[status.code], 5)
 		end
 		return false
 	end
@@ -567,41 +575,41 @@ end
 
 for _, button in ipairs({Button1, Button2, Button3, Button4}) do
 	button.MouseEnter:Connect(function()
-		local hoverSize = isMobile and UDim2.new(0, 330, 0, 45) or UDim2.new(0, 230, 0, 48)
+		local hoverSize = IsMobile and UDim2.new(0, 330, 0, 45) or UDim2.new(0, 230, 0, 48)
 		TweenService:Create(button, TweenInfo.new(0.15, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {Size = hoverSize}):Play()
 	end)
 	button.MouseLeave:Connect(function()
-		local normalSize = isMobile and UDim2.new(0, 320, 0, 42) or UDim2.new(0, 220, 0, 45)
+		local normalSize = IsMobile and UDim2.new(0, 320, 0, 42) or UDim2.new(0, 220, 0, 45)
 		TweenService:Create(button, TweenInfo.new(0.15, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {Size = normalSize}):Play()
 	end)
 	button.MouseButton1Down:Connect(function()
-		local clickSize = isMobile and UDim2.new(0, 310, 0, 40) or UDim2.new(0, 210, 0, 42)
+		local clickSize = IsMobile and UDim2.new(0, 310, 0, 40) or UDim2.new(0, 210, 0, 42)
 		TweenService:Create(button, TweenInfo.new(0.08), {Size = clickSize}):Play()
 	end)
 	button.MouseButton1Up:Connect(function()
-		local normalSize = isMobile and UDim2.new(0, 320, 0, 42) or UDim2.new(0, 220, 0, 45)
+		local normalSize = IsMobile and UDim2.new(0, 320, 0, 42) or UDim2.new(0, 220, 0, 45)
 		TweenService:Create(button, TweenInfo.new(0.08), {Size = normalSize}):Play()
 	end)
 end
 
 Button1.MouseButton1Click:Connect(function()
-	setclipboard(Config.Linkvertise)
-	Notification("Link Copied", "Linkvertise link copied to clipboard", 5, Theme.Accent)
+	setclipboard(config.Linkvertise)
+	Notification("Link Copied", "Linkvertise link copied to clipboard", 5)
 end)
 
 Button2.MouseButton1Click:Connect(function()
-	setclipboard(Config.Shrink)
-	Notification("Link Copied", "Shrink link copied to clipboard", 5, Theme.Accent)
+	setclipboard(config.Shrink)
+	Notification("Link Copied", "Shrink link copied to clipboard", 5)
 end)
 
 Button3.MouseButton1Click:Connect(function()
-	setclipboard(Config.Discord)
-	Notification("Discord Copied", "Discord invite copied to clipboard", 5, Theme.Accent)
+	setclipboard(config.Discord)
+	Notification("Discord Copied", "Discord invite copied to clipboard", 5)
 end)
 
 Button4.MouseButton1Click:Connect(function()
-	setclipboard(Config.Shop)
-	Notification("Link Copied", "Standard key shop link copied", 5, Theme.Accent)
+	setclipboard(config.Shop)
+	Notification("Link Copied", "Standard key shop link copied", 5)
 end)
 
 KeyTextBox.FocusLost:Connect(function()
@@ -610,6 +618,7 @@ KeyTextBox.FocusLost:Connect(function()
 	end
 
 	if ValidateKey(KeyTextBox.Text) then
+		--?
 	else
 		KeyTextBox.Text = ""
 	end
@@ -627,14 +636,14 @@ end)
 
 MakeDraggable(MainFrame)
 
-if isMobile then
+if IsMobile then
 	MainFrame.Size = UDim2.new(0, 380, 0, 440)
 	TitleLabel.TextSize = 22
 	SubtitleLabel.TextSize = 10
 	TextBoxContainer.Size = UDim2.new(0, 340, 0, 45)
 end
 
-local final_size = isMobile and UDim2.new(0, 380, 0, 440) or UDim2.new(0, 580, 0, 340)
+local final_size = IsMobile and UDim2.new(0, 380, 0, 440) or UDim2.new(0, 580, 0, 340)
 local tween_info3 = TweenInfo.new(1, Enum.EasingStyle.Exponential, Enum.EasingDirection.Out)
 
 TweenService:Create(BlurEffect, TweenInfo.new(0.5, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {Size = 24}):Play()
@@ -660,7 +669,7 @@ end
 
 spawn(function()
 	while task.wait(0.3) do
-		local saved_key = (isfile(Config.File) and readfile(Config.File)) or (script_key ~= "" and script_key) or nil
+		local saved_key = (isfile(config.File) and readfile(config.File)) or (script_key ~= "" and script_key) or nil
 
 		if saved_key and ValidateKey(saved_key) then
 			return 
