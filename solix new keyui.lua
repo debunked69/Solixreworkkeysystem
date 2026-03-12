@@ -31,7 +31,7 @@ local list = {
 	["3317771874"] = { id = "e95ef6f27596e636a7d706375c040de4", keyless = true },  -- Pet Simulator 99
 	["9363735110"] = {id = "4948419832e0bd4aa588e628c45b6f8d", keyless = false }, -- Escape Tsunami For Brainrots!
 	["9509842868"] = {id = "ad4ccd094f8b6f972bff36de80475abe", keyless = true }, -- Garden Horizons
-	["5130394318"] = {id = "3e7a75a970118d0f0cf629369524dc7d", keyless = true }, -- Bizarre Lineage
+	["5130394318"] = {id = "3e7a75a970118d0f0cf629369524dc7d", keyless = false }, -- Bizarre Lineage
 }
 
 local executor_name = getexecutorname():match("^%s*(.-)%s*$") or "nigga"
