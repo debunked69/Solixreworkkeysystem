@@ -3,9 +3,6 @@ repeat wait() until game:IsLoaded()
 local wait = task.wait
 local spawn = task.spawn
 
-loadstring(game:HttpGet("https://raw.githubusercontent.com/debunked69/Solixreworkkeysystem/refs/heads/main/Loading%20Screen"))()
-wait(0.3)
-
 local CoreGui = cloneref(game:GetService("CoreGui"))
 local HttpService = cloneref(game:GetService("HttpService"))
 local Lighting = cloneref(game:GetService("Lighting"))
@@ -50,6 +47,15 @@ for _, exec in ipairs({"Xeno", "Solara"}) do
 	if string.find(executor_name, exec) then
 		Workspace:SetAttribute("low", true)
 		break
+	end
+end
+
+local path1 = "solixhub/Assets/Intro/"
+local path2 = {"solixhub", "solixhub/Assets", path1}
+
+for i = 1, #path2 do
+	if not isfolder(path2[i]) then
+		makefolder(path2[i])
 	end
 end
 
@@ -152,6 +158,97 @@ local function LoadFont()
 	return Font.new(getcustomasset("solixhub/Assets/InterSemiBold.font"))
 end
 
+local function LoadIntro()
+	local missing = false
+
+	for _, v in {"writefile", "isfile", "makefolder", "getcustomasset", "isfolder"} do
+		if not (genv or _G or shared or getfenv())[v] then 
+			return
+		end
+	end
+
+	for i = 1, 130 do
+		local formatted_index = string.format("%03d", i)
+		local save_path = path1 .. "ezgif-frame-" .. formatted_index .. ".png"
+
+		if not isfile(save_path) then
+			missing = true
+			break
+		end
+	end
+
+	if missing then
+		for i = 1, 130 do
+			local formatted_index = string.format("%03d", i)
+			local file_name = "ezgif-frame-" .. formatted_index .. ".png"
+			local save_path = path1 .. file_name
+
+			if not isfile(save_path) then
+				local success, data = pcall(function()
+					return game:HttpGet("https://raw.githubusercontent.com/bao8jl/Intro/main/" .. file_name)
+				end)
+				if success and data then
+					writefile(save_path, data)
+				end
+			end
+		end
+	end
+
+	local asset_ids = {}
+
+	for i = 1, 130 do
+		local formatted_index = string.format("%03d", i)
+		local file_path = path1 .. "ezgif-frame-" .. formatted_index .. ".png"
+
+		if isfile(file_path) then
+			table.insert(asset_ids, getcustomasset(file_path))
+		end
+	end
+
+	if #asset_ids >= 130 then
+		local ScreenGui = Instance.new("ScreenGui", CoreGui)
+		ScreenGui.Name = "Solix Intro"
+		ScreenGui.IgnoreGuiInset = true
+
+		local FakeLabel = Instance.new("ImageLabel", ScreenGui)
+		FakeLabel.Size = UDim2.fromScale(0.1, 0.1)
+		FakeLabel.Position = UDim2.fromScale(0.5, 0.5)
+		FakeLabel.AnchorPoint = Vector2.new(0.5, 0.5)
+		FakeLabel.BackgroundTransparency = 1
+		FakeLabel.ImageTransparency = 0.99
+		FakeLabel.ZIndex = 1
+
+		local RealLabel = Instance.new("ImageLabel", ScreenGui)
+		RealLabel.Size = UDim2.fromScale(0.5, 0.5)
+		RealLabel.Position = UDim2.fromScale(0.5, 0.5)
+		RealLabel.AnchorPoint = Vector2.new(0.5, 0.5)
+		RealLabel.BackgroundTransparency = 1
+		RealLabel.ImageTransparency = 1
+		RealLabel.ScaleType = Enum.ScaleType.Fit
+		RealLabel.ZIndex = 2
+		Instance.new("UICorner", RealLabel).CornerRadius = UDim.new(0, 15)
+
+		for i = 1, #asset_ids do
+			FakeLabel.Image = asset_ids[i]
+			wait()
+		end
+		FakeLabel:Destroy()
+
+		RealLabel.ImageTransparency = 0
+		for i = 1, #asset_ids do
+			RealLabel.Image = asset_ids[i]
+			wait(1/30)
+		end
+
+		local FadeTween = TweenService:Create(RealLabel, TweenInfo.new(1, Enum.EasingStyle.Quart, Enum.EasingDirection.Out), {
+			ImageTransparency = 1,
+			Size = UDim2.fromScale(0.4, 0.4)
+		})
+		FadeTween:Play()
+		FadeTween.Completed:Connect(function() ScreenGui:Destroy() end)
+	end
+end
+
 local font = LoadFont()
 
 local luarmor_api = loadstring(game:HttpGet("https://sdkapi-public.luarmor.net/library.lua"))()
@@ -227,11 +324,11 @@ local function Notification(title, desc, duration, color)
 
 	wait()
 
-	local sizeX = math.max(TitleLabel.TextBounds.X, DescLabel.TextBounds.X) + 18
-	local sizeY = TitleLabel.TextBounds.Y + DescLabel.TextBounds.Y + 40
+	local size_x = math.max(TitleLabel.TextBounds.X, DescLabel.TextBounds.X) + 18
+	local size_y = TitleLabel.TextBounds.Y + DescLabel.TextBounds.Y + 40
 
 	local DurationBar = Instance.new("Frame", NotificationFrame)
-	DurationBar.Position = UDim2.new(0, 0, 0, sizeY - 25)
+	DurationBar.Position = UDim2.new(0, 0, 0, size_y - 25)
 	DurationBar.Size = UDim2.new(1, 0, 0, 5)
 	DurationBar.BackgroundColor3 = theme.Inline
 	DurationBar.BorderSizePixel = 0
@@ -251,7 +348,7 @@ local function Notification(title, desc, duration, color)
 	TweenService:Create(DescLabel, tween_info, {TextTransparency = 0.4}):Play()
 	TweenService:Create(DurationBar, tween_info, {BackgroundTransparency = 0}):Play()
 	TweenService:Create(AccentBar, tween_info, {BackgroundTransparency = 0}):Play()
-	TweenService:Create(NotificationFrame, tween_info, {Size = UDim2.new(0, sizeX, 0, sizeY)}):Play()
+	TweenService:Create(NotificationFrame, tween_info, {Size = UDim2.new(0, size_x, 0, size_y)}):Play()
 	TweenService:Create(AccentBar, TweenInfo.new(duration, Enum.EasingStyle.Linear), {Size = UDim2.new(0, 0, 1, 0)}):Play()
 
 	task.delay(duration + 0.1, function()
@@ -260,11 +357,15 @@ local function Notification(title, desc, duration, color)
 		TweenService:Create(DescLabel, tween_info, {TextTransparency = 1}):Play()
 		TweenService:Create(DurationBar, tween_info, {BackgroundTransparency = 1}):Play()
 		TweenService:Create(AccentBar, tween_info, {BackgroundTransparency = 1}):Play()
-		TweenService:Create(NotificationFrame, tween_info, {Size = UDim2.new(0, 0, 0, sizeY)}):Play()
+		TweenService:Create(NotificationFrame, tween_info, {Size = UDim2.new(0, 0, 0, size_y)}):Play()
 		task.wait(0.5)
 		NotificationFrame:Destroy()
 	end)
 end
+
+spawn(LoadIntro)
+
+wait(3)
 
 local ScreenGui = Instance.new("ScreenGui")
 ScreenGui.Name = "Solix ScreenGui"
