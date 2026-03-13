@@ -50,15 +50,6 @@ for _, exec in ipairs({"Xeno", "Solara"}) do
 	end
 end
 
-local path1 = "solixhub/Assets/Intro/"
-local path2 = {"solixhub", "solixhub/Assets", path1}
-
-for i = 1, #path2 do
-	if not isfolder(path2[i]) then
-		makefolder(path2[i])
-	end
-end
-
 local Buttons = {}
 local IsMobile = UserInputService.TouchEnabled and not UserInputService.KeyboardEnabled
 
@@ -165,99 +156,6 @@ local function LoadFont()
 	return Font.new(getcustomasset("solixhub/Assets/InterSemiBold.font"))
 end
 
-local function LoadIntro()
-	local missing = false
-
-    if IsMobile then return end
-
-	for _, v in {"writefile", "isfile", "makefolder", "getcustomasset", "isfolder"} do
-		if not v then 
-			return
-		end
-	end
-
-	for i = 1, 130 do
-		local formatted_index = string.format("%03d", i)
-		local save_path = path1 .. "ezgif-frame-" .. formatted_index .. ".png"
-
-		if not isfile(save_path) then
-			missing = true
-			break
-		end
-	end
-
-	if missing then
-		for i = 1, 130 do
-			local formatted_index = string.format("%03d", i)
-			local file_name = "ezgif-frame-" .. formatted_index .. ".png"
-			local save_path = path1 .. file_name
-
-			if not isfile(save_path) then
-				local success, data = pcall(function()
-					return game:HttpGet("https://raw.githubusercontent.com/bao8jl/Intro/main/" .. file_name)
-				end)
-				if success and data then
-					writefile(save_path, data)
-				end
-			end
-		end
-	end
-
-	local asset_ids = {}
-
-	for i = 1, 130 do
-		local formatted_index = string.format("%03d", i)
-		local file_path = path1 .. "ezgif-frame-" .. formatted_index .. ".png"
-
-		if isfile(file_path) then
-			table.insert(asset_ids, getcustomasset(file_path))
-		end
-	end
-
-	if #asset_ids >= 130 then
-		local ScreenGui = Instance.new("ScreenGui", CoreGui)
-		ScreenGui.Name = "Solix Intro"
-		ScreenGui.IgnoreGuiInset = true
-
-		local FakeLabel = Instance.new("ImageLabel", ScreenGui)
-		FakeLabel.Size = UDim2.fromScale(0.1, 0.1)
-		FakeLabel.Position = UDim2.fromScale(0.5, 0.5)
-		FakeLabel.AnchorPoint = Vector2.new(0.5, 0.5)
-		FakeLabel.BackgroundTransparency = 1
-		FakeLabel.ImageTransparency = 0.99
-		FakeLabel.ZIndex = 1
-
-		local RealLabel = Instance.new("ImageLabel", ScreenGui)
-		RealLabel.Size = UDim2.fromScale(0.36, 0.36)
-		RealLabel.Position = UDim2.fromScale(0.5, 0.5)
-		RealLabel.AnchorPoint = Vector2.new(0.5, 0.5)
-		RealLabel.BackgroundTransparency = 1
-		RealLabel.ImageTransparency = 1
-		RealLabel.ScaleType = Enum.ScaleType.Fit
-		RealLabel.ZIndex = 2
-		Instance.new("UICorner", RealLabel).CornerRadius = UDim.new(0, 15)
-
-		for i = 1, #asset_ids do
-			FakeLabel.Image = asset_ids[i]
-			wait()
-		end
-		FakeLabel:Destroy()
-
-		RealLabel.ImageTransparency = 0
-		for i = 1, #asset_ids do
-			RealLabel.Image = asset_ids[i]
-			wait(1/60)
-		end
-
-		local FadeTween = TweenService:Create(RealLabel, TweenInfo.new(1, Enum.EasingStyle.Quart, Enum.EasingDirection.Out), {
-			ImageTransparency = 1,
-			Size = UDim2.fromScale(0.4, 0.4)
-		})
-		FadeTween:Play()
-		FadeTween.Completed:Connect(function() ScreenGui:Destroy() end)
-	end
-end
-
 local font = LoadFont()
 
 local BlurEffect = Instance.new("BlurEffect")
@@ -361,9 +259,9 @@ local function Notification(title, desc, duration, color)
 	end)
 end
 
-spawn(LoadIntro)
-
-wait(3.6)
+if isfolder("solixhub/Assets/Intro") then
+    delfolder("solixhub/Assets/Intro")
+end
 
 local luarmor_api = loadstring(game:HttpGet("https://sdkapi-public.luarmor.net/library.lua"))()
 
