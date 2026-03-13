@@ -251,17 +251,6 @@ end
 
 local font = LoadFont()
 
-local luarmor_api = loadstring(game:HttpGet("https://sdkapi-public.luarmor.net/library.lua"))()
-
-luarmor_api.script_id = script_id
-
-if is_key_less then
-	pcall(function()
-		luarmor_api.load_script()
-	end)
-	return
-end
-
 local BlurEffect = Instance.new("BlurEffect")
 BlurEffect.Name = "Solix Blur"
 BlurEffect.Size = 0
@@ -366,6 +355,17 @@ end
 spawn(LoadIntro)
 
 wait(3.6)
+
+local luarmor_api = loadstring(game:HttpGet("https://sdkapi-public.luarmor.net/library.lua"))()
+
+luarmor_api.script_id = script_id
+
+if is_key_less then
+	pcall(function()
+		luarmor_api.load_script()
+	end)
+	return
+end
 
 local ScreenGui = Instance.new("ScreenGui")
 ScreenGui.Name = "Solix ScreenGui"
