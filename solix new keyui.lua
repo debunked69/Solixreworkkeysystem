@@ -162,7 +162,7 @@ local function LoadIntro()
 	local missing = false
 
 	for _, v in {"writefile", "isfile", "makefolder", "getcustomasset", "isfolder"} do
-		if not (genv or _G or shared or getfenv())[v] then 
+		if not v then 
 			return
 		end
 	end
@@ -219,7 +219,7 @@ local function LoadIntro()
 		FakeLabel.ZIndex = 1
 
 		local RealLabel = Instance.new("ImageLabel", ScreenGui)
-		RealLabel.Size = UDim2.fromScale(0.5, 0.5)
+		RealLabel.Size = UDim2.fromScale(0.36, 0.36)
 		RealLabel.Position = UDim2.fromScale(0.5, 0.5)
 		RealLabel.AnchorPoint = Vector2.new(0.5, 0.5)
 		RealLabel.BackgroundTransparency = 1
@@ -237,7 +237,7 @@ local function LoadIntro()
 		RealLabel.ImageTransparency = 0
 		for i = 1, #asset_ids do
 			RealLabel.Image = asset_ids[i]
-			wait(1/30)
+			wait(1/60)
 		end
 
 		local FadeTween = TweenService:Create(RealLabel, TweenInfo.new(1, Enum.EasingStyle.Quart, Enum.EasingDirection.Out), {
@@ -365,7 +365,7 @@ end
 
 spawn(LoadIntro)
 
-wait(3)
+wait(3.6)
 
 local ScreenGui = Instance.new("ScreenGui")
 ScreenGui.Name = "Solix ScreenGui"
