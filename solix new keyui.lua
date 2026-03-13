@@ -59,6 +59,13 @@ for i = 1, #path2 do
 	end
 end
 
+local Buttons = {}
+local IsMobile = UserInputService.TouchEnabled and not UserInputService.KeyboardEnabled
+
+if IsMobile then
+	Workspace:SetAttribute("mobile", true)
+end
+
 if CoreGui:FindFirstChild("Solix ScreenGui") then
 	CoreGui["Solix ScreenGui"]:Destroy()
 end
@@ -160,6 +167,8 @@ end
 
 local function LoadIntro()
 	local missing = false
+
+    if IsMobile then return end
 
 	for _, v in {"writefile", "isfile", "makefolder", "getcustomasset", "isfolder"} do
 		if not v then 
@@ -457,13 +466,6 @@ KeyTextBox.TextColor3 = theme.Text
 KeyTextBox.TextSize = 15
 KeyTextBox.ClearTextOnFocus = false
 KeyTextBox.TextTransparency = 1
-
-local Buttons = {}
-local IsMobile = UserInputService.TouchEnabled and not UserInputService.KeyboardEnabled
-
-if IsMobile then
-	Workspace:SetAttribute("mobile", true)
-end
 
 local function AddGradient(v)
 	local gradient = Instance.new("UIGradient", v)
