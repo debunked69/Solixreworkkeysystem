@@ -27,6 +27,8 @@ local list = {
 	["9363735110"] = {id = "4948419832e0bd4aa588e628c45b6f8d", keyless = false }, -- Escape Tsunami For Brainrots!
 	["9509842868"] = {id = "ad4ccd094f8b6f972bff36de80475abe", keyless = true }, -- Garden Horizons
 	["5130394318"] = {id = "3e7a75a970118d0f0cf629369524dc7d", keyless = false }, -- Bizarre Lineage
+	["9186719164"] = {id = "892ccfefdc8834199a2a6e5856a8da67", keyless = true }, -- Sailor Piece
+	
 }
 
 local executor_name = getexecutorname():match("^%s*(.-)%s*$") or "nigga"
