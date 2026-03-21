@@ -2,6 +2,7 @@ repeat wait() until game:IsLoaded()
 
 local wait = task.wait
 local spawn = task.spawn
+local delay = task.delay
 
 local CoreGui = cloneref(game:GetService("CoreGui"))
 local HttpService = cloneref(game:GetService("HttpService"))
@@ -152,11 +153,11 @@ local function LoadFont()
 		}
 	}
 
-	writefile("solixhub/Assets/InterSemiBold.font", HttpService:JSONEncode(font_data))
-	return Font.new(getcustomasset("solixhub/Assets/InterSemiBold.font"))
+	writefile("solixhub/Assets/InterSemiBold.Font", HttpService:JSONEncode(font_data))
+	return Font.new(getcustomasset("solixhub/Assets/InterSemiBold.Font"))
 end
 
-local font = LoadFont()
+local Font = LoadFont()
 
 local BlurEffect = Instance.new("BlurEffect")
 BlurEffect.Name = "Solix Blur"
@@ -196,7 +197,7 @@ local function Notification(title, desc, duration, color)
 
 	local TitleLabel = Instance.new("TextLabel", NotificationFrame)
 	TitleLabel.BackgroundTransparency = 1
-	TitleLabel.FontFace = font
+	TitleLabel.FontFace = Font
 	TitleLabel.Text = title
 	TitleLabel.TextColor3 = theme.Text
 	TitleLabel.TextSize = 14
@@ -207,7 +208,7 @@ local function Notification(title, desc, duration, color)
 
 	local DescLabel = Instance.new("TextLabel", NotificationFrame)
 	DescLabel.BackgroundTransparency = 1
-	DescLabel.FontFace = font
+	DescLabel.FontFace = Font
 	DescLabel.Text = desc
 	DescLabel.TextColor3 = theme.Text
 	DescLabel.TextTransparency = 0.4
@@ -220,11 +221,11 @@ local function Notification(title, desc, duration, color)
 
 	wait()
 
-	local size_x = math.max(TitleLabel.TextBounds.X, DescLabel.TextBounds.X) + 18
-	local size_y = TitleLabel.TextBounds.Y + DescLabel.TextBounds.Y + 40
+	local SizeX = math.max(TitleLabel.TextBounds.X, DescLabel.TextBounds.X) + 18
+	local SizeY = TitleLabel.TextBounds.Y + DescLabel.TextBounds.Y + 40
 
 	local DurationBar = Instance.new("Frame", NotificationFrame)
-	DurationBar.Position = UDim2.new(0, 0, 0, size_y - 25)
+	DurationBar.Position = UDim2.new(0, 0, 0, SizeY - 25)
 	DurationBar.Size = UDim2.new(1, 0, 0, 5)
 	DurationBar.BackgroundColor3 = theme.Inline
 	DurationBar.BorderSizePixel = 0
@@ -238,23 +239,23 @@ local function Notification(title, desc, duration, color)
 	AccentBar.BackgroundTransparency = 1
 	Instance.new("UICorner", AccentBar).CornerRadius = UDim.new(0, 5)
 
-	local tween_info = TweenInfo.new(1, Enum.EasingStyle.Exponential, Enum.EasingDirection.Out)
-	TweenService:Create(NotificationFrame, tween_info, {BackgroundTransparency = 0}):Play()
-	TweenService:Create(TitleLabel, tween_info, {TextTransparency = 0}):Play()
-	TweenService:Create(DescLabel, tween_info, {TextTransparency = 0.4}):Play()
-	TweenService:Create(DurationBar, tween_info, {BackgroundTransparency = 0}):Play()
-	TweenService:Create(AccentBar, tween_info, {BackgroundTransparency = 0}):Play()
-	TweenService:Create(NotificationFrame, tween_info, {Size = UDim2.new(0, size_x, 0, size_y)}):Play()
+	local Tween_Info = TweenInfo.new(1, Enum.EasingStyle.Exponential, Enum.EasingDirection.Out)
+	TweenService:Create(NotificationFrame, Tween_Info, {BackgroundTransparency = 0}):Play()
+	TweenService:Create(TitleLabel, Tween_Info, {TextTransparency = 0}):Play()
+	TweenService:Create(DescLabel, Tween_Info, {TextTransparency = 0.4}):Play()
+	TweenService:Create(DurationBar, Tween_Info, {BackgroundTransparency = 0}):Play()
+	TweenService:Create(AccentBar, Tween_Info, {BackgroundTransparency = 0}):Play()
+	TweenService:Create(NotificationFrame, Tween_Info, {Size = UDim2.new(0, SizeX, 0, SizeY)}):Play()
 	TweenService:Create(AccentBar, TweenInfo.new(duration, Enum.EasingStyle.Linear), {Size = UDim2.new(0, 0, 1, 0)}):Play()
 
-	task.delay(duration + 0.1, function()
-		TweenService:Create(NotificationFrame, tween_info, {BackgroundTransparency = 1}):Play()
-		TweenService:Create(TitleLabel, tween_info, {TextTransparency = 1}):Play()
-		TweenService:Create(DescLabel, tween_info, {TextTransparency = 1}):Play()
-		TweenService:Create(DurationBar, tween_info, {BackgroundTransparency = 1}):Play()
-		TweenService:Create(AccentBar, tween_info, {BackgroundTransparency = 1}):Play()
-		TweenService:Create(NotificationFrame, tween_info, {Size = UDim2.new(0, 0, 0, size_y)}):Play()
-		task.wait(0.5)
+	delay(duration + 0.1, function()
+		TweenService:Create(NotificationFrame, Tween_Info, {BackgroundTransparency = 1}):Play()
+		TweenService:Create(TitleLabel, Tween_Info, {TextTransparency = 1}):Play()
+		TweenService:Create(DescLabel, Tween_Info, {TextTransparency = 1}):Play()
+		TweenService:Create(DurationBar, Tween_Info, {BackgroundTransparency = 1}):Play()
+		TweenService:Create(AccentBar, Tween_Info, {BackgroundTransparency = 1}):Play()
+		TweenService:Create(NotificationFrame, Tween_Info, {Size = UDim2.new(0, 0, 0, SizeY)}):Play()
+		wait(0.5)
 		NotificationFrame:Destroy()
 	end)
 end
@@ -280,6 +281,29 @@ ScreenGui.ResetOnSpawn = false
 ScreenGui.IgnoreGuiInset = true
 ScreenGui.DisplayOrder = 999
 ScreenGui.Parent = CoreGui
+
+local UIScale = Instance.new("UIScale")
+UIScale.Name = "UIScale"
+UIScale.Scale = 1
+UIScale.Parent = ScreenGui
+
+local function GetViewportSize()
+	local Camera = Workspace.CurrentCamera
+
+	return (Camera and Camera.ViewportSize) or Vector2.new(1920, 1080)
+end
+
+local function SetMobileScale()
+	local Viewport = GetViewportSize()
+	
+	if IsMobile then
+		local Scale = math.clamp(Viewport.Y / 500, 0.5, 1.5)
+
+		UIScale.Scale = Scale
+	else
+		UIScale.Scale = 1
+	end
+end
 
 local Overlay = Instance.new("Frame", ScreenGui)
 Overlay.Size = UDim2.new(1, 0, 1, 0)
@@ -307,7 +331,7 @@ local TitleLabel = Instance.new("TextLabel", MainFrame)
 TitleLabel.Position = UDim2.new(0, 0, 0, 20)
 TitleLabel.Size = UDim2.new(1, 0, 0, 40)
 TitleLabel.BackgroundTransparency = 1
-TitleLabel.FontFace = font
+TitleLabel.FontFace = Font
 TitleLabel.Text = config.Title
 TitleLabel.TextColor3 = theme.Accent
 TitleLabel.TextSize = 28
@@ -317,7 +341,7 @@ local SubtitleLabel = Instance.new("TextLabel", MainFrame)
 SubtitleLabel.Position = UDim2.new(0, 0, 0, 65)
 SubtitleLabel.Size = UDim2.new(1, 0, 0, 20)
 SubtitleLabel.BackgroundTransparency = 1
-SubtitleLabel.FontFace = font
+SubtitleLabel.FontFace = Font
 SubtitleLabel.Text = config.Description
 SubtitleLabel.TextColor3 = theme.InactiveText
 SubtitleLabel.TextSize = 13
@@ -356,7 +380,7 @@ local KeyTextBox = Instance.new("TextBox", TextBoxContainer)
 KeyTextBox.Size = UDim2.new(1, -24, 1, 0)
 KeyTextBox.Position = UDim2.new(0, 12, 0, 0)
 KeyTextBox.BackgroundTransparency = 1
-KeyTextBox.FontFace = font
+KeyTextBox.FontFace = Font
 KeyTextBox.PlaceholderText = "Paste your key here..."
 KeyTextBox.PlaceholderColor3 = theme.InactiveText
 KeyTextBox.Text = ""
@@ -366,14 +390,14 @@ KeyTextBox.ClearTextOnFocus = false
 KeyTextBox.TextTransparency = 1
 
 local function AddGradient(v)
-	local gradient = Instance.new("UIGradient", v)
+	local Gradient = Instance.new("UIGradient", v)
 
-	gradient.Rotation = 90
-	gradient.Color = ColorSequence.new({
+	Gradient.Rotation = 90
+	Gradient.Color = ColorSequence.new({
 		ColorSequenceKeypoint.new(0, Color3.fromRGB(255, 255, 255)),
 		ColorSequenceKeypoint.new(1, Color3.fromRGB(216, 216, 216))
 	})
-	return gradient
+	return Gradient
 end
 
 local function CreateButton(text, position, color)
@@ -383,7 +407,7 @@ local function CreateButton(text, position, color)
 	Button.AnchorPoint = Vector2.new(0.5, 0)
 	Button.Size = UDim2.new(0, 220, 0, 45)
 	Button.BackgroundColor3 = color
-	Button.FontFace = font
+	Button.FontFace = Font
 	Button.Text = text
 	Button.TextColor3 = theme.Text
 	Button.TextSize = IsMobile and 13 or 15
@@ -415,8 +439,8 @@ if IsMobile then
 	Button3 = CreateButton("Join Discord", UDim2.new(0.5, 0, 0, 295), theme.Element)
 	Button4 = CreateButton("Buy Standard Key", UDim2.new(0.5, 0, 0, 350), theme.Element)
 
-	for _, v in ipairs(Buttons) do
-		v.button.Size = UDim2.new(0, 320, 0, 42)
+	for _, Button in ipairs(Buttons) do
+		Button.button.Size = UDim2.new(0, 320, 0, 42)
 	end
 else
 	Button1 = CreateButton("Get Key (Linkvertise)", UDim2.new(0.25, 0, 0, 190), theme.Element)
@@ -429,7 +453,7 @@ local CloseButton = Instance.new("TextButton", MainFrame)
 CloseButton.Position = UDim2.new(1, -40, 0, 10)
 CloseButton.Size = UDim2.new(0, 30, 0, 30)
 CloseButton.BackgroundColor3 = theme.Element
-CloseButton.FontFace = font
+CloseButton.FontFace = Font
 CloseButton.Text = "X"
 CloseButton.TextColor3 = theme.Text
 CloseButton.TextSize = 18
@@ -467,7 +491,8 @@ local function MakeDraggable(frame)
 	UserInputService.InputChanged:Connect(function(input)
 		if input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch then
 			if dragging then
-				local delta = input.Position - start
+				local Scale = UIScale.Scale
+				local delta = (input.Position - start) / Scale
 
 				TweenService:Create(frame, TweenInfo.new(0.16, Enum.EasingStyle.Quart, Enum.EasingDirection.Out), {
 					Position = UDim2.new(postion.X.Scale, postion.X.Offset + delta.X, postion.Y.Scale, postion.Y.Offset + delta.Y)
@@ -642,30 +667,32 @@ if IsMobile then
 	TitleLabel.TextSize = 22
 	SubtitleLabel.TextSize = 10
 	TextBoxContainer.Size = UDim2.new(0, 340, 0, 45)
+
+	SetMobileScale()
 end
 
-local final_size = IsMobile and UDim2.new(0, 380, 0, 440) or UDim2.new(0, 580, 0, 340)
-local tween_info3 = TweenInfo.new(1, Enum.EasingStyle.Exponential, Enum.EasingDirection.Out)
+local Final_Size = IsMobile and UDim2.new(0, 380, 0, 440) or UDim2.new(0, 580, 0, 340)
+local Tween_Info2 = TweenInfo.new(1, Enum.EasingStyle.Exponential, Enum.EasingDirection.Out)
 
 TweenService:Create(BlurEffect, TweenInfo.new(0.5, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {Size = 24}):Play()
 TweenService:Create(Overlay, TweenInfo.new(0.3), {BackgroundTransparency = 0.3}):Play()
-TweenService:Create(MainFrame, TweenInfo.new(0.3, Enum.EasingStyle.Back, Enum.EasingDirection.Out), {Size = final_size}):Play()
+TweenService:Create(MainFrame, TweenInfo.new(0.3, Enum.EasingStyle.Back, Enum.EasingDirection.Out), {Size = Final_Size}):Play()
 
 wait(0.3)
 
-TweenService:Create(TitleLabel, tween_info3, {TextTransparency = 0}):Play()
-TweenService:Create(SubtitleLabel, tween_info3, {TextTransparency = 0}):Play()
-TweenService:Create(Line, tween_info3, {BackgroundTransparency = 0}):Play()
-TweenService:Create(TextBoxContainer, tween_info3, {BackgroundTransparency = 0}):Play()
-TweenService:Create(TextBoxStroke, tween_info3, {Transparency = 0}):Play()
-TweenService:Create(KeyTextBox, tween_info3, {TextTransparency = 0}):Play()
-TweenService:Create(CloseButton, tween_info3, {BackgroundTransparency = 0, TextTransparency = 0}):Play()
-TweenService:Create(CloseStroke, tween_info3, {Transparency = 0}):Play()
-TweenService:Create(MainStroke, tween_info3, {Transparency = 0}):Play()
+TweenService:Create(TitleLabel, Tween_Info2, {TextTransparency = 0}):Play()
+TweenService:Create(SubtitleLabel, Tween_Info2, {TextTransparency = 0}):Play()
+TweenService:Create(Line, Tween_Info2, {BackgroundTransparency = 0}):Play()
+TweenService:Create(TextBoxContainer, Tween_Info2, {BackgroundTransparency = 0}):Play()
+TweenService:Create(TextBoxStroke, Tween_Info2, {Transparency = 0}):Play()
+TweenService:Create(KeyTextBox, Tween_Info2, {TextTransparency = 0}):Play()
+TweenService:Create(CloseButton, Tween_Info2, {BackgroundTransparency = 0, TextTransparency = 0}):Play()
+TweenService:Create(CloseStroke, Tween_Info2, {Transparency = 0}):Play()
+TweenService:Create(MainStroke, Tween_Info2, {Transparency = 0}):Play()
 
-for _, v in ipairs(Buttons) do
-	TweenService:Create(v.button, tween_info3, {BackgroundTransparency = 0, TextTransparency = 0}):Play()
-	TweenService:Create(v.stroke, tween_info3, {Transparency = 0}):Play()
+for _, Button in ipairs(Buttons) do
+	TweenService:Create(Button.button, Tween_Info2, {BackgroundTransparency = 0, TextTransparency = 0}):Play()
+	TweenService:Create(Button.stroke, Tween_Info2, {Transparency = 0}):Play()
 end
 
 spawn(function()
