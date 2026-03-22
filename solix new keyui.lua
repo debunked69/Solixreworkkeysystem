@@ -69,7 +69,7 @@ local config = {
 	Title = "Solix Hub Free 15+ Games",
 	Description = "Lifetime key access is available for a one time payment of $15 via solixhub.com",
 	Linkvertise = "https://ads.luarmor.net/get_key?for=Solixhub_Free_KeySystem-OWlLHDMCHADk",
-	Shrink = "https://ads.luarmor.net/get_key?for=Solix_Free_Keysystems-pqJCGTqnTsng",
+	Rinku = "https://ads.luarmor.net/get_key?for=Solix_Free_Keysystems-pqJCGTqnTsng",
 	Discord = "https://discord.gg/solixhub",
 	Shop = "https://solixhub.com/",
 }
@@ -433,7 +433,7 @@ local Button1, Button2, Button3, Button4
 
 if IsMobile then
 	Button1 = CreateButton("Get Key (Linkvertise)", UDim2.new(0.5, 0, 0, 185), theme.Element)
-	Button2 = CreateButton("Get Key (Shrink)", UDim2.new(0.5, 0, 0, 240), theme.Element)
+	Button2 = CreateButton("Get Key (Rinku)", UDim2.new(0.5, 0, 0, 240), theme.Element)
 	Button3 = CreateButton("Join Discord", UDim2.new(0.5, 0, 0, 295), theme.Element)
 	Button4 = CreateButton("Buy Standard Key", UDim2.new(0.5, 0, 0, 350), theme.Element)
 
@@ -442,7 +442,7 @@ if IsMobile then
 	end
 else
 	Button1 = CreateButton("Get Key (Linkvertise)", UDim2.new(0.25, 0, 0, 190), theme.Element)
-	Button2 = CreateButton("Get Key (Shrink)", UDim2.new(0.75, 0, 0, 190), theme.Element)
+	Button2 = CreateButton("Get Key (Rinku)", UDim2.new(0.75, 0, 0, 190), theme.Element)
 	Button3 = CreateButton("Join Discord", UDim2.new(0.25, 0, 0, 255), theme.Element)
 	Button4 = CreateButton("Buy Standard Key", UDim2.new(0.75, 0, 0, 255), theme.Element)
 end
@@ -622,8 +622,8 @@ Button1.MouseButton1Click:Connect(function()
 end)
 
 Button2.MouseButton1Click:Connect(function()
-	setclipboard(config.Shrink)
-	Notification("Link Copied", "Shrink link copied to clipboard", 5)
+	setclipboard(config.Rinku)
+	Notification("Link Copied", "Rinku link copied to clipboard", 5)
 end)
 
 Button3.MouseButton1Click:Connect(function()
