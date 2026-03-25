@@ -339,20 +339,20 @@ local Library do
 				end
 			end)
 
-		UserInputService.InputChanged:Connect(function(Input)
-			if (Input.UserInputType == Enum.UserInputType.MouseMovement or Input.UserInputType == Enum.UserInputType.Touch) and Dragging then
-				local Scale = UIScale and UIScale.Scale or 1
-				local DragDelta = (Input.Position - DragStart) / Scale
-				self:Tween(TweenInfo.new(0.16, Enum.EasingStyle.Quart, Enum.EasingDirection.Out), {
-					Position = UDim2New(
-						StartPosition.X.Scale,
-						StartPosition.X.Offset + DragDelta.X,
-						StartPosition.Y.Scale,
-						StartPosition.Y.Offset + DragDelta.Y
-					)
-				})
-			end
-		end)
+			UserInputService.InputChanged:Connect(function(Input)
+				if (Input.UserInputType == Enum.UserInputType.MouseMovement or Input.UserInputType == Enum.UserInputType.Touch) and Dragging then
+					local Scale = UIScale and UIScale.Scale or 1
+					local DragDelta = (Input.Position - DragStart) / Scale
+					self:Tween(TweenInfo.new(0.16, Enum.EasingStyle.Quart, Enum.EasingDirection.Out), {
+						Position = UDim2New(
+							StartPosition.X.Scale,
+							StartPosition.X.Offset + DragDelta.X,
+							StartPosition.Y.Scale,
+							StartPosition.Y.Offset + DragDelta.Y
+						)
+					})
+				end
+			end)
 
 			return Dragging
 		end
@@ -501,13 +501,13 @@ local Library do
 		local seconds = v % 60
 
 		if days > 0 then
-			return StringFormat("%dd %dh %dm %ds", days, hours, minutes, seconds)
+			return string.format("%dd %dh %dm %ds", days, hours, minutes, seconds)
 		elseif hours > 0 then
-			return StringFormat("%dh %dm %ds", hours, minutes, seconds)
+			return string.format("%dh %dm %ds", hours, minutes, seconds)
 		elseif minutes > 0 then
-			return StringFormat("%dm %ds", minutes, seconds)
+			return string.format("%dm %ds", minutes, seconds)
 		else
-			return StringFormat("%ds", seconds)
+			return string.format("%ds", seconds)
 		end
 	end
 
@@ -1132,7 +1132,7 @@ local Library do
 
 	local UIScale = InstanceNew("UIScale")
 	UIScale.Scale = 1
-	UIScale.Parent = Library.Holder.Instance
+	UIScale.Parent = Items["ScreenGui"].Instance
 
 	local function GetViewportSize()
 		local Camera = Workspace.CurrentCamera
