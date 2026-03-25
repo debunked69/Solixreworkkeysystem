@@ -8,9 +8,6 @@ getgenv().luarmor_api = getgenv().luarmor_api or nil
 getgenv().key_expire = getgenv().key_expire or nil
 getgenv().key_note = getgenv().key_note or nil
 getgenv().key_executions = getgenv().key_executions or nil
-getgenv().key_discord = getgenv().key_discord or nil
-getgenv().key_hwid = getgenv().key_hwid or nil
-getgenv().key_resets = getgenv().key_resets or nil
 
 local wait = task.wait
 local spawn = task.spawn
@@ -102,12 +99,10 @@ local theme = {
 local error_messages = {
 	KEY_EXPIRED = "Your key has expired. Please renew it to continue.",
 	KEY_BANNED = "This key has been blacklisted. Contact support for assistance.",
-	KEY_HWID_LOCKED = "This key is linked to a different HWID. Please reset it via our bot.",
 	KEY_INCORRECT = "The provided key is incorrect or no longer valid.",
 	KEY_INVALID = "Invalid key format. Please check your key and try again.",
 	SCRIPT_ID_INCORRECT = "The provided script ID does not exist or has been removed.",
 	SCRIPT_ID_INVALID = "This script has been deleted by its owner.",
-	INVALID_EXECUTOR = "Invalid HWID header detected. Your executor may not be supported.",
 	SECURITY_ERROR = "Security validation failed (Cloudflare check). Please retry.",
 	TIME_ERROR = "Invalid client time detected. Please sync your system clock.",
 	UNKNOWN_ERROR = "An unknown error occurred. Please contact support."
@@ -577,22 +572,6 @@ local function ValidateKey(key)
 		getgenv().key_note = Result.data.note
 		getgenv().key_executions = Result.data.total_executions or 0
 
-		local Success1, Result1 = pcall(function()
-			return game:HttpGet("https://api.luarmor.net/v3/projects/" .. script_id .. "/users?user_key=" .. cleaned_key)
-		end)
-
-		if Success1 and Result1 then
-			local Success2, Result2 = pcall(HttpService.JSONDecode, HttpService, Result1)
-
-			if Success2 and Result2 and Result2.users and Result2.users[1] then
-				local User = Result2.users[1]
-
-				getgenv().key_discord = User.discord_id or ""
-				getgenv().key_hwid = User.identifier or ""
-				getgenv().key_resets = User.total_resets or 0
-			end
-		end
-
 		Notification("Success", "Key expires in: " .. ToTime(Result.data.auth_expire - os.time()), 5)
 
 		wait(1.5)
@@ -620,7 +599,7 @@ local function ValidateKey(key)
 	end
 
 	if error_messages[Result.code] then
-		if Result.code == "KEY_HWID_LOCKED" or Result.code == "INVALID_EXECUTOR" or Result.code == "SECURITY_ERROR" or Result.code == "UNKNOWN_ERROR" then
+		if Result.code == "SECURITY_ERROR" or Result.code == "UNKNOWN_ERROR" then
 			plr:Kick(error_messages[Result.code])
 		else
 			DeleteFile(config.File)
