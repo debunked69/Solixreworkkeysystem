@@ -1,8 +1,13 @@
 repeat wait() until game:IsLoaded()
 
-getgenv().lilix = getgenv().lilix or false
-getgenv().relix = getgenv().relix or false
+getgenv().lilix = getgenv().lilix or nil
+getgenv().relix = getgenv().relix or nil
+
 getgenv().key = getgenv().key or nil
+getgenv().luarmor_api = getgenv().luarmor_api or nil
+getgenv().key_expire = getgenv().key_expire or nil
+getgenv().key_note = getgenv().key_note or nil
+getgenv().key_executions = getgenv().key_executions or nil
 
 local wait = task.wait
 local spawn = task.spawn
@@ -31,7 +36,7 @@ local list = {
 	["9509842868"] = {id = "ad4ccd094f8b6f972bff36de80475abe", keyless = true }, -- Garden Horizons
 	["5130394318"] = {id = "3e7a75a970118d0f0cf629369524dc7d", keyless = false }, -- Bizarre Lineage
 	["9186719164"] = {id = "892ccfefdc8834199a2a6e5856a8da67", keyless = true }, -- Sailor Piece
-	
+
 }
 
 local is_mobile = UserInputService.TouchEnabled and not UserInputService.KeyboardEnabled
@@ -296,7 +301,7 @@ end
 
 local function SetMobileScale()
 	local Viewport = GetViewportSize()
-	
+
 	if is_mobile then
 		local Scale = math.clamp(Viewport.Y / 500, 0.5, 1.5)
 
