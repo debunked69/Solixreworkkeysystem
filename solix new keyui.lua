@@ -2,7 +2,7 @@ repeat wait() until game:IsLoaded()
 
 getgenv().lilix = getgenv().lilix or false
 getgenv().relix = getgenv().relix or false
-getgenv().key = getgenv().key or false
+getgenv().key = getgenv().key or nil
 
 local wait = task.wait
 local spawn = task.spawn
@@ -129,7 +129,9 @@ local function ToTime(v)
 	end
 end
 
-local function LoadFont()
+local DefaultFont = Enum.Font.GothamBold
+
+local function CustomFont()
 	local font_path = "solixhub/Assets/InterSemiBold.ttf"
 
 	if not isfolder("solixhub") then
@@ -159,7 +161,8 @@ local function LoadFont()
 	return Font.new(getcustomasset("solixhub/Assets/InterSemiBold.Font"))
 end
 
-local Font = LoadFont()
+local FontSuccess, LoadedFont = pcall(CustomFont)
+local LibraryFont = (FontSuccess and LoadedFont) and LoadedFont or DefaultFont
 
 local BlurEffect = Instance.new("BlurEffect")
 BlurEffect.Name = "Solix Blur"
@@ -199,7 +202,7 @@ local function Notification(title, desc, duration, color)
 
 	local TitleLabel = Instance.new("TextLabel", NotificationFrame)
 	TitleLabel.BackgroundTransparency = 1
-	TitleLabel.FontFace = Font
+	TitleLabel.FontFace = LibraryFont
 	TitleLabel.Text = title
 	TitleLabel.TextColor3 = theme.Text
 	TitleLabel.TextSize = 14
@@ -210,7 +213,7 @@ local function Notification(title, desc, duration, color)
 
 	local DescLabel = Instance.new("TextLabel", NotificationFrame)
 	DescLabel.BackgroundTransparency = 1
-	DescLabel.FontFace = Font
+	DescLabel.FontFace = LibraryFont
 	DescLabel.Text = desc
 	DescLabel.TextColor3 = theme.Text
 	DescLabel.TextTransparency = 0.4
@@ -260,10 +263,6 @@ local function Notification(title, desc, duration, color)
 		wait(0.5)
 		NotificationFrame:Destroy()
 	end)
-end
-
-if isfolder("solixhub/Assets/Intro") then
-    delfolder("solixhub/Assets/Intro")
 end
 
 local luarmor_api = loadstring(game:HttpGet("https://sdkapi-public.luarmor.net/library.lua"))()
@@ -333,7 +332,7 @@ local TitleLabel = Instance.new("TextLabel", MainFrame)
 TitleLabel.Position = UDim2.new(0, 0, 0, 20)
 TitleLabel.Size = UDim2.new(1, 0, 0, 40)
 TitleLabel.BackgroundTransparency = 1
-TitleLabel.FontFace = Font
+TitleLabel.FontFace = LibraryFont
 TitleLabel.Text = config.Title
 TitleLabel.TextColor3 = theme.Accent
 TitleLabel.TextSize = 28
@@ -343,7 +342,7 @@ local SubtitleLabel = Instance.new("TextLabel", MainFrame)
 SubtitleLabel.Position = UDim2.new(0, 0, 0, 65)
 SubtitleLabel.Size = UDim2.new(1, 0, 0, 20)
 SubtitleLabel.BackgroundTransparency = 1
-SubtitleLabel.FontFace = Font
+SubtitleLabel.FontFace = LibraryFont
 SubtitleLabel.Text = config.Description
 SubtitleLabel.TextColor3 = theme.InactiveText
 SubtitleLabel.TextSize = 13
@@ -382,7 +381,7 @@ local KeyTextBox = Instance.new("TextBox", TextBoxContainer)
 KeyTextBox.Size = UDim2.new(1, -24, 1, 0)
 KeyTextBox.Position = UDim2.new(0, 12, 0, 0)
 KeyTextBox.BackgroundTransparency = 1
-KeyTextBox.FontFace = Font
+KeyTextBox.FontFace = LibraryFont
 KeyTextBox.PlaceholderText = "Paste your key here..."
 KeyTextBox.PlaceholderColor3 = theme.InactiveText
 KeyTextBox.Text = ""
@@ -409,7 +408,7 @@ local function CreateButton(text, position, color)
 	Button.AnchorPoint = Vector2.new(0.5, 0)
 	Button.Size = UDim2.new(0, 220, 0, 45)
 	Button.BackgroundColor3 = color
-	Button.FontFace = Font
+	Button.FontFace = LibraryFont
 	Button.Text = text
 	Button.TextColor3 = theme.Text
 	Button.TextSize = is_mobile and 13 or 15
@@ -455,7 +454,7 @@ local CloseButton = Instance.new("TextButton", MainFrame)
 CloseButton.Position = UDim2.new(1, -40, 0, 10)
 CloseButton.Size = UDim2.new(0, 30, 0, 30)
 CloseButton.BackgroundColor3 = theme.Element
-CloseButton.FontFace = Font
+CloseButton.FontFace = LibraryFont
 CloseButton.Text = "X"
 CloseButton.TextColor3 = theme.Text
 CloseButton.TextSize = 18
