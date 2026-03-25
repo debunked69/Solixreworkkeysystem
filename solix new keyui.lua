@@ -1,5 +1,8 @@
 repeat wait() until game:IsLoaded()
 
+getgenv().lilix = getgenv().lilix or false
+getgenv().relix = getgenv().relix or false
+
 local wait = task.wait
 local spawn = task.spawn
 local delay = task.delay
@@ -30,7 +33,7 @@ local list = {
 	
 }
 
-local executor_name = getexecutorname():match("^%s*(.-)%s*$") or "nigga"
+local is_mobile = UserInputService.TouchEnabled and not UserInputService.KeyboardEnabled
 local game_id = tostring(game.GameId)
 local game_config = list[game_id]
 
@@ -42,19 +45,19 @@ end
 local script_id = game_config.id
 local is_key_less = game_config.keyless
 
-for _, exec in ipairs({"Xeno", "Solara"}) do
-	if string.find(executor_name, exec) then
-		Workspace:SetAttribute("low", true)
-		break
-	end
+if hookfunction and hookmetamethod then
+	getgenv().lilix = true
+else
+	getgenv().lilix = false
+end
+
+if is_mobile then
+	getgenv().relix = true
+else
+	getgenv().relix = false
 end
 
 local Buttons = {}
-local IsMobile = UserInputService.TouchEnabled and not UserInputService.KeyboardEnabled
-
-if IsMobile then
-	Workspace:SetAttribute("mobile", true)
-end
 
 if CoreGui:FindFirstChild("Solix ScreenGui") then
 	CoreGui["Solix ScreenGui"]:Destroy()
@@ -294,7 +297,7 @@ end
 local function SetMobileScale()
 	local Viewport = GetViewportSize()
 	
-	if IsMobile then
+	if is_mobile then
 		local Scale = math.clamp(Viewport.Y / 500, 0.5, 1.5)
 
 		UIScale.Scale = Scale
@@ -408,7 +411,7 @@ local function CreateButton(text, position, color)
 	Button.FontFace = Font
 	Button.Text = text
 	Button.TextColor3 = theme.Text
-	Button.TextSize = IsMobile and 13 or 15
+	Button.TextSize = is_mobile and 13 or 15
 	Button.BorderSizePixel = 0
 	Button.AutoButtonColor = false
 	Button.BackgroundTransparency = 1
@@ -431,7 +434,7 @@ end
 
 local Button1, Button2, Button3, Button4
 
-if IsMobile then
+if is_mobile then
 	Button1 = CreateButton("Get Key (Linkvertise)", UDim2.new(0.5, 0, 0, 185), theme.Element)
 	Button2 = CreateButton("Get Key (Rinku)", UDim2.new(0.5, 0, 0, 240), theme.Element)
 	Button3 = CreateButton("Join Discord", UDim2.new(0.5, 0, 0, 295), theme.Element)
@@ -599,19 +602,19 @@ end
 
 for _, button in ipairs({Button1, Button2, Button3, Button4}) do
 	button.MouseEnter:Connect(function()
-		local hoverSize = IsMobile and UDim2.new(0, 330, 0, 45) or UDim2.new(0, 230, 0, 48)
+		local hoverSize = is_mobile and UDim2.new(0, 330, 0, 45) or UDim2.new(0, 230, 0, 48)
 		TweenService:Create(button, TweenInfo.new(0.15, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {Size = hoverSize}):Play()
 	end)
 	button.MouseLeave:Connect(function()
-		local normalSize = IsMobile and UDim2.new(0, 320, 0, 42) or UDim2.new(0, 220, 0, 45)
+		local normalSize = is_mobile and UDim2.new(0, 320, 0, 42) or UDim2.new(0, 220, 0, 45)
 		TweenService:Create(button, TweenInfo.new(0.15, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {Size = normalSize}):Play()
 	end)
 	button.MouseButton1Down:Connect(function()
-		local clickSize = IsMobile and UDim2.new(0, 310, 0, 40) or UDim2.new(0, 210, 0, 42)
+		local clickSize = is_mobile and UDim2.new(0, 310, 0, 40) or UDim2.new(0, 210, 0, 42)
 		TweenService:Create(button, TweenInfo.new(0.08), {Size = clickSize}):Play()
 	end)
 	button.MouseButton1Up:Connect(function()
-		local normalSize = IsMobile and UDim2.new(0, 320, 0, 42) or UDim2.new(0, 220, 0, 45)
+		local normalSize = is_mobile and UDim2.new(0, 320, 0, 42) or UDim2.new(0, 220, 0, 45)
 		TweenService:Create(button, TweenInfo.new(0.08), {Size = normalSize}):Play()
 	end)
 end
@@ -660,7 +663,7 @@ end)
 
 MakeDraggable(MainFrame)
 
-if IsMobile then
+if is_mobile then
 	MainFrame.Size = UDim2.new(0, 380, 0, 440)
 	TitleLabel.TextSize = 22
 	SubtitleLabel.TextSize = 10
@@ -669,7 +672,7 @@ if IsMobile then
 	SetMobileScale()
 end
 
-local Final_Size = IsMobile and UDim2.new(0, 380, 0, 440) or UDim2.new(0, 580, 0, 340)
+local Final_Size = is_mobile and UDim2.new(0, 380, 0, 440) or UDim2.new(0, 580, 0, 340)
 local Tween_Info2 = TweenInfo.new(1, Enum.EasingStyle.Exponential, Enum.EasingDirection.Out)
 
 TweenService:Create(BlurEffect, TweenInfo.new(0.5, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {Size = 24}):Play()
