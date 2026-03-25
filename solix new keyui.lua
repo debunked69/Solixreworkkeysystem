@@ -8,6 +8,9 @@ getgenv().luarmor_api = getgenv().luarmor_api or nil
 getgenv().key_expire = getgenv().key_expire or nil
 getgenv().key_note = getgenv().key_note or nil
 getgenv().key_executions = getgenv().key_executions or nil
+getgenv().key_discord = getgenv().key_discord or nil
+getgenv().key_hwid = getgenv().key_hwid or nil
+getgenv().key_resets = getgenv().key_resets or nil
 
 local wait = task.wait
 local spawn = task.spawn
@@ -117,20 +120,23 @@ local function DeleteFile(v)
 end
 
 local function ToTime(v)
-	if v <= 0 then
-		return "I don't know bro"
+	if v <= 0 or not v then
+		return "Lifetime"
 	end
 
 	local days = math.floor(v / 86400)
 	local hours = math.floor((v % 86400) / 3600)
 	local minutes = math.floor((v % 3600) / 60)
+	local seconds = v % 60
 
 	if days > 0 then
-		return string.format("%dd %dh %dm", days, hours, minutes)
+		return string.format("%dd %dh %dm %ds", days, hours, minutes, seconds)
 	elseif hours > 0 then
-		return string.format("%dh %dm", hours, minutes)
+		return string.format("%dh %dm %ds", hours, minutes, seconds)
+	elseif minutes > 0 then
+		return string.format("%dm %ds", minutes, seconds)
 	else
-		return string.format("%dm", minutes)
+		return string.format("%ds", seconds)
 	end
 end
 
@@ -547,14 +553,14 @@ local function ValidateKey(key)
 		Notification("Info", "Extra spaces detected, verifying without spaces...", 5)
 	end
 
-	local success, status = pcall(luarmor_api.check_key, cleaned_key)
+	local Success, Result = pcall(luarmor_api.check_key, cleaned_key)
 
-	if not success then
+	if not Success then
 		Notification("Error", "Network error. Please try again.", 5)
 		return false
 	end
 
-	if status.code == "KEY_VALID" then
+	if Result.code == "KEY_VALID" then
 		if not isfile(config.File) then
 			pcall(writefile, config.File, cleaned_key)
 		else
@@ -564,13 +570,30 @@ local function ValidateKey(key)
 		end
 
 		script_key = cleaned_key
+
 		getgenv().key = cleaned_key
 		getgenv().luarmor_api = luarmor_api
-		getgenv().key_expire = status.data.auth_expire
-		getgenv().key_note = status.data.note or "None"
-		getgenv().key_executions = status.data.total_executions or 0
+		getgenv().key_expire = Result.data.auth_expire
+		getgenv().key_note = Result.data.note
+		getgenv().key_executions = Result.data.total_executions or 0
 
-		Notification("Success", "Key expire in: " .. ToTime(status.data.auth_expire - os.time()), 5)
+		local Success1, Result1 = pcall(function()
+			return game:HttpGet("https://api.luarmor.net/v3/projects/" .. script_id .. "/users?user_key=" .. cleaned_key)
+		end)
+
+		if Success1 and Result1 then
+			local Success2, Result2 = pcall(HttpService.JSONDecode, HttpService, Result1)
+
+			if Success2 and Result2 and Result2.users and Result2.users[1] then
+				local User = Result2.users[1]
+
+				getgenv().key_discord = User.discord_id or ""
+				getgenv().key_hwid = User.identifier or ""
+				getgenv().key_resets = User.total_resets or 0
+			end
+		end
+
+		Notification("Success", "Key expires in: " .. ToTime(Result.data.auth_expire - os.time()), 5)
 
 		wait(1.5)
 		CloseUI()
@@ -596,17 +619,17 @@ local function ValidateKey(key)
 		return true
 	end
 
-	if error_messages[status.code] then
-		if status.code == "KEY_HWID_LOCKED" or status.code == "INVALID_EXECUTOR" or status.code == "SECURITY_ERROR" or status.code == "UNKNOWN_ERROR" then
-			plr:Kick(error_messages[status.code])
+	if error_messages[Result.code] then
+		if Result.code == "KEY_HWID_LOCKED" or Result.code == "INVALID_EXECUTOR" or Result.code == "SECURITY_ERROR" or Result.code == "UNKNOWN_ERROR" then
+			plr:Kick(error_messages[Result.code])
 		else
 			DeleteFile(config.File)
-			Notification("Error", error_messages[status.code], 5)
+			Notification("Error", error_messages[Result.code], 5)
 		end
 		return false
 	end
 
-	plr:Kick("Key check failed:\nCode: " .. status.code)
+	plr:Kick("Key check failed:\nCode: " .. Result.code)
 	return false
 end
 
