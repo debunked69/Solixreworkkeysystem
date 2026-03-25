@@ -560,8 +560,10 @@ local function ValidateKey(key)
 
 		script_key = cleaned_key
 		getgenv().key = cleaned_key
+		getgenv().luarmor_api = luarmor_api
+		getgenv().key_expire = status.data.auth_expire
 
-		Notification("Success", "Key expires in: " .. ToTime(status.data.auth_expire - os.time()), 5)
+		Notification("Success", "Key expire in: " .. ToTime(status.data.auth_expire - os.time()), 5)
 
 		wait(1.5)
 		CloseUI()
