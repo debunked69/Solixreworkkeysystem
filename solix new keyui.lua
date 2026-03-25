@@ -1,14 +1,5 @@
 repeat wait() until game:IsLoaded()
 
-getgenv().lilix = getgenv().lilix or nil
-getgenv().relix = getgenv().relix or nil
-
-getgenv().key = getgenv().key or nil
-getgenv().luarmor_api = getgenv().luarmor_api or nil
-getgenv().key_expire = getgenv().key_expire or nil
-getgenv().key_note = getgenv().key_note or nil
-getgenv().key_executions = getgenv().key_executions or nil
-
 local wait = task.wait
 local spawn = task.spawn
 local delay = task.delay
