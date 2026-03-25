@@ -2,6 +2,7 @@ repeat wait() until game:IsLoaded()
 
 getgenv().lilix = getgenv().lilix or false
 getgenv().relix = getgenv().relix or false
+getgenv().key = getgenv().key or false
 
 local wait = task.wait
 local spawn = task.spawn
@@ -559,6 +560,7 @@ local function ValidateKey(key)
 		end
 
 		script_key = cleaned_key
+		getgenv().key = cleaned_key
 
 		Notification("Success", "Key expires in: " .. ToTime(status.data.auth_expire - os.time()), 5)
 
@@ -575,7 +577,7 @@ local function ValidateKey(key)
 				or game_id == "9509842868" -- Garden Horizons
 				or game_id == "5130394318" -- Bizarre Lineage
 			)
-				and Workspace:GetAttribute("low") then
+				and not getgenv().lilix then
 			plr:Kick("This executor is not supported for this game.")
 		end
 
