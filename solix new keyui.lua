@@ -53,7 +53,7 @@ end
 local FontPath = Folder_Configs.Assets .. "/InterSemibold.ttf"
 
 if not isfile(FontPath) then
-	local FontData = game:HttpGet("https://github.com/sametexe001/luas/Text/refs/heads/main/fonts/InterSemibold.ttf")
+	local FontData = game:HttpGet("https://github.com/sametexe001/luas/raw/main/fonts/InterSemibold.ttf")
 
 	if FontData and FontData ~= "" then
 		writefile(FontPath, FontData)
@@ -339,19 +339,20 @@ local Library do
 				end
 			end)
 
-			UserInputService.InputChanged:Connect(function(Input)
-				if (Input.UserInputType == Enum.UserInputType.MouseMovement or Input.UserInputType == Enum.UserInputType.Touch) and Dragging then
-					local DragDelta = Input.Position - DragStart
-					self:Tween(TweenInfo.new(0.16, Enum.EasingStyle.Quart, Enum.EasingDirection.Out), {
-						Position = UDim2New(
-							StartPosition.X.Scale,
-							StartPosition.X.Offset + DragDelta.X,
-							StartPosition.Y.Scale,
-							StartPosition.Y.Offset + DragDelta.Y
-						)
-					})
-				end
-			end)
+		UserInputService.InputChanged:Connect(function(Input)
+			if (Input.UserInputType == Enum.UserInputType.MouseMovement or Input.UserInputType == Enum.UserInputType.Touch) and Dragging then
+				local Scale = UIScale and UIScale.Scale or 1
+				local DragDelta = (Input.Position - DragStart) / Scale
+				self:Tween(TweenInfo.new(0.16, Enum.EasingStyle.Quart, Enum.EasingDirection.Out), {
+					Position = UDim2New(
+						StartPosition.X.Scale,
+						StartPosition.X.Offset + DragDelta.X,
+						StartPosition.Y.Scale,
+						StartPosition.Y.Offset + DragDelta.Y
+					)
+				})
+			end
+		end)
 
 			return Dragging
 		end
@@ -1129,11 +1130,32 @@ local Library do
 
 	Items["MainFrame"]:MakeDraggable()
 
+	local UIScale = InstanceNew("UIScale")
+	UIScale.Scale = 1
+	UIScale.Parent = Library.Holder.Instance
+
+	local function GetViewportSize()
+		local Camera = Workspace.CurrentCamera
+		return (Camera and Camera.ViewportSize) or Vector2.new(1920, 1080)
+	end
+
+	local function SetMobileScale()
+		local Viewport = GetViewportSize()
+
+		if IsMobile then
+			local Scale = math.clamp(Viewport.Y / 500, 0.5, 1.5)
+			UIScale.Scale = Scale
+		else
+			UIScale.Scale = 1
+		end
+	end
+
 	if IsMobile then
 		Items["MainFrame"].Instance.Size = UDim2New(0, 380, 0, 440)
 		Items["TitleLabel"].Instance.TextSize = 22
 		Items["SubtitleLabel"].Instance.TextSize = 10
 		Items["TextBoxContainer"].Instance.Size = UDim2New(0, 340, 0, 45)
+		SetMobileScale()
 	end
 
 	local FinalSize = IsMobile and UDim2New(0, 380, 0, 440) or UDim2New(0, 580, 0, 340)
