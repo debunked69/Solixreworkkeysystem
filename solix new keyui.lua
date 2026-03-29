@@ -1,16 +1,5 @@
 repeat wait() until game:IsLoaded()
 
-local cloneref = cloneref or function(o) return o end
-local CoreGui = cloneref(game:GetService("CoreGui"))
-local TweenService = cloneref(game:GetService("TweenService"))
-local UserInputService = cloneref(game:GetService("UserInputService"))
-local Players = cloneref(game:GetService("Players"))
-local TextService = cloneref(game:GetService("TextService"))
-local HttpService = cloneref(game:GetService("HttpService"))
-local Lighting = cloneref(game:GetService("Lighting"))
-local Workspace = cloneref(game:GetService("Workspace"))
-local IsMobile = UserInputService.TouchEnabled and not UserInputService.KeyboardEnabled and not UserInputService.MouseEnabled
-
 getgenv().lilix = getgenv().lilix or nil
 getgenv().relix = getgenv().relix or nil
 
@@ -30,6 +19,17 @@ else
 	warn = function() end
 end
 
+local cloneref = cloneref or function(o) return o end
+local CoreGui = cloneref(game:GetService("CoreGui"))
+local TweenService = cloneref(game:GetService("TweenService"))
+local UserInputService = cloneref(game:GetService("UserInputService"))
+local Players = cloneref(game:GetService("Players"))
+local TextService = cloneref(game:GetService("TextService"))
+local HttpService = cloneref(game:GetService("HttpService"))
+local Lighting = cloneref(game:GetService("Lighting"))
+local Workspace = cloneref(game:GetService("Workspace"))
+local IsMobile = UserInputService.TouchEnabled and not UserInputService.KeyboardEnabled and not UserInputService.MouseEnabled
+
 local Folder_Configs = {
 	Directory = "solixhub",
 	Configs = "solixhub/Configs",
@@ -48,16 +48,6 @@ local GameConfigFolder = Folder_Configs.Configs .. "/" .. GameId
 
 if not isfolder(GameConfigFolder) then
 	makefolder(GameConfigFolder)
-end
-
-local FontPath = Folder_Configs.Assets .. "/InterSemibold.ttf"
-
-if not isfile(FontPath) then
-	local FontData = game:HttpGet("https://github.com/sametexe001/luas/raw/main/fonts/InterSemibold.ttf")
-
-	if FontData and FontData ~= "" then
-		writefile(FontPath, FontData)
-	end
 end
 
 local GameList = {
@@ -161,9 +151,11 @@ local Library do
 
 	local function SafeGetUI()
 		local Success, Result = pcall(GetUI)
+
 		if Success and Result then
 			return Result
 		end
+
 		return game:GetService("CoreGui")
 	end
 
@@ -281,7 +273,9 @@ local Library do
 			if not self.Instance then
 				return
 			end
+
 			Library:AddToTheme(self, Properties)
+
 			return self
 		end
 
@@ -289,6 +283,7 @@ local Library do
 			if not self.Instance or not self.Instance[Event] then
 				return
 			end
+
 			return Library:Connect(self.Instance[Event], Callback)
 		end
 
@@ -296,6 +291,7 @@ local Library do
 			if not self.Instance then
 				return
 			end
+
 			return Tween:Create(self, Info, Goal)
 		end
 
@@ -303,6 +299,7 @@ local Library do
 			if self.Instance then
 				self.Instance:Destroy()
 			end
+
 			self = nil
 		end
 
@@ -341,8 +338,10 @@ local Library do
 
 			UserInputService.InputChanged:Connect(function(Input)
 				if (Input.UserInputType == Enum.UserInputType.MouseMovement or Input.UserInputType == Enum.UserInputType.Touch) and Dragging then
+
 					local Scale = UIScale and UIScale.Scale or 1
 					local DragDelta = (Input.Position - DragStart) / Scale
+
 					self:Tween(TweenInfo.new(0.16, Enum.EasingStyle.Quart, Enum.EasingDirection.Out), {
 						Position = UDim2New(
 							StartPosition.X.Scale,
@@ -358,52 +357,53 @@ local Library do
 		end
 	end
 
-	local DefaultFont = Enum.Font.GothamBold
+	local CustomFont = { } do
+		function CustomFont:New(Name, Weight, Style, Data)
+			if not isfile(Data.Id) then
+				writefile(Data.Id, game:HttpGet(Data.Url))
+			end
 
-	local function SafeFont(...)
-		local Success, Result = pcall(function(...)
-			return Font.new(...)
-		end, ...)
-		return Success and Result or nil
-	end
+			local AssetSuccess, AssetId = pcall(getcustomasset, Data.Id)
+			if not AssetSuccess then
+				return Font.fromEnum(Enum.Font.Gotham)
+			end
 
-	local FontSuccess, LoadedFont = pcall(function()
-		local AssetFolder = Folder_Configs.Assets
-
-		local FontAssetId = getcustomasset(FontPath)
-		if not FontAssetId then
-			return nil
-		end
-
-		local FontJson = {
-			name = "InterSemibold",
-			faces = {
-				{
-					name = "InterSemibold",
-					weight = 400,
-					style = "Regular",
-					assetId = FontAssetId
+			local FontData = {
+				name = Name,
+				faces = {
+					{
+						name = Name,
+						weight = Weight,
+						style = Style,
+						assetId = AssetId
+					}
 				}
 			}
-		}
 
-		local FontFilePath = AssetFolder .. "/InterSemibold.Font"
-		writefile(FontFilePath, HttpService:JSONEncode(FontJson))
+			local FontPath = Folder_Configs.Assets .. "/" .. Name .. ".font"
+			if not isfile(FontPath) then
+				writefile(FontPath, HttpService:JSONEncode(FontData))
+			end
 
-		local FontAssetPath = getcustomasset(FontFilePath)
-		if not FontAssetPath then
-			return nil
+			local FontAssetSuccess, FontAssetId = pcall(getcustomasset, FontPath)
+			if not FontAssetSuccess then
+				return Font.fromEnum(Enum.Font.Gotham)
+			end
+
+			return Font.new(FontAssetId)
 		end
 
-		return SafeFont(FontAssetPath)
-	end)
+		local FontSuccess = pcall(function()
+			Library.Font = CustomFont:New("InterSemibold", 400, "Regular", {
+				Id = "InterSemibold",
+				Url = "https://raw.githubusercontent.com/sametexe001/luas/main/fonts/InterSemibold.ttf"
+			})
+		end)
 
-	local Resolved = FontSuccess and LoadedFont
-	if not Resolved then
-		Resolved = SafeFont(DefaultFont)
+		if not FontSuccess then
+			Library.Font = Font.fromEnum(Enum.Font.Gotham)
+		end
 	end
-
-	Library.Font = Resolved or DefaultFont
 
 	Library.Holder = Instances:Create("ScreenGui", {
 		Parent = SafeGetUI(),
@@ -418,39 +418,43 @@ local Library do
 	Library.NotifHolder = Instances:Create("Frame", {
 		Parent = Library.Holder.Instance,
 		Name = "\0",
-		BorderColor3 = FromRGB(0, 0, 0),
-		AnchorPoint = Vector2New(1, 0),
-		BackgroundTransparency = 1,
-		Position = UDim2New(1, 0, 0, 0),
 		Size = UDim2New(0, 0, 1, 0),
+		Position = UDim2New(1, 0, 0, 0),
+		AnchorPoint = Vector2New(1, 0),
+		BackgroundColor3 = FromRGB(0, 0, 0),
+		BackgroundTransparency = 1,
 		BorderSizePixel = 0,
 		AutomaticSize = Enum.AutomaticSize.X
 	})
+
 	Library.NotifLayoutOrder = 0
 
 	Instances:Create("UIListLayout", {
 		Parent = Library.NotifHolder.Instance,
 		Name = "\0",
-		Padding = UDimNew(0, 20),
 		SortOrder = Enum.SortOrder.LayoutOrder,
-		HorizontalAlignment = Enum.HorizontalAlignment.Right
+		HorizontalAlignment = Enum.HorizontalAlignment.Right,
+		Padding = UDimNew(0, 20)
 	})
 
 	Instances:Create("UIPadding", {
 		Parent = Library.NotifHolder.Instance,
 		Name = "\0",
-		PaddingTop = UDimNew(0, 12),
-		PaddingBottom = UDimNew(0, 12),
+		PaddingLeft = UDimNew(0, 12),
 		PaddingRight = UDimNew(0, 12),
-		PaddingLeft = UDimNew(0, 12)
+		PaddingTop = UDimNew(0, 12),
+		PaddingBottom = UDimNew(0, 12)
 	})
 
 	Library.Thread = function(self, Function)
 		local NewThread = coroutine.create(Function)
+
 		coroutine.wrap(function()
 			coroutine.resume(NewThread)
 		end)()
+
 		TableInsert(self.Threads, NewThread)
+
 		return NewThread
 	end
 
@@ -487,11 +491,12 @@ local Library do
 		end
 
 		TableInsert(self.ThemeItems, ThemeData)
+
 		self.ThemeMap[Item] = ThemeData
 	end
 
 	local function ToTime(v)
-		if v <= 0 or not v then
+		if v < 0 then
 			return "Lifetime"
 		end
 
@@ -515,9 +520,11 @@ local Library do
 		local Success, Result = pcall(function()
 			return TextService:GetTextSize(Text, 14, Library.Font, Vector2New(Width, 10000))
 		end)
+
 		if not Success or not Result then
 			Result = TextService:GetTextSize(Text, 14, Enum.Font.SourceSans, Vector2New(Width, 10000))
 		end
+
 		return Result
 	end
 
@@ -525,15 +532,74 @@ local Library do
 		wait()
 		Library.NotifLayoutOrder = (Library.NotifLayoutOrder or 0) + 1
 
+		local function WrapText(Text, Character)
+			if not Text or Text == "" then
+				return ""
+			end
+
+			Character = Character or 100
+
+			local Lines = {}
+
+			for i = 1, #Text, Character do
+				local Chunk = Text:sub(i, i + Character - 1)
+				local NewLine = Chunk:find("\n")
+
+				if NewLine then
+					table.insert(Lines, Chunk:sub(1, NewLine - 1))
+					Text = Chunk:sub(NewLine + 1) .. Text:sub(i + Character)
+				else
+					table.insert(Lines, Chunk)
+				end
+			end
+
+			return table.concat(Lines, "\n")
+		end
+
+		local TitleText = WrapText(Data.Title or Data.Name or "", 100)
+		local DescText = WrapText(Data.Description or "", 100)
+
+		local PaddingH = 6
+		local PaddingV = 5
+		local Gap = 5
+		local BarGap = 4
+		local BarH = 3
+		local MaxWidth = 280
+
+		local function GetTextSize(Text, FontSize, Width)
+			local Success, Result = pcall(function()
+				return TextService:GetTextSize(Text, FontSize, Library.Font, Vector2.new(Width, 10000))
+			end)
+
+			if not Success or not Result then
+				Result = TextService:GetTextSize(Text, FontSize, Enum.Font.SourceSans, Vector2.new(Width, 10000))
+			end
+
+			return Result
+		end
+
+		local TitleSize = GetTextSize(TitleText, 14, MaxWidth)
+		local DescSize = DescText and GetTextSize(DescText, 12, MaxWidth) or Vector2.new(0, 14)
+
+		local TitleH = math.max(math.ceil(TitleSize.Y), 15)
+		local DescH = math.max(math.ceil(DescSize.Y), 14)
+
+		if DescH < 28 then DescH = 28 end
+
+		local SizeY = PaddingV + TitleH + Gap + DescH + BarGap + BarH + PaddingV
+
+		local ContentWidth = math.max(math.ceil(TitleSize.X), math.ceil(DescSize.X))
+		ContentWidth = math.min(ContentWidth, MaxWidth)
+
 		local Items = { } do
 			Items["Notification"] = Instances:Create("Frame", {
 				Parent = Library.NotifHolder.Instance,
 				Name = "\0",
-				LayoutOrder = Library.NotifLayoutOrder,
-				BackgroundTransparency = 0.3,
+				BackgroundColor3 = Library.Theme["Background"],
+				BackgroundTransparency = 1,
 				BorderColor3 = FromRGB(0, 0, 0),
 				BorderSizePixel = 0,
-				BackgroundColor3 = Library.Theme["Background"]
+				LayoutOrder = Library.NotifLayoutOrder
 			}):AddToTheme({BackgroundColor3 = 'Background'})
 
 			Instances:Create("UICorner", {
@@ -545,53 +611,58 @@ local Library do
 			Instances:Create("UIPadding", {
 				Parent = Items["Notification"].Instance,
 				Name = "\0",
-				PaddingTop = UDimNew(0, 5),
-				PaddingBottom = UDimNew(0, 5),
-				PaddingRight = UDimNew(0, 6),
-				PaddingLeft = UDimNew(0, 6)
+				PaddingLeft = UDimNew(0, PaddingH),
+				PaddingRight = UDimNew(0, PaddingH),
+				PaddingTop = UDimNew(0, PaddingV),
+				PaddingBottom = UDimNew(0, PaddingV)
 			})
 
 			Items["Title"] = Instances:Create("TextLabel", {
 				Parent = Items["Notification"].Instance,
 				Name = "\0",
-				FontFace = Library.Font,
-				TextColor3 = Library.Theme["Text"],
-				BorderColor3 = FromRGB(0, 0, 0),
-				Text = Data.Title or Data.Name,
-				Size = UDim2New(0, 0, 0, 15),
+				Size = UDim2New(1, 0, 0, TitleH),
 				BackgroundTransparency = 1,
-				TextXAlignment = Enum.TextXAlignment.Left,
+				BorderColor3 = FromRGB(0, 0, 0),
 				BorderSizePixel = 0,
-				AutomaticSize = Enum.AutomaticSize.XY,
-				TextSize = 14
+				Text = TitleText,
+				TextColor3 = Library.Theme["Text"],
+				TextSize = 14,
+				FontFace = Library.Font,
+				TextXAlignment = Enum.TextXAlignment.Left,
+				TextYAlignment = Enum.TextYAlignment.Top,
+				TextWrapped = true,
+				TextTransparency = 1
 			}):AddToTheme({TextColor3 = 'Text'})
 
 			Items["Description"] = Instances:Create("TextLabel", {
 				Parent = Items["Notification"].Instance,
 				Name = "\0",
-				FontFace = Library.Font,
-				TextWrapped = true,
-				TextColor3 = Library.Theme["Text"],
-				TextTransparency = 0.4,
-				Text = Data.Description,
-				Size = UDim2New(0, 0, 0, 0),
-				Position = UDim2New(0, 0, 0, 20),
-				BorderSizePixel = 0,
-				BorderColor3 = FromRGB(0, 0, 0),
+				Size = UDim2New(1, 0, 0, DescH),
+				Position = UDim2New(0, 0, 0, TitleH + Gap),
 				BackgroundTransparency = 1,
+				BorderColor3 = FromRGB(0, 0, 0),
+				BorderSizePixel = 0,
+				Text = DescText,
+				TextColor3 = Library.Theme["Text"],
+				TextSize = 12,
+				FontFace = Library.Font,
+				TextTransparency = 1,
 				TextXAlignment = Enum.TextXAlignment.Left,
-				AutomaticSize = Enum.AutomaticSize.Y,
-				TextSize = 14
+				TextYAlignment = Enum.TextYAlignment.Top,
+				TextWrapped = true,
+				TextTruncate = Enum.TextTruncate.None,
+				RichText = false
 			}):AddToTheme({TextColor3 = 'Text'})
 
 			Items["Duration"] = Instances:Create("Frame", {
 				Parent = Items["Notification"].Instance,
 				Name = "\0",
-				Position = UDim2New(0, 0, 0, 40),
+				Size = UDim2New(1, 0, 0, BarH),
+				Position = UDim2New(0, 0, 0, TitleH + Gap + DescH + BarGap),
+				BackgroundColor3 = Library.Theme["Inline"],
+				BackgroundTransparency = 1,
 				BorderColor3 = FromRGB(0, 0, 0),
-				Size = UDim2New(1, 0, 0, 3),
-				BorderSizePixel = 0,
-				BackgroundColor3 = Library.Theme["Inline"]
+				BorderSizePixel = 0
 			}):AddToTheme({BackgroundColor3 = 'Inline'})
 
 			Instances:Create("UICorner", {
@@ -603,10 +674,10 @@ local Library do
 			Items["Accent"] = Instances:Create("Frame", {
 				Parent = Items["Duration"].Instance,
 				Name = "\0",
-				BorderColor3 = FromRGB(0, 0, 0),
 				Size = UDim2New(1, 0, 1, 0),
-				BorderSizePixel = 0,
-				BackgroundColor3 = Data.Color
+				BackgroundColor3 = Data.Color,
+				BorderColor3 = FromRGB(0, 0, 0),
+				BorderSizePixel = 0
 			})
 
 			Instances:Create("UICorner", {
@@ -616,30 +687,12 @@ local Library do
 			})
 		end
 
-		wait()
-
-		local Content = GetTextSize(Data.Description or "", 10000).X
-		local Description = math.max(math.ceil(GetTextSize(Data.Description or "", Content).Y), 14)
-		local TitleSize = math.ceil(Items["Title"].Instance.TextBounds.X)
-		local Final = math.max(TitleSize, Content)
-		local SizeY = 5 + 20 + Description + 4 + 3 + 5
-
-		Items["Description"].Instance.Size = UDim2New(0, Final, 0, 0)
-		Items["Duration"].Instance.Position = UDim2New(0, 0, 0, 5 + 20 + Description + 4)
 		Items["Notification"].Instance.Size = UDim2New(0, 0, 0, SizeY)
-
-		for _, Value in pairs(Items) do
-			if Value.Instance:IsA("Frame") then
-				Value.Instance.BackgroundTransparency = 1
-			elseif Value.Instance:IsA("TextLabel") then
-				Value.Instance.TextTransparency = 1
-			end
-		end
 
 		local Info = TweenInfo.new(1, Enum.EasingStyle.Exponential, Enum.EasingDirection.Out, 0, false, 0)
 
-		Library.Thread(self, function()
-			for Index, Value in pairs(Items) do
+		Library:Thread(function()
+			for Index, Value in Items do
 				if Value.Instance:IsA("Frame") then
 					Value:Tween(Info, {BackgroundTransparency = 0})
 				elseif Value.Instance:IsA("TextLabel") and Index ~= "Description" then
@@ -649,11 +702,11 @@ local Library do
 				end
 			end
 
-			Items["Notification"]:Tween(Info, {Size = UDim2New(0, Final, 0, SizeY)})
+			Items["Notification"]:Tween(Info, {Size = UDim2New(0, ContentWidth, 0, SizeY)})
 			Items["Accent"]:Tween(TweenInfo.new(Data.Duration, Enum.EasingStyle.Linear, Enum.EasingDirection.Out), {Size = UDim2New(0, 0, 1, 0)})
 
 			delay(Data.Duration + 0.1, function()
-				for _, Value in pairs(Items) do
+				for Index, Value in Items do
 					if Value.Instance:IsA("Frame") then
 						Value:Tween(nil, {BackgroundTransparency = 1})
 					elseif Value.Instance:IsA("TextLabel") then
@@ -678,10 +731,10 @@ local Library do
 		Items["ScreenGui"] = Instances:Create("ScreenGui", {
 			Parent = SafeGetUI(),
 			Name = "\0",
-			ResetOnSpawn = false,
-			IgnoreGuiInset = true,
+			ZIndexBehavior = Enum.ZIndexBehavior.Global,
 			DisplayOrder = 999,
-			ZIndexBehavior = Enum.ZIndexBehavior.Global
+			ResetOnSpawn = false,
+			IgnoreGuiInset = true
 		})
 
 		Items["Overlay"] = Instances:Create("Frame", {
@@ -697,9 +750,9 @@ local Library do
 		Items["MainFrame"] = Instances:Create("Frame", {
 			Parent = Items["ScreenGui"].Instance,
 			Name = "\0",
-			AnchorPoint = Vector2New(0.5, 0.5),
-			Position = UDim2New(0.5, 0, 0.5, 0),
 			Size = UDim2New(0, 0, 0, 0),
+			Position = UDim2New(0.5, 0, 0.5, 0),
+			AnchorPoint = Vector2New(0.5, 0.5),
 			BackgroundColor3 = Library.Theme["Background"],
 			BackgroundTransparency = 0.15,
 			BorderSizePixel = 0,
@@ -724,53 +777,53 @@ local Library do
 		Items["TitleLabel"] = Instances:Create("TextLabel", {
 			Parent = Items["MainFrame"].Instance,
 			Name = "\0",
-			Position = UDim2New(0, 0, 0, 20),
 			Size = UDim2New(1, 0, 0, 40),
+			Position = UDim2New(0, 0, 0, 20),
 			BackgroundTransparency = 1,
-			FontFace = Library.Font,
+			BorderSizePixel = 0,
 			Text = Config.Title,
 			TextColor3 = Library.Theme["Accent"],
 			TextSize = 28,
+			FontFace = Library.Font,
 			TextTransparency = 1,
-			BorderSizePixel = 0,
 			ZIndex = 2
 		}):AddToTheme({TextColor3 = 'Accent'})
 
 		Items["SubtitleLabel"] = Instances:Create("TextLabel", {
 			Parent = Items["MainFrame"].Instance,
 			Name = "\0",
-			Position = UDim2New(0, 0, 0, 65),
 			Size = UDim2New(1, 0, 0, 20),
+			Position = UDim2New(0, 0, 0, 65),
 			BackgroundTransparency = 1,
-			FontFace = Library.Font,
+			BorderSizePixel = 0,
 			Text = Config.Description,
 			TextColor3 = Library.Theme["Inactive Text"],
 			TextSize = 13,
+			FontFace = Library.Font,
 			TextTransparency = 1,
-			BorderSizePixel = 0,
 			ZIndex = 2
 		}):AddToTheme({TextColor3 = 'Inactive Text'})
 
 		Items["Line"] = Instances:Create("Frame", {
 			Parent = Items["MainFrame"].Instance,
 			Name = "\0",
-			Position = UDim2New(0.08, 0, 0, 95),
 			Size = UDim2New(0.84, 0, 0, 1),
+			Position = UDim2New(0.08, 0, 0, 95),
 			BackgroundColor3 = Library.Theme["Border"],
-			BorderSizePixel = 0,
 			BackgroundTransparency = 1,
+			BorderSizePixel = 0,
 			ZIndex = 2
 		}):AddToTheme({BackgroundColor3 = 'Border'})
 
 		Items["TextBoxContainer"] = Instances:Create("Frame", {
 			Parent = Items["MainFrame"].Instance,
 			Name = "\0",
+			Size = UDim2New(0, 480, 0, 50),
 			Position = UDim2New(0.5, 0, 0, 115),
 			AnchorPoint = Vector2New(0.5, 0),
-			Size = UDim2New(0, 480, 0, 50),
 			BackgroundColor3 = Library.Theme["Element"],
-			BorderSizePixel = 0,
 			BackgroundTransparency = 1,
+			BorderSizePixel = 0,
 			ZIndex = 2
 		}):AddToTheme({BackgroundColor3 = 'Element'})
 
@@ -805,33 +858,33 @@ local Library do
 			Size = UDim2New(1, -24, 1, 0),
 			Position = UDim2New(0, 12, 0, 0),
 			BackgroundTransparency = 1,
-			FontFace = Library.Font,
-			PlaceholderText = "Paste your key here...",
-			PlaceholderColor3 = Library.Theme["Inactive Text"],
+			BorderSizePixel = 0,
+			ZIndex = 2,
 			Text = "",
 			TextColor3 = Library.Theme["Text"],
 			TextSize = 15,
-			ClearTextOnFocus = false,
+			FontFace = Library.Font,
+			PlaceholderText = "Paste your key here...",
+			PlaceholderColor3 = Library.Theme["Inactive Text"],
+			TextXAlignment = Enum.TextXAlignment.Left,
 			TextTransparency = 1,
-			BorderSizePixel = 0,
-			ZIndex = 2,
 			CursorPosition = -1,
-			TextXAlignment = Enum.TextXAlignment.Left
+			ClearTextOnFocus = false
 		}):AddToTheme({TextColor3 = 'Text', PlaceholderColor3 = 'Inactive Text'})
 
 		Items["CloseButton"] = Instances:Create("TextButton", {
 			Parent = Items["MainFrame"].Instance,
 			Name = "\0",
-			Position = UDim2New(1, -40, 0, 10),
 			Size = UDim2New(0, 30, 0, 30),
+			Position = UDim2New(1, -40, 0, 10),
 			BackgroundColor3 = Library.Theme["Element"],
-			FontFace = Library.Font,
+			BackgroundTransparency = 1,
+			BorderSizePixel = 0,
 			Text = "X",
 			TextColor3 = Library.Theme["Text"],
 			TextSize = 18,
-			BorderSizePixel = 0,
+			FontFace = Library.Font,
 			AutoButtonColor = false,
-			BackgroundTransparency = 1,
 			TextTransparency = 1,
 			ZIndex = 2
 		}):AddToTheme({BackgroundColor3 = 'Element', TextColor3 = 'Text'})
@@ -858,17 +911,17 @@ local Library do
 		local Button = Instances:Create("TextButton", {
 			Parent = Items["MainFrame"].Instance,
 			Name = "\0",
+			Size = UDim2New(0, 220, 0, 45),
 			Position = Position,
 			AnchorPoint = Vector2New(0.5, 0),
-			Size = UDim2New(0, 220, 0, 45),
 			BackgroundColor3 = Library.Theme["Element"],
-			FontFace = Library.Font,
+			BackgroundTransparency = 1,
+			BorderSizePixel = 0,
 			Text = Text,
 			TextColor3 = Library.Theme["Text"],
 			TextSize = IsMobile and 13 or 15,
-			BorderSizePixel = 0,
+			FontFace = Library.Font,
 			AutoButtonColor = false,
-			BackgroundTransparency = 1,
 			TextTransparency = 1,
 			ZIndex = 2
 		}):AddToTheme({BackgroundColor3 = 'Element', TextColor3 = 'Text'})
@@ -990,13 +1043,13 @@ local Library do
 
 			getgenv().key = CleanedKey
 			getgenv().luarmor_api = LuarmorApi
-			getgenv().key_expire = Result.data.auth_expire
-			getgenv().key_note = Result.data.note
-			getgenv().key_executions = Result.data.total_executions or 0
+			getgenv().key_expire = Result.data and Result.data.auth_expire or 0
+			getgenv().key_note = Result.data and Result.data.note or ""
+			getgenv().key_executions = Result.data and Result.data.total_executions or 0
 
 			Library:Notification({
 				Title = "Success",
-				Description = "Key expires in: " .. ToTime(Result.data.auth_expire - os.time()),
+				Description = "Key expires in: " .. ToTime(getgenv().key_expire - os.time()),
 				Color = FromRGB(60, 255, 60),
 				Duration = 5
 			})
@@ -1183,7 +1236,7 @@ local Library do
 	end
 
 	spawn(function()
-		while task.wait(0.3) do
+		while wait(0.3) do
 			local SavedKey = (isfile(Config.File) and readfile(Config.File)) or (script_key ~= "" and script_key) or nil
 
 			if SavedKey and ValidateKey(SavedKey) then
