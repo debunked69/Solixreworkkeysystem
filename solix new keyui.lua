@@ -572,14 +572,22 @@ local Library do
 			end)
 
 			if not Success or not Result then
-				Result = TextService:GetTextSize(Text, FontSize, Enum.Font.SourceSans, Vector2.new(Width, 10000))
+				Success, Result = pcall(function()
+					return TextService:GetTextSize(Text, FontSize, Enum.Font.Gotham, Vector2.new(Width, 10000))
+				end)
 			end
 
-			return Result
+			if not Success or not Result then
+				Success, Result = pcall(function()
+					return TextService:GetTextSize(Text, FontSize, Enum.Font.SourceSans, Vector2.new(Width, 10000))
+				end)
+			end
+
+			return Result or Vector2.new(Width, FontSize)
 		end
 
 		local TitleSize = GetTextSize(TitleText, 14, MaxWidth)
-		local DescSize = DescText and GetTextSize(DescText, 12, MaxWidth) or Vector2.new(0, 14)
+		local DescSize = DescText ~= "" and GetTextSize(DescText, 12, MaxWidth) or Vector2.new(0, 0)
 
 		local TitleH = math.max(math.ceil(TitleSize.Y), 15)
 		local DescH = math.max(math.ceil(DescSize.Y), 14)
