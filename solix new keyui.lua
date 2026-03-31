@@ -63,6 +63,7 @@ local GameList = {
 	["9509842868"] = { id = "ad4ccd094f8b6f972bff36de80475abe", keyless = true },
 	["5130394318"] = { id = "3e7a75a970118d0f0cf629369524dc7d", keyless = false },
 	["9186719164"] = { id = "892ccfefdc8834199a2a6e5856a8da67", keyless = true },
+	["9787206684"] = { id = "a29d0ba0c834bf7d9ccd4b615fce834f", keyless = true },
 }
 
 local Config = {
