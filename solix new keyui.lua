@@ -51,19 +51,19 @@ if not isfolder(GameConfigFolder) then
 end
 
 local GameList = {
-	["3808223175"] = { id = "4fe2dfc202115670b1813277df916ab2", keyless = false },
-	["994732206"]  = { id = "e2718ddebf562c5c4080dfce26b09398", keyless = false },
-	["1511883870"] = { id = "fefdf5088c44beb34ef52ed6b520507c", keyless = false },
-	["6035872082"] = { id = "3bb7969a9ecb9e317b0a24681327c2e2", keyless = true },
-	["245662005"]  = { id = "21ad7f491e4658e9dc9529a60c887c6e", keyless = true },
-	["7018190066"] = { id = "98f5c64a0a9ecca29517078597bbcbdb", keyless = true },
-	["7326934954"] = { id = "00e140acb477c5ecde501c1d448df6f9", keyless = true },
-	["7671049560"] = { id = "c0b41e859f576fb70183206224d4a75f", keyless = false },
-	["9363735110"] = { id = "4948419832e0bd4aa588e628c45b6f8d", keyless = false },
-	["9509842868"] = { id = "ad4ccd094f8b6f972bff36de80475abe", keyless = true },
-	["5130394318"] = { id = "3e7a75a970118d0f0cf629369524dc7d", keyless = false },
-	["9186719164"] = { id = "892ccfefdc8834199a2a6e5856a8da67", keyless = true },
-	["9787206684"] = { id = "a29d0ba0c834bf7d9ccd4b615fce834f", keyless = true },
+	["3808223175"] = { id = "4fe2dfc202115670b1813277df916ab2", keyless = false }, -- Jujutsu Infinite
+	["994732206"]  = { id = "e2718ddebf562c5c4080dfce26b09398", keyless = false }, -- Blox Fruits
+	["1511883870"] = { id = "fefdf5088c44beb34ef52ed6b520507c", keyless = false }, -- Shindo Life
+	["6035872082"] = { id = "3bb7969a9ecb9e317b0a24681327c2e2", keyless = true }, -- Rivals
+	["245662005"]  = { id = "21ad7f491e4658e9dc9529a60c887c6e", keyless = true }, -- Jailbreak
+	["7018190066"] = { id = "98f5c64a0a9ecca29517078597bbcbdb", keyless = true }, -- Dead Rails
+	["7326934954"] = { id = "00e140acb477c5ecde501c1d448df6f9", keyless = true }, -- 99 Nights in the Forest
+	["7671049560"] = { id = "c0b41e859f576fb70183206224d4a75f", keyless = false }, -- The Forge
+	["9363735110"] = { id = "4948419832e0bd4aa588e628c45b6f8d", keyless = false }, -- Escape Tsunami For Brainrots!
+	["9509842868"] = { id = "ad4ccd094f8b6f972bff36de80475abe", keyless = true }, -- Garden Horizons
+	["5130394318"] = { id = "3e7a75a970118d0f0cf629369524dc7d", keyless = false }, -- Bizarre Lineage
+	["9186719164"] = { id = "892ccfefdc8834199a2a6e5856a8da67", keyless = true }, -- Sailor Piece
+	["9787206684"] = { id = "a29d0ba0c834bf7d9ccd4b615fce834f", keyless = true } -- Be a Lucky Block
 }
 
 local Config = {
@@ -1067,14 +1067,16 @@ local Library do
 			CloseUI()
 
 			if not (
-				GameId == "3808223175"
-					or GameId == "994732206"
-					or GameId == "1511883870"
-					or GameId == "7018190066"
-					or GameId == "7671049560"
-					or GameId == "9363735110"
-					or GameId == "9509842868"
-					or GameId == "5130394318"
+				GameId == "3808223175" -- Jujutsu Infinite
+					or GameId == "994732206" -- Blox Fruits
+					or GameId == "1511883870" -- Shindo Life
+					or GameId == "7018190066" -- Dead Rails
+					or GameId == "7671049560" -- The Forge
+					or GameId == "9363735110" -- Escape Tsunami For Brainrots!
+					or GameId == "9509842868" -- Garden Horizons
+					or GameId == "5130394318" -- Bizarre Lineage
+					or GameId == "9186719164" -- Sailor Piece
+					or GameId == "9787206684" -- Be a Lucky Block
 				) and not getgenv().lilix then
 				LocalPlayer:Kick("This executor is not supported for this game.")
 			end
