@@ -63,7 +63,8 @@ local GameList = {
 	["9509842868"] = { id = "ad4ccd094f8b6f972bff36de80475abe", keyless = true }, -- Garden Horizons
 	["5130394318"] = { id = "3e7a75a970118d0f0cf629369524dc7d", keyless = false }, -- Bizarre Lineage
 	["9186719164"] = { id = "892ccfefdc8834199a2a6e5856a8da67", keyless = true }, -- Sailor Piece
-	["9787206684"] = { id = "a29d0ba0c834bf7d9ccd4b615fce834f", keyless = false } -- Be a Lucky Block
+	["9787206684"] = { id = "a29d0ba0c834bf7d9ccd4b615fce834f", keyless = false }, -- Be a Lucky Block
+	["9875383684"] = { id = "e29724bc620c1a6d1a45818c4f71b1d0", keyless = true } -- Be a Lucky Block
 }
 
 local Config = {
@@ -1077,6 +1078,7 @@ local Library do
 					or GameId == "5130394318" -- Bizarre Lineage
 					or GameId == "9186719164" -- Sailor Piece
 					or GameId == "9787206684" -- Be a Lucky Block
+					or GameId == "9875383684" -- Be a Brainrot
 				) and not getgenv().lilix then
 				LocalPlayer:Kick("This executor is not supported for this game.")
 			end
