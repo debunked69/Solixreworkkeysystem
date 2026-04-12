@@ -64,7 +64,7 @@ local GameList = {
 	["5130394318"] = { id = "3e7a75a970118d0f0cf629369524dc7d", keyless = false }, -- Bizarre Lineage
 	["9186719164"] = { id = "892ccfefdc8834199a2a6e5856a8da67", keyless = true }, -- Sailor Piece
 	["9787206684"] = { id = "a29d0ba0c834bf7d9ccd4b615fce834f", keyless = false }, -- Be a Lucky Block
-	["9875383684"] = { id = "e29724bc620c1a6d1a45818c4f71b1d0", keyless = false } -- Be a Lucky Block
+	["9875383684"] = { id = "e29724bc620c1a6d1a45818c4f71b1d0", keyless = false } -- Be a Brainrot
 }
 
 local Config = {
