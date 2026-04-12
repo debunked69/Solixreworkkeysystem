@@ -60,7 +60,6 @@ local GameList = {
 	["7326934954"] = { id = "00e140acb477c5ecde501c1d448df6f9", keyless = true }, -- 99 Nights in the Forest
 	["7671049560"] = { id = "c0b41e859f576fb70183206224d4a75f", keyless = false }, -- The Forge
 	["9363735110"] = { id = "4948419832e0bd4aa588e628c45b6f8d", keyless = false }, -- Escape Tsunami For Brainrots!
-	["9509842868"] = { id = "ad4ccd094f8b6f972bff36de80475abe", keyless = true }, -- Garden Horizons
 	["5130394318"] = { id = "3e7a75a970118d0f0cf629369524dc7d", keyless = false }, -- Bizarre Lineage
 	["9186719164"] = { id = "892ccfefdc8834199a2a6e5856a8da67", keyless = true }, -- Sailor Piece
 	["9787206684"] = { id = "a29d0ba0c834bf7d9ccd4b615fce834f", keyless = false }, -- Be a Lucky Block
@@ -133,16 +132,44 @@ local Library do
 	local delay = task.delay
 
 	local LocalPlayer = Players.LocalPlayer
+	local Mouse = LocalPlayer:GetMouse()
 
 	local FromRGB = Color3.fromRGB
+	local FromHSV = Color3.fromHSV
+	local FromHex = Color3.fromHex
+
+	local RGBSequence = ColorSequence.new
+	local RGBSequenceKeypoint = ColorSequenceKeypoint.new
+	local NumSequence = NumberSequence.new
+	local NumSequenceKeypoint = NumberSequenceKeypoint.new
 
 	local UDim2New = UDim2.new
 	local UDimNew = UDim.new
+	local UDim2FromOffset = UDim2.fromOffset
 	local Vector2New = Vector2.new
+	local Vector3New = Vector3.new
+
+	local MathClamp = math.clamp
+	local MathFloor = math.floor
+	local MathAbs = math.abs
+	local MathSin = math.sin
 
 	local TableInsert = table.insert
+	local TableFind = table.find
+	local TableRemove = table.remove
+	local TableConcat = table.concat
+	local TableClone = table.clone
+	local TableUnpack = table.unpack
+
 	local StringFormat = string.format
+	local StringFind = string.find
+	local StringGSub = string.gsub
+	local StringLower = string.lower
+	local StringLen = string.len
+
 	local InstanceNew = Instance.new
+
+	local RectNew = Rect.new
 
 	local GetUI = gethui or function()
 		local Success, Result = pcall(function()
@@ -497,24 +524,26 @@ local Library do
 		self.ThemeMap[Item] = ThemeData
 	end
 
-	local function ToTime(v)
-		if v < 0 then
+	local function ToTime(a)
+		if not a then
+			return "No Key"
+		elseif a < 0 then
 			return "Lifetime"
 		end
 
-		local days = math.floor(v / 86400)
-		local hours = math.floor((v % 86400) / 3600)
-		local minutes = math.floor((v % 3600) / 60)
-		local seconds = v % 60
+		local days = MathFloor(a / 86400)
+		local hours = MathFloor((a % 86400) / 3600)
+		local minutes = MathFloor((a % 3600) / 60)
+		local seconds = a % 60
 
 		if days > 0 then
-			return string.format("%dd %dh %dm %ds", days, hours, minutes, seconds)
+			return StringFormat("%dd %dh %dm %ds", days, hours, minutes, seconds)
 		elseif hours > 0 then
-			return string.format("%dh %dm %ds", hours, minutes, seconds)
+			return StringFormat("%dh %dm %ds", hours, minutes, seconds)
 		elseif minutes > 0 then
-			return string.format("%dm %ds", minutes, seconds)
+			return StringFormat("%dm %ds", minutes, seconds)
 		else
-			return string.format("%ds", seconds)
+			return StringFormat("%ds", seconds)
 		end
 	end
 
@@ -534,74 +563,46 @@ local Library do
 		wait()
 		Library.NotifLayoutOrder = (Library.NotifLayoutOrder or 0) + 1
 
-		local function WrapText(Text, Character)
-			if not Text or Text == "" then
-				return ""
-			end
-
-			Character = Character or 100
-
-			local Lines = {}
-
-			for i = 1, #Text, Character do
-				local Chunk = Text:sub(i, i + Character - 1)
-				local NewLine = Chunk:find("\n")
-
-				if NewLine then
-					table.insert(Lines, Chunk:sub(1, NewLine - 1))
-					Text = Chunk:sub(NewLine + 1) .. Text:sub(i + Character)
-				else
-					table.insert(Lines, Chunk)
-				end
-			end
-
-			return table.concat(Lines, "\n")
-		end
-
-		local TitleText = WrapText(Data.Title or Data.Name or "", 100)
-		local DescText = WrapText(Data.Description or "", 100)
+		local TitleText = Data.Title or Data.Name or ""
+		local DescText = Data.Description or ""
+		local Duration = Data.Duration or 5
 
 		local PaddingH = 6
 		local PaddingV = 5
 		local Gap = 5
 		local BarGap = 4
 		local BarH = 3
-		local MaxWidth = 280
+		local MaxWidth = 330
 
 		local function GetTextSize(Text, FontSize, Width)
-			local Success, Result = pcall(function()
-				return TextService:GetTextSize(Text, FontSize, Library.Font, Vector2.new(Width, 10000))
-			end)
+			local Font = Library.Font
 
-			if not Success or not Result then
-				Success, Result = pcall(function()
-					return TextService:GetTextSize(Text, FontSize, Enum.Font.Gotham, Vector2.new(Width, 10000))
-				end)
+			if typeof(Font) ~= "EnumItem" or Font.EnumType ~= Enum.Font then
+				Font = Enum.Font.Gotham
 			end
 
-			if not Success or not Result then
-				Success, Result = pcall(function()
-					return TextService:GetTextSize(Text, FontSize, Enum.Font.SourceSans, Vector2.new(Width, 10000))
-				end)
+			if Width <= 0 then
+				Width = 10000
 			end
 
-			return Result or Vector2.new(Width, FontSize)
+			return TextService:GetTextSize(Text, FontSize, Font, Vector2.new(Width, 10000))
 		end
 
 		local TitleSize = GetTextSize(TitleText, 14, MaxWidth)
-		local DescSize = DescText ~= "" and GetTextSize(DescText, 12, MaxWidth) or Vector2.new(0, 0)
+		local DescAvailableWidth = MaxWidth - PaddingH * 2
+		local DescSize = DescText ~= "" and GetTextSize(DescText, 12, DescAvailableWidth) or Vector2.new(DescAvailableWidth, 28)
 
-		local TitleH = math.max(math.ceil(TitleSize.Y), 15)
-		local DescH = math.max(math.ceil(DescSize.Y), 14)
+		local TitleH = math.max(math.ceil(math.max(TitleSize.Y, 1)), 15)
+		local DescH = math.max(math.ceil(math.max(DescSize.Y, 1)), 14)
 
 		if DescH < 28 then DescH = 28 end
 
+		local ContentWidth = math.max(math.ceil(math.max(TitleSize.X, 1)), math.ceil(math.max(DescSize.X, 1)), 100)
+		ContentWidth = math.min(math.max(ContentWidth + PaddingH * 2, 100), MaxWidth)
+
 		local SizeY = PaddingV + TitleH + Gap + DescH + BarGap + BarH + PaddingV
 
-		local ContentWidth = math.max(math.ceil(TitleSize.X), math.ceil(DescSize.X))
-		ContentWidth = math.min(ContentWidth, MaxWidth)
-
-		local Items = { } do
+		local Items = {} do
 			Items["Notification"] = Instances:Create("Frame", {
 				Parent = Library.NotifHolder.Instance,
 				Name = "\0",
@@ -609,7 +610,8 @@ local Library do
 				BackgroundTransparency = 1,
 				BorderColor3 = FromRGB(0, 0, 0),
 				BorderSizePixel = 0,
-				LayoutOrder = Library.NotifLayoutOrder
+				LayoutOrder = Library.NotifLayoutOrder,
+				Size = UDim2New(0, ContentWidth, 0, SizeY)
 			}):AddToTheme({BackgroundColor3 = 'Background'})
 
 			Instances:Create("UICorner", {
@@ -647,8 +649,8 @@ local Library do
 			Items["Description"] = Instances:Create("TextLabel", {
 				Parent = Items["Notification"].Instance,
 				Name = "\0",
-				Size = UDim2New(1, 0, 0, DescH),
-				Position = UDim2New(0, 0, 0, TitleH + Gap),
+				Size = UDim2New(1, -PaddingH * 2, 0, DescH),
+				Position = UDim2New(0, PaddingH, 0, TitleH + Gap),
 				BackgroundTransparency = 1,
 				BorderColor3 = FromRGB(0, 0, 0),
 				BorderSizePixel = 0,
@@ -661,8 +663,17 @@ local Library do
 				TextYAlignment = Enum.TextYAlignment.Top,
 				TextWrapped = true,
 				TextTruncate = Enum.TextTruncate.None,
-				RichText = false
+				RichText = false,
+				TextScaled = false,
+				AutomaticSize = Enum.AutomaticSize.Y
 			}):AddToTheme({TextColor3 = 'Text'})
+
+			Instances:Create("UITextSizeConstraint", {
+				Parent = Items["Description"].Instance,
+				Name = "\0",
+				MinTextSize = 12,
+				MaxTextSize = 12
+			})
 
 			Items["Duration"] = Instances:Create("Frame", {
 				Parent = Items["Notification"].Instance,
@@ -697,34 +708,39 @@ local Library do
 			})
 		end
 
-		Items["Notification"].Instance.Size = UDim2New(0, 0, 0, SizeY)
+		local FadeInfo = TweenInfo.new(1, Enum.EasingStyle.Exponential, Enum.EasingDirection.Out, 0, false, 0)
+		local BarInfo = TweenInfo.new(Duration, Enum.EasingStyle.Linear, Enum.EasingDirection.Out)
 
-		local Info = TweenInfo.new(1, Enum.EasingStyle.Exponential, Enum.EasingDirection.Out, 0, false, 0)
+		local Frames = { Items["Notification"], Items["Duration"] }
+		local TextLabels = { Items["Title"] }
+		local DescLabel = Items["Description"]
 
 		Library:Thread(function()
-			for Index, Value in Items do
-				if Value.Instance:IsA("Frame") then
-					Value:Tween(Info, {BackgroundTransparency = 0})
-				elseif Value.Instance:IsA("TextLabel") and Index ~= "Description" then
-					Value:Tween(Info, {TextTransparency = 0})
-				elseif Value.Instance:IsA("TextLabel") and Index == "Description" then
-					Value:Tween(Info, {TextTransparency = 0.4})
-				end
+			for _, Item in Frames do
+				Item:Tween(FadeInfo, {BackgroundTransparency = 0})
 			end
 
-			Items["Notification"]:Tween(Info, {Size = UDim2New(0, ContentWidth, 0, SizeY)})
-			Items["Accent"]:Tween(TweenInfo.new(Data.Duration, Enum.EasingStyle.Linear, Enum.EasingDirection.Out), {Size = UDim2New(0, 0, 1, 0)})
+			for _, Item in TextLabels do
+				Item:Tween(FadeInfo, {TextTransparency = 0})
+			end
 
-			delay(Data.Duration + 0.1, function()
-				for Index, Value in Items do
-					if Value.Instance:IsA("Frame") then
-						Value:Tween(nil, {BackgroundTransparency = 1})
-					elseif Value.Instance:IsA("TextLabel") then
-						Value:Tween(nil, {TextTransparency = 1})
-					end
+			DescLabel:Tween(FadeInfo, {TextTransparency = 0.4})
+
+			Items["Notification"]:Tween(FadeInfo, {Size = UDim2New(0, ContentWidth, 0, SizeY)})
+			Items["Accent"]:Tween(BarInfo, {Size = UDim2New(0, 0, 1, 0)})
+
+			delay(Duration + 0.1, function()
+				for _, Item in Frames do
+					Item:Tween(FadeInfo, {BackgroundTransparency = 1})
 				end
 
-				Items["Notification"]:Tween(Info, {Size = UDim2New(0, 0, 0, SizeY)})
+				for _, Item in TextLabels do
+					Item:Tween(FadeInfo, {TextTransparency = 1})
+				end
+
+				DescLabel:Tween(FadeInfo, {TextTransparency = 1})
+
+				Items["Notification"]:Tween(FadeInfo, {Size = UDim2New(0, 0, 0, SizeY)})
 				wait(0.5)
 				Items["Notification"]:Clean()
 			end)
@@ -847,9 +863,9 @@ local Library do
 			Parent = Items["TextBoxContainer"].Instance,
 			Name = "\0",
 			Rotation = 90,
-			Color = ColorSequence.new({
-				ColorSequenceKeypoint.new(0, FromRGB(255, 255, 255)),
-				ColorSequenceKeypoint.new(1, FromRGB(216, 216, 216))
+			Color = RGBSequence({
+				RGBSequenceKeypoint(0, FromRGB(255, 255, 255)),
+				RGBSequenceKeypoint(1, FromRGB(216, 216, 216))
 			})
 		})
 
@@ -946,9 +962,9 @@ local Library do
 			Parent = Button.Instance,
 			Name = "\0",
 			Rotation = 90,
-			Color = ColorSequence.new({
-				ColorSequenceKeypoint.new(0, FromRGB(255, 255, 255)),
-				ColorSequenceKeypoint.new(1, FromRGB(216, 216, 216))
+			Color = RGBSequence({
+				RGBSequenceKeypoint(0, FromRGB(255, 255, 255)),
+				RGBSequenceKeypoint(1, FromRGB(216, 216, 216))
 			})
 		})
 
@@ -1074,7 +1090,6 @@ local Library do
 					or GameId == "7018190066" -- Dead Rails
 					or GameId == "7671049560" -- The Forge
 					or GameId == "9363735110" -- Escape Tsunami For Brainrots!
-					or GameId == "9509842868" -- Garden Horizons
 					or GameId == "5130394318" -- Bizarre Lineage
 					or GameId == "9186719164" -- Sailor Piece
 					or GameId == "9787206684" -- Be a Lucky Block
@@ -1209,7 +1224,7 @@ local Library do
 		local Viewport = GetViewportSize()
 
 		if IsMobile then
-			local Scale = math.clamp(Viewport.Y / 500, 0.5, 1.5)
+			local Scale = MathClamp(Viewport.Y / 500, 0.5, 1.5)
 			UIScale.Scale = Scale
 		else
 			UIScale.Scale = 1
