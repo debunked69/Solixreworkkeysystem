@@ -60,7 +60,7 @@ local GameList = {
 	["7326934954"] = { id = "00e140acb477c5ecde501c1d448df6f9", keyless = true }, -- 99 Nights in the Forest
 	["7671049560"] = { id = "c0b41e859f576fb70183206224d4a75f", keyless = false }, -- The Forge
 	["9363735110"] = { id = "4948419832e0bd4aa588e628c45b6f8d", keyless = false }, -- Escape Tsunami For Brainrots!
-	["5130394318"] = { id = "3e7a75a970118d0f0cf629369524dc7d", keyless = false }, -- Bizarre Lineage
+	["5130394318"] = { id = "3e7a75a970118d0f0cf629369524dc7d", keyless = true }, -- Bizarre Lineage
 	["9186719164"] = { id = "892ccfefdc8834199a2a6e5856a8da67", keyless = true }, -- Sailor Piece
 	["9787206684"] = { id = "a29d0ba0c834bf7d9ccd4b615fce834f", keyless = false }, -- Be a Lucky Block
 	["9875383684"] = { id = "e29724bc620c1a6d1a45818c4f71b1d0", keyless = false } -- Be a Brainrot
